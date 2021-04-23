@@ -1,0 +1,26 @@
+:root {
+  --holder100Orange: #ff9414;
+}
+.contentWrapper {
+  padding-top: 1rem;
+}
+.contentCenter {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+.orangeBackground {
+  background-color: var(--holder100Orange);
+  width: 100vw;
+  height: 100vh;
+  color: white;
+}
+.inputStyles {
+  border-radius: 0.5rem !important;
+  margin-bottom: 0.5rem;
+}
+.closeModal {
+  background-color: var(--holder100Orange) !important;
+  border-color: var(--holder100Orange) !important;
+}

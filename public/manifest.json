@@ -1,0 +1,25 @@
+{
+  "short_name": "Mit Holder 100",
+  "name": "Mit Holder 100 Web App",
+  "icons": [
+    {
+      "src": "holder100Favicon.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "holder100Favicon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "holder100Favicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ff9414",
+  "background_color": "#ffffff"
+}
