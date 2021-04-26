@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import logoBlack from '../../assets/images/logoBlack.svg';
 
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClipboardList } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 // import { faCalenderCheck } from '@fortawesome/free-solid-svg-icons'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { faKey } from '@fortawesome/free-solid-svg-icons'
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faKey } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 
 // Reactstrap components
 import {
@@ -20,7 +19,7 @@ import {
   DropdownItem,
   List,
   Row,
-  Col
+  Col,
 } from 'reactstrap';
 
 const Menu = (props) => {
@@ -29,20 +28,20 @@ const Menu = (props) => {
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
   const handleTasksMenu = () => {
-    props.selectedMenuPage('Tasks')
-  }
+    props.selectedMenuPage('Tasks');
+  };
 
   const handleChangePasswordMenu = () => {
-    props.selectedMenuPage('ChangePassword')
-  }
+    props.selectedMenuPage('ChangePassword');
+  };
   const handleChangeInformationMenu = () => {
-    props.selectedMenuPage('Information')
-  }
+    props.selectedMenuPage('Information');
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     window.location = '/';
-  }
+  };
 
   return (
     <Container>
@@ -59,42 +58,46 @@ const Menu = (props) => {
         <li className="listItem" onClick={handleTasksMenu}>
           <Row>
             <Col className="listCol">
-              <FontAwesomeIcon className="fontAwesomeIconMenu" icon={faClipboardList}></FontAwesomeIcon>
+              <FontAwesomeIcon
+                className="fontAwesomeIconMenu"
+                icon={faClipboardList}
+              ></FontAwesomeIcon>
             </Col>
-            <Col>
-              Opgaver
-          </Col>
+            <Col>Opgaver</Col>
           </Row>
         </li>
         <li className="listItem" onClick={handleChangeInformationMenu}>
           <Row>
             <Col className="listCol">
-              <FontAwesomeIcon className="fontAwesomeIconMenu" icon={faInfoCircle}></FontAwesomeIcon>
+              <FontAwesomeIcon
+                className="fontAwesomeIconMenu"
+                icon={faInfoCircle}
+              ></FontAwesomeIcon>
             </Col>
-            <Col >
-              Information
-          </Col>
+            <Col>Information</Col>
           </Row>
         </li>
 
         <li className="listItem" onClick={handleChangePasswordMenu}>
           <Row>
             <Col className="listCol">
-              <FontAwesomeIcon className="fontAwesomeIconMenu" icon={faKey}></FontAwesomeIcon>
+              <FontAwesomeIcon
+                className="fontAwesomeIconMenu"
+                icon={faKey}
+              ></FontAwesomeIcon>
             </Col>
-            <Col >
-              Skift adgangskode
-          </Col>
+            <Col>Skift adgangskode</Col>
           </Row>
         </li>
         <li className="listItem" onClick={handleLogout}>
           <Row>
             <Col className="listCol">
-              <FontAwesomeIcon className="fontAwesomeIconMenu" icon={faSignOutAlt}></FontAwesomeIcon>
+              <FontAwesomeIcon
+                className="fontAwesomeIconMenu"
+                icon={faSignOutAlt}
+              ></FontAwesomeIcon>
             </Col>
-            <Col>
-              Log ud
-            </Col>
+            <Col>Log ud</Col>
           </Row>
         </li>
         <div className="listSection">
@@ -105,11 +108,12 @@ const Menu = (props) => {
             <a href="mailto:info@holder100.dk">
               <Row>
                 <Col className="listCol">
-                  <FontAwesomeIcon className="fontAwesomeIconMenu" icon={faEnvelope}></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    className="fontAwesomeIconMenu"
+                    icon={faEnvelope}
+                  ></FontAwesomeIcon>
                 </Col>
-                <Col >
-                  info@holder100.dk
-          </Col>
+                <Col>info@holder100.dk</Col>
               </Row>
             </a>
           </li>
@@ -117,11 +121,12 @@ const Menu = (props) => {
             <a href="tel:33607608">
               <Row>
                 <Col className="listCol">
-                  <FontAwesomeIcon className="fontAwesomeIconMenu" icon={faPhoneAlt}></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    className="fontAwesomeIconMenu"
+                    icon={faPhoneAlt}
+                  ></FontAwesomeIcon>
                 </Col>
-                <Col>
-                  33 607 608
-            </Col>
+                <Col>33 607 608</Col>
               </Row>
             </a>
           </li>

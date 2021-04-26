@@ -16,7 +16,6 @@ import Home from './components/home/Home';
 import NotFound from './components/notFound/NotFound';
 
 function App() {
-
   const [validToken, setValidToken] = useState(false);
   const [doneFetching, setDoneFetching] = useState(false);
 
@@ -31,33 +30,29 @@ function App() {
       axios({
         method: 'post',
         url: `${globalConsts[0]}/wordpress/wp-json/jwt-auth/v1/token/validate`,
-        headers: headers
-      }).then((result) => {
-        if (result.data.data.status === 200) {
-          setValidToken(true);
-        }
-        setDoneFetching(true);
-      }).catch((error) => {
-        setDoneFetching(true);
-        localStorage.removeItem('token');
+        headers: headers,
       })
-    }
-    else {
+        .then((result) => {
+          if (result.data.data.status === 200) {
+            setValidToken(true);
+          }
+          setDoneFetching(true);
+        })
+        .catch((error) => {
+          setDoneFetching(true);
+          localStorage.removeItem('token');
+        });
+    } else {
       setDoneFetching(true);
     }
-  }, [])
-
+  }, []);
 
   // Defining Auth route
   const Auth = ({ render: Component, ...rest }) => (
     <Route
       {...rest}
       render={(props) =>
-        validToken ? (
-          <Component {...props} />
-        ) : (
-          window.location.replace('/')
-        )
+        validToken ? <Component {...props} /> : window.location.replace('/')
       }
     />
   );
@@ -68,19 +63,21 @@ function App() {
         <Route path="/" exact component={Login} />
         <Route path="/pincode" exact component={Pincode} />
         {doneFetching ? (
-          <Auth
-            path="/home"
-            render={() => (
-              <Home />
-            )}
-          />) : <Route><Container>Loading...</Container></Route>}
-        {
-          !(window.location.href).includes(`${globalConsts[0]}/wordpress`) ? (
-            // window.location.href !== `${globalConsts[0]}/wordpress/wp-admin` || window.location.href !== `${globalConsts[0]}/wordpress/wp-login.php?loggedout=true&wp_lang=da_DK` ? (
-            // window.location.href !== `${globalConsts[0]}/wordpress/wp-admin` ? (
-            <Route exact component={NotFound} />
-          ) : window.location.replace(`${globalConsts[0]}/wordpress/wp-admin/index.php`)
-        }
+          <Auth path="/home" render={() => <Home />} />
+        ) : (
+          <Route>
+            <Container>Loading...</Container>
+          </Route>
+        )}
+        {!window.location.href.includes(`${globalConsts[0]}/wordpress`) ? (
+          // window.location.href !== `${globalConsts[0]}/wordpress/wp-admin` || window.location.href !== `${globalConsts[0]}/wordpress/wp-login.php?loggedout=true&wp_lang=da_DK` ? (
+          // window.location.href !== `${globalConsts[0]}/wordpress/wp-admin` ? (
+          <Route exact component={NotFound} />
+        ) : (
+          window.location.replace(
+            `${globalConsts[0]}/wordpress/wp-admin/index.php`
+          )
+        )}
       </Switch>
     </Router>
   );
