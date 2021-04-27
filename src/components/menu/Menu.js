@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import logoBlack from '../../assets/images/logoBlack.svg';
-
+import { Link } from 'react-router-dom';
+import './Menu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 // import { faCalenderCheck } from '@fortawesome/free-solid-svg-icons'
@@ -22,21 +23,21 @@ import {
   Col,
 } from 'reactstrap';
 
-const Menu = (props) => {
+const Menu = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
-  const handleTasksMenu = () => {
-    props.selectedMenuPage('Tasks');
-  };
+  // const handleTasksMenu = () => {
+  //   props.selectedMenuPage('Tasks');
+  // };
 
-  const handleChangePasswordMenu = () => {
-    props.selectedMenuPage('ChangePassword');
-  };
-  const handleChangeInformationMenu = () => {
-    props.selectedMenuPage('Information');
-  };
+  // const handleChangePasswordMenu = () => {
+  //   props.selectedMenuPage('ChangePassword');
+  // };
+  // const handleChangeInformationMenu = () => {
+  //   props.selectedMenuPage('Information');
+  // };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -55,39 +56,45 @@ const Menu = (props) => {
         </DropdownMenu>
       </Dropdown>
       <List className="listMenu" type="unstyled">
-        <li className="listItem" onClick={handleTasksMenu}>
-          <Row>
-            <Col className="listCol">
-              <FontAwesomeIcon
-                className="fontAwesomeIconMenu"
-                icon={faClipboardList}
-              ></FontAwesomeIcon>
-            </Col>
-            <Col>Opgaver</Col>
-          </Row>
+        <li className="listItem" >
+          <Link to={'/home'}>
+            <Row>
+              <Col className="listCol">
+                <FontAwesomeIcon
+                  className="fontAwesomeIconMenu"
+                  icon={faClipboardList}
+                ></FontAwesomeIcon>
+              </Col>
+              <Col>Opgaver</Col>
+            </Row>
+          </Link>
         </li>
-        <li className="listItem" onClick={handleChangeInformationMenu}>
-          <Row>
-            <Col className="listCol">
-              <FontAwesomeIcon
-                className="fontAwesomeIconMenu"
-                icon={faInfoCircle}
-              ></FontAwesomeIcon>
-            </Col>
-            <Col>Information</Col>
-          </Row>
+        <li className="listItem">
+          <Link to={'/information'}>
+            <Row>
+              <Col className="listCol">
+                <FontAwesomeIcon
+                  className="fontAwesomeIconMenu"
+                  icon={faInfoCircle}
+                ></FontAwesomeIcon>
+              </Col>
+              <Col>Information</Col>
+            </Row>
+          </Link>
         </li>
 
-        <li className="listItem" onClick={handleChangePasswordMenu}>
-          <Row>
-            <Col className="listCol">
-              <FontAwesomeIcon
-                className="fontAwesomeIconMenu"
-                icon={faKey}
-              ></FontAwesomeIcon>
-            </Col>
-            <Col>Skift adgangskode</Col>
-          </Row>
+        <li className="listItem">
+          <Link to={'/change-password'}>
+            <Row>
+              <Col className="listCol">
+                <FontAwesomeIcon
+                  className="fontAwesomeIconMenu"
+                  icon={faKey}
+                ></FontAwesomeIcon>
+              </Col>
+              <Col>Skift adgangskode</Col>
+            </Row>
+          </Link>
         </li>
         <li className="listItem" onClick={handleLogout}>
           <Row>

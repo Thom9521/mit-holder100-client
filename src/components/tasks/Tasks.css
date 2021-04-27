@@ -1,0 +1,22 @@
+.taskDiv{
+    background-color: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 6px -6px black;
+}
+.taskDiv:hover{
+    cursor: pointer;
+}
+.taskDiv h5{
+    font-weight: 500;
+}
+.taskDiv p{
+    margin: 0;
+    font-size: 0.9rem;
+}
+.taskLink:hover {
+    text-decoration: none;
+}
+.centerHorizontal {
+    align-items: center;
+}

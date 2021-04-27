@@ -70,9 +70,8 @@ const ChangePassword = () => {
             formDataPassword.append('password', newPassword);
             axios({
               method: 'POST',
-              url: `${
-                globalConsts[0]
-              }/wordpress/wp-json/wp/v2/users/${localStorage.getItem('ID')}`,
+              url: `${globalConsts[0]
+                }/wordpress/wp-json/wp/v2/users/${localStorage.getItem('ID')}`,
               data: formDataPassword,
               headers: headers,
             })
@@ -122,7 +121,6 @@ const ChangePassword = () => {
             placeholder="Ny adgangskode"
             type="password"
             required
-            minLength="8"
             value={newPassword}
             onChange={handleNewPassword}
           />
@@ -131,7 +129,6 @@ const ChangePassword = () => {
             placeholder="Gentag ny adgangskode"
             type="password"
             required
-            minLength="8"
             value={repeatedPassword}
             onChange={handleRepeatedPassword}
           />

@@ -25,8 +25,14 @@ const Pincode = () => {
   const [modalError, setModalError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const toggleModalSuccess = () => setModalSuccess(!modalSuccess);
+  const toggleModalSuccess = () => {
+    setModalSuccess(!modalSuccess)
+    if (modalSuccess) {
+      window.location = '/';
+    }
+  }
   const toggleModalError = () => setModalError(!modalError);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();

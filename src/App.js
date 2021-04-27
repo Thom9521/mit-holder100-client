@@ -7,12 +7,16 @@ import globalConsts from './globalConsts';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Reactstrap components
-import { Container } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 // Local components
 import Login from './components/login/Login';
 import Pincode from './components/pincode/Pincode';
-import Home from './components/home/Home';
+import Tasks from './components/tasks/Tasks';
+import Information from './components/information/Information';
+import Menu from './components/menu/Menu';
+import SpecificTask from './components/specificTask/SpecificTask';
+import ChangePassword from './components/changePassword/ChangePassword';
 import NotFound from './components/notFound/NotFound';
 
 function App() {
@@ -62,8 +66,89 @@ function App() {
       <Switch>
         <Route path="/" exact component={Login} />
         <Route path="/pincode" exact component={Pincode} />
-        {doneFetching ? (
+        {/* {doneFetching ? (
           <Auth path="/home" render={() => <Home />} />
+        ) : (
+          <Route>
+            <Container>Loading...</Container>
+          </Route>
+        )} */}
+
+        {doneFetching ? (
+          <Auth path="/home" render={() =>
+            <Container className="contentWrapper">
+              <Row>
+                <Col lg="3">
+                  <Menu />
+                </Col>
+                <Col>
+                  <Container className="homeContainer">
+                    <Tasks />
+                  </Container>
+                </Col>
+              </Row>
+            </Container>
+          } />
+        ) : (
+          <Route>
+            <Container>Loading...</Container>
+          </Route>
+        )}
+        {doneFetching ? (
+          <Auth path="/information" render={() =>
+            <Container className="contentWrapper">
+              <Row>
+                <Col lg="3">
+                  <Menu />
+                </Col>
+                <Col>
+                  <Container className="homeContainer">
+                    <Information />
+                  </Container>
+                </Col>
+              </Row>
+            </Container>
+          } />
+        ) : (
+          <Route>
+            <Container>Loading...</Container>
+          </Route>
+        )}
+        {doneFetching ? (
+          <Auth path="/change-password" render={() =>
+            <Container className="contentWrapper">
+              <Row>
+                <Col lg="3">
+                  <Menu />
+                </Col>
+                <Col>
+                  <Container className="homeContainer">
+                    <ChangePassword />
+                  </Container>
+                </Col>
+              </Row>
+            </Container>
+          } />
+        ) : (
+          <Route>
+            <Container>Loading...</Container>
+          </Route>
+        )}
+        {doneFetching ? (
+          <Auth path="/task/:id" render={() =>
+            <Container className="contentWrapper">
+              <Row>
+                <Col lg="3">
+                  <Menu />
+                </Col>
+                <Col>
+                  <Container className="homeContainer">
+                    <SpecificTask />
+                  </Container>
+                </Col>
+              </Row>
+            </Container>
+          } />
         ) : (
           <Route>
             <Container>Loading...</Container>
