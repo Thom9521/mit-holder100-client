@@ -11,10 +11,11 @@ const Tasks = (props) => {
   // const [clickUpCompanies, setClickUpCompanies] = useState('');
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [noTasks, setNoTasks] = useState(false);
 
-  const handleTasksMenu = () => {
-    props.selectedMenuPage('Task');
-  };
+  // const handleTasksMenu = () => {
+  //   props.selectedMenuPage('Task');
+  // };
 
   useEffect(() => {
     setLoading(true);
@@ -48,27 +49,30 @@ const Tasks = (props) => {
       method: 'get',
       // url: `${globalConsts[0]}/users/getToken.php`,
       url: `${globalConsts[0]}/wordpress/wp-json/wp/v2/users/${wordPressId}`,
-      headers: headers
+      headers: headers,
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           // setClickUpClientId(response.data.acf.user_fields_click_up_id);
           // setClickUpCompanies(response.data.acf.user_fields_companies);
           axios({
             method: 'get',
             url: `${globalConsts[0]}/users/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
-            headers: headers
+            headers: headers,
           })
             .then((response) => {
-              console.log(response);
+              // console.log(response);
+              if (response.data == '') {
+                setNoTasks(true);
+              }
               setTasks(response.data);
               setLoading(false);
-
-            }).catch((error) => {
+            })
+            .catch((error) => {
               console.log(error);
               setLoading(false);
-            })
+            });
         } else {
           setLoading(false);
         }
@@ -79,24 +83,29 @@ const Tasks = (props) => {
   }, []);
   if (loading) {
     return (
-      <div className="contentCenter centerHorizontal homeContainer"><Loader
-        type="TailSpin"
-        color="#ff9414"
-        height={80}
-        width={80}
-      /></div>
+      <div className="contentCenter centerHorizontal homeContainer">
+        <Loader type="TailSpin" color="#ff9414" height={80} width={80} />
+      </div>
     );
   } else {
     return (
       <div className="contentWrapper contentCenter homeContainerContainer">
         <h4>Opgaver</h4>
-        {tasks.map(task => (
-          <Link key={task.id} to={{ pathname: `task/${task.id}`, state: task }} className="taskLink">
-            <Task key={task.id} task={task} />
-          </Link>
-        ))}
+        {noTasks ? (
+          <p>Du har ingen opgaver lige nu</p>
+        ) : (
+          tasks.map((task) => (
+            <Link
+              key={task.id}
+              to={{ pathname: `task/${task.id}`, state: task }}
+              className="taskLink"
+            >
+              <Task key={task.id} task={task} />
+            </Link>
+          ))
+        )}
       </div>
-    )
+    );
   }
 };
 export default Tasks;
