@@ -127,21 +127,6 @@ const SpecificTask = () => {
               />
             </div>
 
-            <div className="taskContent mt-3">
-              <h5>Tilføj et billede</h5>
-              <Label className="imageLabel" for="imageFile">
-                Vælg billede
-              </Label>
-              <Input
-                id="imageFile"
-                type="file"
-                multiple
-                name="imageFile"
-                className="fileInput"
-                required
-                onChange={onSelectFile}
-              />
-            </div>
             {selectedFiles !== '' &&
               selectedFiles.map((file, index) => (
                 <div key={index} className="taskContent mt-3">
@@ -168,6 +153,21 @@ const SpecificTask = () => {
                 </div>
               ))}
 
+            <div className="taskContent mt-3">
+              <h5>Tilføj et billede</h5>
+              <Label className="imageLabel" for="imageFile">
+                Vælg billede
+              </Label>
+              <Input
+                id="imageFile"
+                type="file"
+                multiple
+                name="imageFile"
+                className="fileInput"
+                required
+                onChange={onSelectFile}
+              />
+            </div>
             <div className="taskButtonDiv">
               <Button className="taskButton">Indsend</Button>
             </div>
