@@ -58,15 +58,16 @@ const Tasks = (props) => {
           // setClickUpCompanies(response.data.acf.user_fields_companies);
           axios({
             method: 'get',
-            url: `${globalConsts[0]}/users/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
+            url: `${globalConsts[0]}/tasks/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
             headers: headers,
           })
             .then((response) => {
               // console.log(response);
-              if (response.data == '') {
+              if (response.data.length <= 0) {
                 setNoTasks(true);
               }
               setTasks(response.data);
+              console.log(response.data);
               setLoading(false);
             })
             .catch((error) => {
@@ -92,7 +93,7 @@ const Tasks = (props) => {
       <div className="contentWrapper contentCenter homeContainerContainer">
         <h4>Opgaver</h4>
         {noTasks ? (
-          <p>Du har ingen opgaver lige nu</p>
+          <p>Du har ingen tilgængelige opgaver.</p>
         ) : (
           tasks.map((task) => (
             <Link
