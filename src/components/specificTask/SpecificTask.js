@@ -130,12 +130,12 @@ const SpecificTask = () => {
             {selectedFiles !== '' &&
               selectedFiles.map((file, index) => (
                 <div key={index} className="taskContent mt-3">
-                  <h5>Valgte billede {index + 1}</h5>
+                  <h5>Billede {index + 1}</h5>
                   {selectedFiles[index] && (
                     <img
                       src={previews[index]}
                       className="imagePreview"
-                      alt="Valgte billede"
+                      alt="Et valgt billede"
                     />
                   )}
                   <p>{selectedFiles[index] && selectedFiles[index].name}</p>
