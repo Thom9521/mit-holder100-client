@@ -28,6 +28,7 @@
   padding-right: 1rem !important;
   background-color: var(--holder100Orange) !important;
   border-color: var(--holder100Orange) !important;
+  width: 100%;
 }
 
 .imagePreview {
@@ -37,7 +38,7 @@
 .fileInput {
   display: none !important;
 }
-.imageLabel {
+.fileLabel {
   background-color: white;
   color: var(--holder100Orange);
   display: block;
@@ -47,10 +48,15 @@
   padding: 0.375rem 0.75rem;
   border: 1px solid transparent;
   border-color: var(--holder100Orange);
-  width: 7.1rem;
+  width: 5rem;
   margin-top: 1rem;
 }
-.imageLabel:hover {
+.removeFileBtn {
+  background-color: white !important;
+  color: red !important;
+  border-color: red !important;
+}
+.fileLabel:hover {
   cursor: pointer;
 }
 

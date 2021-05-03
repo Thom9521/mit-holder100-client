@@ -3,6 +3,7 @@ import './SpecificTask.css';
 import { useLocation } from 'react-router';
 import axios from 'axios';
 import globalConsts from '../../globalConsts';
+import Loader from 'react-loader-spinner';
 
 import {
   Button,
@@ -21,8 +22,8 @@ const SpecificTask = () => {
   const [modalSuccess, setModalSuccess] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [preview, setPreview] = useState();
   const [previews, setPreviews] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const { state } = useLocation();
   // console.log(state);
@@ -45,16 +46,12 @@ const SpecificTask = () => {
 
   useEffect(() => {
     if (!selectedFile) {
-      setPreview(undefined);
       return;
     }
     const objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
     setPreviews((prevState) => {
       return [...prevState, objectUrl];
     });
-
-    return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
   const onSelectFile = (e) => {
@@ -69,33 +66,80 @@ const SpecificTask = () => {
       return [...prevState, fileObject];
     });
   };
+
   if (selectedFile) {
     // console.log(fileObject);
-    console.log(selectedFile);
+    // console.log(selectedFile);
     console.log(selectedFiles);
     console.log(previews);
   }
+
+  const onFileRemove = (fileName, previewName) => {
+    URL.revokeObjectURL(previewName);
+
+    setSelectedFiles((prevState) => {
+      return prevState.filter((file) => file.name !== fileName);
+    });
+    setPreviews((prevState) => {
+      return prevState.filter((preview) => preview !== previewName);
+    });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+    };
 
-    const formData = new FormData();
-    formData.append('taskId', state.id);
-    formData.append('comment_text', taskText);
+    const commentData = new FormData();
+    commentData.append('taskId', state.id);
+    commentData.append('comment_text', taskText);
+
     if (state.assignees.length > 0) {
-      formData.append('assignee', state.assignees[0].id);
+      commentData.append('assignee', state.assignees[0].id);
     }
     axios({
       method: 'POST',
       url: `${globalConsts[0]}/tasks/addComment.php`,
-      data: formData,
+      data: commentData,
     })
       .then((result) => {
         setTaskTest('');
-        toggleModalSuccess();
-        console.log(result);
+        if (selectedFiles.length > 0) {
+          const fileData = new FormData();
+          fileData.append('taskId', state.id);
+          for (let i = 0; i < selectedFiles.length; i++) {
+            fileData.append('file[]', selectedFiles[i], selectedFiles[i].name);
+          }
+          axios({
+            method: 'POST',
+            url: `${globalConsts[0]}/tasks/addAttachments.php`,
+            data: fileData,
+            headers: headers,
+          })
+            .then((result) => {
+              console.log(result);
+              if (result.status === 200) {
+                setSelectedFiles([]);
+                setPreviews([]);
+                setSelectedFile();
+                setLoading(false);
+                toggleModalSuccess();
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              setLoading(false);
+            });
+        } else {
+          toggleModalSuccess();
+          setLoading(false);
+        }
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   };
 
@@ -130,46 +174,54 @@ const SpecificTask = () => {
             {selectedFiles !== '' &&
               selectedFiles.map((file, index) => (
                 <div key={index} className="taskContent mt-3">
-                  <h5>Billede {index + 1}</h5>
-                  {selectedFiles[index] && (
-                    <img
-                      src={previews[index]}
-                      className="imagePreview"
-                      alt="Et valgt billede"
-                    />
-                  )}
+                  <h5>Fil {index + 1}</h5>
+                  {selectedFiles[index] &&
+                    (selectedFiles[index].type === 'image/jpeg' ||
+                      selectedFiles[index].type === 'image/jpg' ||
+                      selectedFiles[index].type === 'image/gif' ||
+                      selectedFiles[index].type === 'image/png') && (
+                      <img
+                        src={previews[index]}
+                        className="imagePreview"
+                        alt="En valgt fil"
+                      />
+                    )}
                   <p>{selectedFiles[index] && selectedFiles[index].name}</p>
-                  <Label className="imageLabel" for="imageFile">
-                    Vælg billede
-                  </Label>
-                  <Input
-                    id="imageFile"
-                    type="file"
-                    name="imageFile"
-                    className="fileInput"
-                    required
-                    onChange={onSelectFile}
-                  />
+                  <Button
+                    className="removeFileBtn"
+                    onClick={() => onFileRemove(file.name, previews[index])}
+                  >
+                    Slet
+                  </Button>
                 </div>
               ))}
 
             <div className="taskContent mt-3">
-              <h5>Tilføj et billede</h5>
-              <Label className="imageLabel" for="imageFile">
-                Vælg billede
+              <h5>Tilføj en fil</h5>
+              <Label className="fileLabel" for="selectedFile">
+                Vælg fil
               </Label>
               <Input
-                id="imageFile"
+                id="selectedFile"
                 type="file"
-                multiple
-                name="imageFile"
+                name="selectedFile"
                 className="fileInput"
-                required
                 onChange={onSelectFile}
               />
             </div>
             <div className="taskButtonDiv">
-              <Button className="taskButton">Indsend</Button>
+              <Button className="taskButton">
+                {loading ? (
+                  <Loader
+                    type="TailSpin"
+                    color="white"
+                    height={23}
+                    width={23}
+                  />
+                ) : (
+                  'Indsend'
+                )}
+              </Button>
             </div>
           </div>
         </FormGroup>
