@@ -31,7 +31,7 @@ const SpecificTask = () => {
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
     if (modalSuccess) {
-      window.location = '/home';
+      // window.location = '/home';
     }
   };
 
@@ -66,13 +66,6 @@ const SpecificTask = () => {
       return [...prevState, fileObject];
     });
   };
-
-  if (selectedFile) {
-    // console.log(fileObject);
-    // console.log(selectedFile);
-    console.log(selectedFiles);
-    console.log(previews);
-  }
 
   const onFileRemove = (fileName, previewName) => {
     URL.revokeObjectURL(previewName);
@@ -111,6 +104,9 @@ const SpecificTask = () => {
           fileData.append('taskId', state.id);
           for (let i = 0; i < selectedFiles.length; i++) {
             fileData.append('file[]', selectedFiles[i], selectedFiles[i].name);
+          }
+          if (state.assignees.length > 0) {
+            fileData.append('assignee', state.assignees[0].id);
           }
           axios({
             method: 'POST',
