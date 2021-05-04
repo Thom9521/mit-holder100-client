@@ -61,6 +61,7 @@ const Tasks = (props) => {
               if (response.data.length <= 0) {
                 setNoTasks(true);
               }
+              console.log(response.data)
               setTasks(response.data);
               setLoading(false);
             })

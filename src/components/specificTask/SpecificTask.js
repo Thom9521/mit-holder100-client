@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SpecificTask.css';
 import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import globalConsts from '../../globalConsts';
 import Loader from 'react-loader-spinner';
@@ -25,7 +26,6 @@ const SpecificTask = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
-  const [fileComments, setFileComments] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { state } = useLocation();
@@ -33,9 +33,9 @@ const SpecificTask = () => {
 
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
-    if (modalSuccess) {
-      // window.location = '/home';
-    }
+    // if (modalSuccess) {
+    //   window.location = '/home';
+    // }
   };
 
   var deadlineColor = '';
@@ -68,9 +68,7 @@ const SpecificTask = () => {
       // selectedFiles: [...prevState, fileObject],
       return [...prevState, fileObject];
     });
-    setFileComments((prevState) => {
-      return [...prevState, ""];
-    })
+
   };
 
   const onFileRemove = (fileName, previewName) => {
@@ -103,6 +101,7 @@ const SpecificTask = () => {
     const commentData = new FormData();
     commentData.append('taskId', state.id);
     commentData.append('comment_text', taskText);
+    commentData.append('status', state.status.status);
 
     if (state.assignees.length > 0) {
       commentData.append('assignee', state.assignees[0].id);
@@ -113,6 +112,8 @@ const SpecificTask = () => {
       data: commentData,
     })
       .then((result) => {
+        console.log(result);
+
         setTaskTest('');
         if (selectedFiles.length > 0) {
           const fileData = new FormData();
@@ -132,6 +133,7 @@ const SpecificTask = () => {
           })
             .then((result) => {
               if (result.status === 200) {
+                console.log(result);
                 setSelectedFiles([]);
                 setPreviews([]);
                 setSelectedFile();
@@ -255,9 +257,11 @@ const SpecificTask = () => {
         <ModalHeader toggle={toggleModalSuccess}>Succes!</ModalHeader>
         <ModalBody>Din besvarelse er blevet indsendt til Holder 100.</ModalBody>
         <ModalFooter>
-          <Button className="closeModal" onClick={toggleModalSuccess}>
-            Luk
+          <Link to={'/home'}>
+            <Button className="closeModal" onClick={toggleModalSuccess}>
+              Luk
           </Button>{' '}
+          </Link>
         </ModalFooter>
       </Modal>
     </div>

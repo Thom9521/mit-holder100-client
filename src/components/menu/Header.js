@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import logoBlack from '../../assets/images/logoBlack.svg';
 
 // Reactstrap components
@@ -20,10 +21,12 @@ const Header = () => {
         <React.Fragment>
             <Row>
                 <Col className="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-xs-6 col-6">
-                    <img className="mb-5" src={logoBlack} alt="Holder100 logo" />
+                    <Link to={'/home'}>
+                        <img className="holder100Image" src={logoBlack} alt="Holder100 logo" />
+                    </Link>
                 </Col>
                 <Col className="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-xs-6 col-6 dropdownCol">
-                    <Dropdown isOpen={dropdownOpen} toggle={toggle} >
+                    <Dropdown isOpen={dropdownOpen} toggle={toggle} className="dropdownStyles">
                         <DropdownToggle caret>Firma 1</DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem className="mb-3">Firma 1</DropdownItem>

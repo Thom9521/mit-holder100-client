@@ -16,7 +16,6 @@
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    /* optional */
     -webkit-box-align: start;
     -moz-box-align: start;
     -ms-flex-align: start;
@@ -42,8 +41,16 @@
     -ms-flex-order: 1;
     -webkit-order: 1;
     order: 1;
+
   }
   .headerDiv{
       display: block;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      background-color: white;
+      z-index: 1;
+      padding-top: 1rem;
+      box-shadow: 0 6px 6px -6px black;
   }
 }

@@ -57,6 +57,9 @@
 .errorMessage {
   color: red;
 }
+.holder100Image{
+  margin-bottom: 4rem;
+}
 
 @media only screen and (max-width: 991px) {
   .listMenu {
@@ -105,5 +108,15 @@
   }
   .homeContainerContainer{
     padding-top: 2rem;
+  }
+  .holder100Image{
+    margin-bottom: 2rem;
+  }
+  .homeContainer {
+    border-radius: 0;
+    background-repeat: repeat-x;
+  }
+  .dropdownStyles{
+    position: fixed !important;
   }
 }
