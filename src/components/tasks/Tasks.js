@@ -47,39 +47,38 @@ const Tasks = (props) => {
 
     axios({
       method: 'get',
-      // url: `${globalConsts[0]}/users/getToken.php`,
       url: `${globalConsts[0]}/wordpress/wp-json/wp/v2/users/${wordPressId}`,
       headers: headers,
     })
       .then((response) => {
-        // console.log(response);
         if (response.status === 200) {
-          // setClickUpClientId(response.data.acf.user_fields_click_up_id);
-          // setClickUpCompanies(response.data.acf.user_fields_companies);
           axios({
             method: 'get',
             url: `${globalConsts[0]}/tasks/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
             headers: headers,
           })
             .then((response) => {
-              // console.log(response);
               if (response.data.length <= 0) {
                 setNoTasks(true);
               }
               setTasks(response.data);
-              console.log(response.data);
               setLoading(false);
             })
             .catch((error) => {
               console.log(error);
               setLoading(false);
+              setNoTasks(true);
+
             });
         } else {
+          setNoTasks(true);
           setLoading(false);
         }
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
+        setNoTasks(true);
       });
   }, []);
   if (loading) {

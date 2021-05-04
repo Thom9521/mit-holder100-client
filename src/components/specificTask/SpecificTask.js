@@ -15,6 +15,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Row,
+  Col
 } from 'reactstrap';
 
 const SpecificTask = () => {
@@ -23,6 +25,7 @@ const SpecificTask = () => {
   const [selectedFile, setSelectedFile] = useState();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [fileComments, setFileComments] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { state } = useLocation();
@@ -65,6 +68,9 @@ const SpecificTask = () => {
       // selectedFiles: [...prevState, fileObject],
       return [...prevState, fileObject];
     });
+    setFileComments((prevState) => {
+      return [...prevState, ""];
+    })
   };
 
   const onFileRemove = (fileName, previewName) => {
@@ -77,6 +83,15 @@ const SpecificTask = () => {
       return prevState.filter((preview) => preview !== previewName);
     });
   };
+
+  // Attaching a comment field onto the file object
+  const handleFileComment = (value, index) => {
+    let files = [...selectedFiles];
+    let file = files[index];
+    file.comment = value;
+    files[index] = file;
+    setSelectedFiles(files);
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -104,6 +119,7 @@ const SpecificTask = () => {
           fileData.append('taskId', state.id);
           for (let i = 0; i < selectedFiles.length; i++) {
             fileData.append('file[]', selectedFiles[i], selectedFiles[i].name);
+            fileData.append('comment[]', selectedFiles[i].comment)
           }
           if (state.assignees.length > 0) {
             fileData.append('assignee', state.assignees[0].id);
@@ -115,7 +131,6 @@ const SpecificTask = () => {
             headers: headers,
           })
             .then((result) => {
-              console.log(result);
               if (result.status === 200) {
                 setSelectedFiles([]);
                 setPreviews([]);
@@ -174,13 +189,27 @@ const SpecificTask = () => {
                   {selectedFiles[index] &&
                     (selectedFiles[index].type === 'image/jpeg' ||
                       selectedFiles[index].type === 'image/jpg' ||
+                      selectedFiles[index].type === 'image/svg+xml' ||
                       selectedFiles[index].type === 'image/gif' ||
                       selectedFiles[index].type === 'image/png') && (
-                      <img
-                        src={previews[index]}
-                        className="imagePreview"
-                        alt="En valgt fil"
-                      />
+                      <Row>
+                        <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
+                          <img
+                            src={previews[index]}
+                            className="imagePreview"
+                            alt="En valgt fil"
+                          />
+                        </Col>
+                        <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
+                          <Input
+                            type="textarea"
+                            placeholder="Tilføj en kommentar til filen"
+                            className="fileComment"
+                            onChange={(e) => handleFileComment(e.target.value, index)}
+
+                          />
+                        </Col>
+                      </Row>
                     )}
                   <p>{selectedFiles[index] && selectedFiles[index].name}</p>
                   <Button
