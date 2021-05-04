@@ -112,7 +112,7 @@ const SpecificTask = () => {
       data: commentData,
     })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
 
         setTaskTest('');
         if (selectedFiles.length > 0) {
@@ -133,7 +133,7 @@ const SpecificTask = () => {
           })
             .then((result) => {
               if (result.status === 200) {
-                console.log(result);
+                // console.log(result);
                 setSelectedFiles([]);
                 setPreviews([]);
                 setSelectedFile();
