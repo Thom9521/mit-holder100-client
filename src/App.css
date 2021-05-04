@@ -1,1 +1,49 @@
 @import url('./assets/css/globalStyles.css');
+
+.headerDiv{
+    display: none;
+}
+
+@media only screen and (max-width: 991px) {
+.menuResponsiveness{
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    /* optional */
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    -ms-flex-align: start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+}
+
+.menuResponsiveness .firstCol {
+    -webkit-box-ordinal-group: 2;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 2;
+    -webkit-order: 2;
+    order: 2;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .menuResponsiveness .secondCol {
+    -webkit-box-ordinal-group: 1;
+    -moz-box-ordinal-group: 1;
+    -ms-flex-order: 1;
+    -webkit-order: 1;
+    order: 1;
+  }
+  .headerDiv{
+      display: block;
+  }
+}

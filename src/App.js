@@ -14,6 +14,7 @@ import Login from './components/login/Login';
 import Pincode from './components/pincode/Pincode';
 import Tasks from './components/tasks/Tasks';
 import Information from './components/information/Information';
+import Header from './components/menu/Header';
 import Menu from './components/menu/Menu';
 import SpecificTask from './components/specificTask/SpecificTask';
 import ChangePassword from './components/changePassword/ChangePassword';
@@ -76,12 +77,15 @@ function App() {
 
         {doneFetching ? (
           <Auth path="/home" render={() =>
-            <Container className="contentWrapper">
+            <Container className="contentWrapper menuResponsiveness">
               <Row>
-                <Col lg="3">
+                <Col className="firstCol" lg="3">
                   <Menu />
                 </Col>
-                <Col>
+                <Col className="secondCol">
+                  <div className="headerDiv">
+                    <Header />
+                  </div>
                   <Container className="homeContainer">
                     <Tasks />
                   </Container>
@@ -96,12 +100,15 @@ function App() {
         )}
         {doneFetching ? (
           <Auth path="/information" render={() =>
-            <Container className="contentWrapper">
+            <Container className="contentWrapper menuResponsiveness">
               <Row>
-                <Col lg="3">
+                <Col className="firstCol" lg="3">
                   <Menu />
                 </Col>
-                <Col>
+                <Col className="secondCol">
+                  <div className="headerDiv">
+                    <Header />
+                  </div>
                   <Container className="homeContainer">
                     <Information />
                   </Container>
@@ -116,12 +123,15 @@ function App() {
         )}
         {doneFetching ? (
           <Auth path="/change-password" render={() =>
-            <Container className="contentWrapper">
+            <Container className="contentWrapper menuResponsiveness">
               <Row>
-                <Col lg="3">
+                <Col className="firstCol" lg="3">
                   <Menu />
                 </Col>
-                <Col>
+                <Col className="secondCol">
+                  <div className="headerDiv">
+                    <Header />
+                  </div>
                   <Container className="homeContainer">
                     <ChangePassword />
                   </Container>
@@ -136,12 +146,15 @@ function App() {
         )}
         {doneFetching ? (
           <Auth path="/task/:id" render={() =>
-            <Container className="contentWrapper">
+            <Container className="contentWrapper menuResponsiveness">
               <Row>
-                <Col lg="3">
+                <Col className="firstCol" lg="3">
                   <Menu />
                 </Col>
-                <Col>
+                <Col className="secondCol">
+                  <div className="headerDiv">
+                    <Header />
+                  </div>
                   <Container className="homeContainer">
                     <SpecificTask />
                   </Container>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import logoBlack from '../../assets/images/logoBlack.svg';
 import { Link } from 'react-router-dom';
+import Header from './Header';
 import './Menu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
@@ -14,30 +14,12 @@ import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 // Reactstrap components
 import {
   Container,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   List,
   Row,
   Col,
 } from 'reactstrap';
 
 const Menu = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggle = () => setDropdownOpen(!dropdownOpen);
-
-  // const handleTasksMenu = () => {
-  //   props.selectedMenuPage('Tasks');
-  // };
-
-  // const handleChangePasswordMenu = () => {
-  //   props.selectedMenuPage('ChangePassword');
-  // };
-  // const handleChangeInformationMenu = () => {
-  //   props.selectedMenuPage('Information');
-  // };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -45,69 +27,71 @@ const Menu = () => {
   };
 
   return (
-    <Container>
-      <img className="mb-5" src={logoBlack} alt="Holder100 logo" />
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>Firma 1</DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem className="mb-3">Firma 1</DropdownItem>
-          <DropdownItem className="mb-3">Firma 2</DropdownItem>
-          <DropdownItem className="mb-3">Firma 3</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
+    <Container className="listContainer">
+      <div className="headerContainer">
+        <Header />
+      </div>
       <List className="listMenu" type="unstyled">
+        {/* <div className="mainSection"> */}
         <li className="listItem" >
           <Link to={'/home'}>
-            <Row>
+            <Row className="listRow">
               <Col className="listCol">
                 <FontAwesomeIcon
                   className="fontAwesomeIconMenu"
                   icon={faClipboardList}
                 ></FontAwesomeIcon>
               </Col>
-              <Col>Opgaver</Col>
+              <Col className="listColText">
+                Opgaver
+              </Col>
             </Row>
           </Link>
         </li>
         <li className="listItem">
           <Link to={'/information'}>
-            <Row>
+            <Row className="listRow">
               <Col className="listCol">
                 <FontAwesomeIcon
                   className="fontAwesomeIconMenu"
                   icon={faInfoCircle}
                 ></FontAwesomeIcon>
               </Col>
-              <Col>Information</Col>
+              <Col className="listColText">
+                Information
+                </Col>
             </Row>
           </Link>
         </li>
 
         <li className="listItem">
           <Link to={'/change-password'}>
-            <Row>
+            <Row className="listRow">
               <Col className="listCol">
                 <FontAwesomeIcon
                   className="fontAwesomeIconMenu"
                   icon={faKey}
                 ></FontAwesomeIcon>
               </Col>
-              <Col>Skift adgangskode</Col>
+              <Col className="listColText">
+                Skift adgangskode
+                </Col>
             </Row>
           </Link>
         </li>
         <li className="listItem" onClick={handleLogout}>
-          <Row>
+          <Row className="listRow">
             <Col className="listCol">
               <FontAwesomeIcon
                 className="fontAwesomeIconMenu"
                 icon={faSignOutAlt}
               ></FontAwesomeIcon>
             </Col>
-            <Col>Log ud</Col>
+            <Col className="listColText">Log ud</Col>
           </Row>
         </li>
-        <div className="listSection">
+        {/* </div> */}
+        <div className="contactSection">
           <li className="listHeader">
             <h5>Kontakt os</h5>
           </li>
