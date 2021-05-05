@@ -256,7 +256,9 @@ const SpecificTask = () => {
       </Form>
       <Modal isOpen={modalSuccess} toggle={toggleModalSuccess}>
         <ModalHeader toggle={toggleModalSuccess}>Succes!</ModalHeader>
-        <ModalBody>Din besvarelse er blevet indsendt til Holder 100.</ModalBody>
+        <ModalBody>
+          Tak for dit svar. Din besvarelse er blevet indsendt til Holder 100.
+        </ModalBody>
         <ModalFooter>
           <Link to={'/home'}>
             <Button className="closeModal" onClick={toggleModalSuccess}>
