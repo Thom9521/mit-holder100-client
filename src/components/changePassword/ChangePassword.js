@@ -58,7 +58,6 @@ const ChangePassword = () => {
         data: formDataLogin,
       })
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             const token = localStorage.getItem('token');
             const tokenHeader = 'Bearer ' + token;
@@ -70,13 +69,13 @@ const ChangePassword = () => {
             formDataPassword.append('password', newPassword);
             axios({
               method: 'POST',
-              url: `${globalConsts[0]
-                }/wordpress/wp-json/wp/v2/users/${localStorage.getItem('ID')}`,
+              url: `${
+                globalConsts[0]
+              }/wordpress/wp-json/wp/v2/users/${localStorage.getItem('ID')}`,
               data: formDataPassword,
               headers: headers,
             })
               .then((response) => {
-                console.log(response);
                 toggleModal();
                 setLoading(false);
                 setOldPassword('');

@@ -17,7 +17,7 @@ import {
   ModalBody,
   ModalFooter,
   Row,
-  Col
+  Col,
 } from 'reactstrap';
 
 const SpecificTask = () => {
@@ -29,7 +29,6 @@ const SpecificTask = () => {
   const [loading, setLoading] = useState(false);
 
   const { state } = useLocation();
-  // console.log(state);
 
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
@@ -68,11 +67,11 @@ const SpecificTask = () => {
       // selectedFiles: [...prevState, fileObject],
       return [...prevState, fileObject];
     });
-
   };
 
   const onFileRemove = (fileName, previewName) => {
     URL.revokeObjectURL(previewName);
+    setSelectedFile();
 
     setSelectedFiles((prevState) => {
       return prevState.filter((file) => file.name !== fileName);
@@ -89,7 +88,7 @@ const SpecificTask = () => {
     file.comment = value;
     files[index] = file;
     setSelectedFiles(files);
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -120,7 +119,7 @@ const SpecificTask = () => {
           fileData.append('taskId', state.id);
           for (let i = 0; i < selectedFiles.length; i++) {
             fileData.append('file[]', selectedFiles[i], selectedFiles[i].name);
-            fileData.append('comment[]', selectedFiles[i].comment)
+            fileData.append('comment[]', selectedFiles[i].comment);
           }
           if (state.assignees.length > 0) {
             fileData.append('assignee', state.assignees[0].id);
@@ -207,8 +206,9 @@ const SpecificTask = () => {
                             type="textarea"
                             placeholder="Tilføj en kommentar til filen"
                             className="fileComment"
-                            onChange={(e) => handleFileComment(e.target.value, index)}
-
+                            onChange={(e) =>
+                              handleFileComment(e.target.value, index)
+                            }
                           />
                         </Col>
                       </Row>
@@ -234,6 +234,7 @@ const SpecificTask = () => {
                 name="selectedFile"
                 className="fileInput"
                 onChange={onSelectFile}
+                onClick={(e) => (e.target.value = null)} // Setting value to null so the same file can be picked more than once in a row
               />
             </div>
             <div className="taskButtonDiv">
@@ -260,7 +261,7 @@ const SpecificTask = () => {
           <Link to={'/home'}>
             <Button className="closeModal" onClick={toggleModalSuccess}>
               Luk
-          </Button>{' '}
+            </Button>{' '}
           </Link>
         </ModalFooter>
       </Modal>
