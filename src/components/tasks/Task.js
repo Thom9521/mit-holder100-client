@@ -1,7 +1,8 @@
 import React from 'react';
 
 const Task = (props) => {
-  const { name, due_date } = props.task;
+  const { name, due_date } = props.task; // Destructuring
+
   var deadlineColor = '';
   if (due_date !== null) {
     var deadline = new Date(parseInt(due_date));
