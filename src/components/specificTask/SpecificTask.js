@@ -188,52 +188,45 @@ const SpecificTask = () => {
                 <div key={index} className="taskContent mt-3">
                   <h5>Fil {index + 1}</h5>
                   {selectedFiles[index] &&
-                    (selectedFiles[index].type === 'image/jpeg' ||
-                      selectedFiles[index].type === 'image/jpg' ||
-                      selectedFiles[index].type === 'image/svg+xml' ||
-                      selectedFiles[index].type === 'image/gif' ||
-                      selectedFiles[index].type === 'video/mp4' ||
-                      selectedFiles[index].type === 'video/mov' ||
-                      selectedFiles[index].type === 'video/wmv' ||
-                      selectedFiles[index].type === 'image/png') && (
-                      <Row>
-                        {(selectedFiles[index].type === 'video/mp4' ||
-                          selectedFiles[index].type === 'video/mov' ||
-                          selectedFiles[index].type === 'video/wmv') && (
-                            <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
-                              <video src={previews[index]}
-                                className="imagePreview"
-                                alt="En valgt videofil"
-                                controls>
-                                Din browser understøtter ikke videoer
+
+                    <Row>
+                      {(selectedFiles[index].type === 'video/mp4' ||
+                        selectedFiles[index].type === 'video/mov' ||
+                        selectedFiles[index].type === 'video/wmv') && (
+                          <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
+                            <video src={previews[index]}
+                              className="imagePreview"
+                              alt="En valgt videofil"
+                              controls>
+                              Din browser understøtter ikke videoer
                               </video>
-                            </Col>
-                          )}
-                        {(selectedFiles[index].type === 'image/jpeg' ||
-                          selectedFiles[index].type === 'image/jpg' ||
-                          selectedFiles[index].type === 'image/svg+xml' ||
-                          selectedFiles[index].type === 'image/gif' ||
-                          selectedFiles[index].type === 'image/png') && (
-                            <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
-                              <img
-                                src={previews[index]}
-                                className="imagePreview"
-                                alt="En valgt billedefil"
-                              />
-                            </Col>
-                          )}
-                        <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
-                          <Input
-                            type="textarea"
-                            placeholder="Tilføj en kommentar til filen"
-                            className="fileComment"
-                            onChange={(e) =>
-                              handleFileComment(e.target.value, index)
-                            }
-                          />
-                        </Col>
-                      </Row>
-                    )}
+                          </Col>
+                        )}
+                      {(selectedFiles[index].type === 'image/jpeg' ||
+                        selectedFiles[index].type === 'image/jpg' ||
+                        selectedFiles[index].type === 'image/svg+xml' ||
+                        selectedFiles[index].type === 'image/gif' ||
+                        selectedFiles[index].type === 'image/png') && (
+                          <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
+                            <img
+                              src={previews[index]}
+                              className="imagePreview"
+                              alt="En valgt billedefil"
+                            />
+                          </Col>
+                        )}
+                      <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
+                        <Input
+                          type="textarea"
+                          placeholder="Tilføj en kommentar til filen"
+                          className="fileComment"
+                          onChange={(e) =>
+                            handleFileComment(e.target.value, index)
+                          }
+                        />
+                      </Col>
+                    </Row>
+                  }
                   <p>{selectedFiles[index] && selectedFiles[index].name}</p>
                   <Button
                     className="removeFileBtn"
