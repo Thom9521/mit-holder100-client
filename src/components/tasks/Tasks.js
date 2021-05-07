@@ -36,16 +36,13 @@ const Tasks = (props) => {
         if (response.status === 200) {
           axios({
             method: 'get',
-            url: `${globalConsts[0]}/tasks/getTasks.php?clickUpClientId
-            =${response.data.acf.user_fields_click_up_id}
-            &clickUpCompanies=${response.data.acf.user_fields_companies}`,
+            url: `${globalConsts[0]}/tasks/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
             headers: headers,
           })
             .then((response) => {
               if (response.data.length <= 0) {
                 setNoTasks(true);
               }
-              // console.log(response.data)
               setTasks(response.data);
               setLoading(false);
             })

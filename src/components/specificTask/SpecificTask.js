@@ -209,11 +209,11 @@ const SpecificTask = () => {
                               </video>
                             </Col>
                           )}
-                        {selectedFiles[index].type === 'image/jpeg' ||
+                        {(selectedFiles[index].type === 'image/jpeg' ||
                           selectedFiles[index].type === 'image/jpg' ||
                           selectedFiles[index].type === 'image/svg+xml' ||
                           selectedFiles[index].type === 'image/gif' ||
-                          selectedFiles[index].type === 'image/png' && (
+                          selectedFiles[index].type === 'image/png') && (
                             <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
                               <img
                                 src={previews[index]}
