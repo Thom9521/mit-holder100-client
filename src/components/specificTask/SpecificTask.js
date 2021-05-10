@@ -28,6 +28,7 @@ const SpecificTask = () => {
   const [previews, setPreviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
+  // var selectedTags = [];
 
   const { state } = useLocation();
   // console.log(state.tags);
@@ -56,7 +57,7 @@ const SpecificTask = () => {
     setPreviews((prevState) => {
       return [...prevState, objectUrl];
     });
-  }, [selectedFile]);
+  }, [selectedFile, selectedTags]);
 
   const onSelectFile = (e) => {
     const fileObject = e.target.files[0];
@@ -93,6 +94,7 @@ const SpecificTask = () => {
   };
 
   const handleTags = (e, tagIndex, fileIndex, bgColor) => {
+    // var localTagsArray = selectedTags;
     const tagObject = {
       id: e.target.value + tagIndex + fileIndex,
       value: e.target.value,
@@ -114,16 +116,31 @@ const SpecificTask = () => {
           setSelectedTags((prevState) => {
             return prevState.filter((tag) => tag.id !== tagObject.id);
           });
+          // localTagsArray = localTagsArray.filter(
+          //   (tag) => tag.id !== tagObject.id
+          // );
         }
-        if (selectedTags[i].fileIndex === tagObject.fileIndex) {
-          let files = [...selectedFiles];
-          let file = files[fileIndex];
-          let tagsArray = [file.tags];
-          tagsArray.push(selectedTags[i]);
-          file.tags = tagsArray;
-          files[fileIndex] = file;
-          setSelectedFiles(files);
-        }
+        // if (selectedTags[i].fileIndex === tagObject.fileIndex) {
+        //   console.log(tagObject.fileIndex);
+        //   let files = [...selectedFiles];
+        //   let file = files[fileIndex];
+        //   var tagsArray;
+        //   if (file.tags !== undefined) {
+        //     tagsArray = file.tags;
+        //   } else {
+        //     tagsArray = [];
+        //   }
+        //   if (!tagsArray.some((tag) => tag.value === tagObject.value)) {
+        //     tagsArray.push(tagObject);
+        //     console.log('test1');
+        //   } else {
+        //     console.log('test2');
+        //     return tagsArray.filter((tag) => tag.id !== tagObject.id);
+        //   }
+        //   file.tags = tagsArray;
+        //   files[fileIndex] = file;
+        //   setSelectedFiles(files);
+        // }
       }
     }
     if (!inArray) {
@@ -132,12 +149,27 @@ const SpecificTask = () => {
         return [...prevState, tagObject];
       });
     }
-    console.log(selectedFiles);
+    // if (!localTagsArray.some((tag) => tag.value === tagObject.value)) {
+    //   localTagsArray.push(tagObject);
+    // }
+    // console.log(localTagsArray);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // Setting tags on file object
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const tagsWithMatchingFileIndex = selectedTags.filter(
+        (tag) => tag.fileIndex === i
+      );
+      let files = [...selectedFiles];
+      let file = files[i];
+      file.tags = tagsWithMatchingFileIndex;
+      files[i] = file;
+    }
     setLoading(true);
+
     const headers = {
       'Content-Type': 'multipart/form-data',
     };
@@ -165,6 +197,11 @@ const SpecificTask = () => {
           for (let i = 0; i < selectedFiles.length; i++) {
             fileData.append('file[]', selectedFiles[i], selectedFiles[i].name);
             fileData.append('comment[]', selectedFiles[i].comment);
+            var tagsString = '';
+            for (let i = 0; i < selectedTags.length; i++) {
+              tagsString += '"' + selectedTags[i].value + '"' + ' ';
+            }
+            fileData.append('tags[]', tagsString);
           }
           if (state.assignees.length > 0) {
             fileData.append('assignee', state.assignees[0].id);
@@ -177,7 +214,7 @@ const SpecificTask = () => {
           })
             .then((result) => {
               if (result.status === 200) {
-                // console.log(result);
+                console.log(result);
                 setSelectedFiles([]);
                 setPreviews([]);
                 setSelectedFile();
@@ -343,11 +380,11 @@ const SpecificTask = () => {
           Tak for dit svar. Din besvarelse er blevet indsendt til Holder 100.
         </ModalBody>
         <ModalFooter>
-          <Link to={'/home'}>
-            <Button className="closeModal" onClick={toggleModalSuccess}>
-              Luk
-            </Button>{' '}
-          </Link>
+          {/* <Link to={'/home'}> */}
+          <Button className="closeModal" onClick={toggleModalSuccess}>
+            Luk
+          </Button>{' '}
+          {/* </Link> */}
         </ModalFooter>
       </Modal>
     </div>
