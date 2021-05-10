@@ -27,24 +27,6 @@ const Tasks = (props) => {
       'Content-Type': 'application/json',
       Authorization: tokenHeader,
     };
-    // CORS error
-    // const headers2 = {
-    //   'Content-Type': 'application/json',
-    //   Authorization: '6736916_f6214088e72af5c764e8c970b5aa7063c7dcf32f',
-    // };
-    // axios({
-    //   method: 'get',
-    //   // url: `${globalConsts[0]}/users/getToken.php`,
-    //   url: 'https://api.clickup.com/api/v2/list/38186322/task',
-    //   headers: headers2,
-    // })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
     axios({
       method: 'get',
       url: `${globalConsts[0]}/wordpress/wp-json/wp/v2/users/${wordPressId}`,
@@ -61,7 +43,6 @@ const Tasks = (props) => {
               if (response.data.length <= 0) {
                 setNoTasks(true);
               }
-              // console.log(response.data)
               setTasks(response.data);
               setLoading(false);
             })
