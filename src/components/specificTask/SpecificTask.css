@@ -35,7 +35,6 @@
   max-width: 20rem;
   width: 100%;
   height: auto;
-
 }
 .fileInput {
   display: none !important;
@@ -65,13 +64,18 @@
 .fileComment {
   height: 100% !important;
 }
-
+.tagStyles {
+  color: white;
+  margin: 0.1rem;
+  border-radius: 0.4rem;
+  font-size: smaller;
+}
 
 @media only screen and (max-width: 991px) {
   .taskWrapper {
     margin: 1rem;
   }
-  .fileCol{
+  .fileCol {
     margin-bottom: 1rem;
     margin-top: 1rem;
   }

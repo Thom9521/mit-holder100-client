@@ -27,8 +27,10 @@ const SpecificTask = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const { state } = useLocation();
+  // console.log(state.tags);
 
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
@@ -88,6 +90,49 @@ const SpecificTask = () => {
     file.comment = value;
     files[index] = file;
     setSelectedFiles(files);
+  };
+
+  const handleTags = (e, tagIndex, fileIndex, bgColor) => {
+    const tagObject = {
+      id: e.target.value + tagIndex + fileIndex,
+      value: e.target.value,
+      tagIndex: tagIndex,
+      fileIndex: fileIndex,
+    };
+    var inArray = false;
+
+    if (selectedTags.length > 0) {
+      for (let i = 0; i < selectedTags.length; i++) {
+        if (
+          selectedTags[i].value +
+            selectedTags[i].tagIndex +
+            selectedTags[i].fileIndex ===
+          tagObject.id
+        ) {
+          inArray = true;
+          e.target.style.borderColor = bgColor;
+          setSelectedTags((prevState) => {
+            return prevState.filter((tag) => tag.id !== tagObject.id);
+          });
+        }
+        if (selectedTags[i].fileIndex === tagObject.fileIndex) {
+          let files = [...selectedFiles];
+          let file = files[fileIndex];
+          let tagsArray = [file.tags];
+          tagsArray.push(selectedTags[i]);
+          file.tags = tagsArray;
+          files[fileIndex] = file;
+          setSelectedFiles(files);
+        }
+      }
+    }
+    if (!inArray) {
+      e.target.style.borderColor = 'yellow';
+      setSelectedTags((prevState) => {
+        return [...prevState, tagObject];
+      });
+    }
+    console.log(selectedFiles);
   };
 
   const handleSubmit = (event) => {
@@ -213,7 +258,30 @@ const SpecificTask = () => {
                         </Col>
                       </Row>
                     )}
-                  <p>{selectedFiles[index] && selectedFiles[index].name}</p>
+                  <Row>
+                    <Col>
+                      <p>{selectedFiles[index] && selectedFiles[index].name}</p>
+                    </Col>
+                    <Col>
+                      {state.tags.map((tag, tagIndex) => (
+                        <button
+                          type="button"
+                          key={tagIndex}
+                          className="tagStyles"
+                          value={tag.name}
+                          onClick={(e) =>
+                            handleTags(e, tagIndex, index, tag.tag_bg)
+                          }
+                          style={{
+                            backgroundColor: tag.tag_bg,
+                            borderColor: tag.tag_bg,
+                          }}
+                        >
+                          {tag.name}
+                        </button>
+                      ))}
+                    </Col>
+                  </Row>
                   <Button
                     className="removeFileBtn"
                     onClick={() => onFileRemove(file.name, previews[index])}
