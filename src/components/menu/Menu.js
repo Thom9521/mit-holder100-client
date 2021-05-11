@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import './Menu.css';
@@ -10,31 +10,40 @@ import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
 
 // Reactstrap components
-import {
-  Container,
-  List,
-  Row,
-  Col,
-} from 'reactstrap';
+import { Container, List, Row, Col } from 'reactstrap';
 
 const Menu = () => {
+  const history = useHistory();
+
+  const [chosenCompany, setChosenCompany] = useState('');
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     window.location = '/';
   };
+  const handleChosenCompany = (childData) => {
+    setChosenCompany(childData);
+    if (window.location.href.includes('/home')) {
+      history.push('/home', childData);
+      console.log(childData);
+    }
+  };
 
   return (
     <Container className="listContainer">
       <div className="headerContainer">
-        <Header />
+        {/* {userCompanies != '' && <Header userCompanies={userCompanies} />} */}
+        <Header chosenCompany={handleChosenCompany} />
       </div>
       <List className="listMenu" type="unstyled">
         {/* <div className="mainSection"> */}
-        <li className="listItem" >
-          <Link to={'/home'}>
+        <li className="listItem">
+          <Link to={{ pathname: '/home', state: chosenCompany }}>
+            {/* to={{ pathname: `task/${task.id}`, state: task }} */}
+
             <Row className="listRow">
               <Col className="listCol">
                 <FontAwesomeIcon
@@ -42,9 +51,7 @@ const Menu = () => {
                   icon={faClipboardList}
                 ></FontAwesomeIcon>
               </Col>
-              <Col className="listColText">
-                Opgaver
-              </Col>
+              <Col className="listColText">Opgaver</Col>
             </Row>
           </Link>
         </li>
@@ -57,9 +64,7 @@ const Menu = () => {
                   icon={faInfoCircle}
                 ></FontAwesomeIcon>
               </Col>
-              <Col className="listColText">
-                Information
-                </Col>
+              <Col className="listColText">Information</Col>
             </Row>
           </Link>
         </li>
@@ -73,9 +78,7 @@ const Menu = () => {
                   icon={faKey}
                 ></FontAwesomeIcon>
               </Col>
-              <Col className="listColText">
-                Skift adgangskode
-                </Col>
+              <Col className="listColText">Skift adgangskode</Col>
             </Row>
           </Link>
         </li>

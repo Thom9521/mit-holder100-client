@@ -199,6 +199,7 @@ const SpecificTask = () => {
             fileData.append('comment[]', selectedFiles[i].comment);
             var tagsString = '';
             for (let i = 0; i < selectedTags.length; i++) {
+              // eslint-disable-next-line
               tagsString += '"' + selectedTags[i].value + '"' + ' ';
             }
             fileData.append('tags[]', tagsString);
@@ -380,11 +381,11 @@ const SpecificTask = () => {
           Tak for dit svar. Din besvarelse er blevet indsendt til Holder 100.
         </ModalBody>
         <ModalFooter>
-          {/* <Link to={'/home'}> */}
-          <Button className="closeModal" onClick={toggleModalSuccess}>
-            Luk
-          </Button>{' '}
-          {/* </Link> */}
+          <Link to={'/home'}>
+            <Button className="closeModal" onClick={toggleModalSuccess}>
+              Luk
+            </Button>{' '}
+          </Link>
         </ModalFooter>
       </Modal>
     </div>

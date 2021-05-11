@@ -11,7 +11,8 @@
 .listItem a {
   color: black;
 }
-.listItem a:hover, a:active {
+.listItem a:hover,
+a:active {
   text-decoration: none;
   color: var(--holder100Orange);
 }
@@ -57,7 +58,7 @@
 .errorMessage {
   color: red;
 }
-.holder100Image{
+.holder100Image {
   margin-bottom: 4rem;
 }
 
@@ -71,52 +72,52 @@
     padding-right: 1rem;
     padding-left: 1rem;
   }
-  .contactSection{
+  .contactSection {
     display: none;
   }
-  .dropdownCol{
+  .dropdownCol {
     display: flex !important;
     justify-content: flex-end !important;
   }
-  .headerContainer{
+  .headerContainer {
     display: none !important;
   }
-  .listContainer{
+  .listContainer {
     background-color: white;
     height: 100%;
   }
-  .listMenu{
+  .listMenu {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
-  .listRow{
+  .listRow {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  .listCol{
+  .listCol {
     padding-left: 1rem !important;
     max-width: 100% !important;
   }
-  .fontAwesomeIconMenu{
+  .fontAwesomeIconMenu {
     margin-right: 0rem;
   }
-  .listColText{
+  .listColText {
     font-size: 0.9rem;
   }
-  .homeContainerContainer{
+  .homeContainerContainer {
     padding-top: 2rem;
   }
-  .holder100Image{
+  .holder100Image {
     margin-bottom: 2rem;
   }
   .homeContainer {
     border-radius: 0;
     background-repeat: repeat-x;
   }
-  .dropdownStyles{
-    position: fixed !important;
+  .dropdownStyles {
+    /* position: fixed !important; */
   }
 }

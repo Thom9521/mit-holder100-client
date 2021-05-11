@@ -23,7 +23,9 @@ const Home = () => {
         </Col>
         <Col>
           <Container className="homeContainer">
-            {(chosenMenuPage === 'Tasks' || chosenMenuPage === '') && <Tasks selectedMenuPage={handleMenuPage} />}
+            {(chosenMenuPage === 'Tasks' || chosenMenuPage === '') && (
+              <Tasks selectedMenuPage={handleMenuPage} />
+            )}
             {chosenMenuPage === 'ChangePassword' && <ChangePassword />}
             {chosenMenuPage === 'Information' && <Information />}
             {chosenMenuPage === 'Task' && <SpecificTask />}

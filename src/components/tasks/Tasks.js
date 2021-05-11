@@ -5,8 +5,11 @@ import Loader from 'react-loader-spinner';
 import globalConsts from '../../globalConsts';
 import Task from './Task';
 import './Tasks.css';
+import { useLocation } from 'react-router';
 
 const Tasks = (props) => {
+  const { state } = useLocation();
+  console.log(state);
   // const [clickUpClientId, setClickUpClientId] = useState('');
   // const [clickUpCompanies, setClickUpCompanies] = useState('');
   const [tasks, setTasks] = useState([]);
@@ -50,7 +53,6 @@ const Tasks = (props) => {
               console.log(error);
               setLoading(false);
               setNoTasks(true);
-
             });
         } else {
           setNoTasks(true);

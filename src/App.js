@@ -14,7 +14,7 @@ import Login from './components/login/Login';
 import Pincode from './components/pincode/Pincode';
 import Tasks from './components/tasks/Tasks';
 import Information from './components/information/Information';
-import Header from './components/menu/Header';
+// import Header from './components/menu/Header';
 import Menu from './components/menu/Menu';
 import SpecificTask from './components/specificTask/SpecificTask';
 import ChangePassword from './components/changePassword/ChangePassword';
@@ -57,15 +57,26 @@ function App() {
     <Route
       {...rest}
       render={(props) =>
-        validToken ? <Component {...props} /> : window.location.replace('/')
+        validToken ? (
+          <Component {...props} />
+        ) : (
+          window.location.replace('/login')
+        )
       }
     />
   );
 
   return (
     <Router>
+      {(!window.location.href.includes('/pincode') ||
+        !window.location.href.includes('/login')) && (
+        <Col className="firstCol" lg="3">
+          <Menu />
+        </Col>
+      )}
+
       <Switch>
-        <Route path="/" exact component={Login} />
+        <Route path="/login" exact component={Login} />
         <Route path="/pincode" exact component={Pincode} />
         {/* {doneFetching ? (
           <Auth path="/home" render={() => <Home />} />
@@ -76,92 +87,104 @@ function App() {
         )} */}
 
         {doneFetching ? (
-          <Auth path="/home" render={() =>
-            <Container className="contentWrapper menuResponsiveness">
-              <Row>
-                <Col className="firstCol" lg="3">
-                  <Menu />
-                </Col>
-                <Col className="secondCol">
-                  <div className="headerDiv">
-                    <Header />
-                  </div>
-                  <Container className="homeContainer">
-                    <Tasks />
-                  </Container>
-                </Col>
-              </Row>
-            </Container>
-          } />
+          <Auth
+            path="/home"
+            render={() => (
+              <Container className="contentWrapper menuResponsiveness">
+                <Row>
+                  {/* <Col className="firstCol" lg="3">
+                    <Menu />
+                  </Col> */}
+                  <Col className="secondCol">
+                    {/* <div className="headerDiv">
+                      <Header />
+                    </div> */}
+                    <Container className="homeContainer">
+                      <Tasks />
+                    </Container>
+                  </Col>
+                </Row>
+              </Container>
+            )}
+          />
         ) : (
           <Route>
             <Container>Loading...</Container>
           </Route>
         )}
         {doneFetching ? (
-          <Auth path="/information" render={() =>
-            <Container className="contentWrapper menuResponsiveness">
-              <Row>
-                <Col className="firstCol" lg="3">
-                  <Menu />
-                </Col>
-                <Col className="secondCol">
-                  <div className="headerDiv">
-                    <Header />
-                  </div>
-                  <Container className="homeContainer">
-                    <Information />
-                  </Container>
-                </Col>
-              </Row>
-            </Container>
-          } />
+          <Auth
+            path="/information"
+            render={() => (
+              <Container className="contentWrapper menuResponsiveness">
+                <Row>
+                  {/* <Col className="firstCol" lg="3">
+                    <Menu />
+                  </Col> */}
+                  <Col className="secondCol">
+                    {/* <div className="headerDiv">
+                      <Header />
+                    </div> */}
+                    <Container className="homeContainer">
+                      <Information />
+                    </Container>
+                  </Col>
+                </Row>
+              </Container>
+            )}
+          />
         ) : (
           <Route>
             <Container>Loading...</Container>
           </Route>
         )}
         {doneFetching ? (
-          <Auth path="/change-password" render={() =>
-            <Container className="contentWrapper menuResponsiveness">
-              <Row>
-                <Col className="firstCol" lg="3">
-                  <Menu />
-                </Col>
-                <Col className="secondCol">
-                  <div className="headerDiv">
-                    <Header />
-                  </div>
-                  <Container className="homeContainer">
-                    <ChangePassword />
-                  </Container>
-                </Col>
-              </Row>
-            </Container>
-          } />
+          <Auth
+            path="/change-password"
+            render={() => (
+              <Container className="contentWrapper menuResponsiveness">
+                <Row>
+                  {/* <Col className="firstCol" lg="3">
+                    <Menu />
+                  </Col> */}
+                  <Col className="secondCol">
+                    {/* <div className="headerDiv">
+                      <Header />
+                    </div> */}
+                    <Container className="homeContainer">
+                      <ChangePassword />
+                    </Container>
+                  </Col>
+                </Row>
+              </Container>
+            )}
+          />
         ) : (
           <Route>
             <Container>Loading...</Container>
           </Route>
         )}
         {doneFetching ? (
-          <Auth path="/task/:id" render={() =>
-            <Container className="contentWrapper menuResponsiveness">
-              <Row>
-                <Col className="firstCol" lg="3">
-                  <Menu />
-                </Col>
-                <Col className="secondCol">
-                  <div className="headerDiv">
-                    <Header />
-                  </div>
-                  <Container className="homeContainer">
-                    <SpecificTask />
-                  </Container>
-                </Col>
-              </Row>
-            </Container>
-          } />
+          <Auth
+            path="/task/:id"
+            render={() => (
+              <Container className="contentWrapper menuResponsiveness">
+                <Row>
+                  {/* <Col className="firstCol" lg="3">
+                    <Menu />
+                  </Col> */}
+                  <Col className="secondCol">
+                    {/* <div className="headerDiv">
+                      <Header />
+                    </div> */}
+                    <Container className="homeContainer">
+                      <SpecificTask />
+                    </Container>
+                  </Col>
+                </Row>
+              </Container>
+            )}
+          />
         ) : (
           <Route>
             <Container>Loading...</Container>

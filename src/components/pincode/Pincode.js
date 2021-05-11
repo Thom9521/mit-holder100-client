@@ -26,13 +26,12 @@ const Pincode = () => {
   const [loading, setLoading] = useState(false);
 
   const toggleModalSuccess = () => {
-    setModalSuccess(!modalSuccess)
+    setModalSuccess(!modalSuccess);
     if (modalSuccess) {
-      window.location = '/';
+      window.location = '/login';
     }
-  }
+  };
   const toggleModalError = () => setModalError(!modalError);
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -91,7 +90,7 @@ const Pincode = () => {
           </FormGroup>
         </Form>
         <p className="mt-5">
-          <Link className="linkStyles" to={'/'}>
+          <Link className="linkStyles" to={'/login'}>
             Tilbage
           </Link>
         </p>
