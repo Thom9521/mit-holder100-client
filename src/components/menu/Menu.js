@@ -26,22 +26,23 @@ const Menu = () => {
   };
   const handleChosenCompany = (childData) => {
     setChosenCompany(childData);
-    if (window.location.href.includes('/home')) {
-      history.push('/home', childData);
+    if (window.location.href.includes('/tasks')) {
+      history.push('/tasks', childData);
       console.log(childData);
     }
   };
 
   return (
-    <Container className="listContainer">
+    <div className="listContainer">
       <div className="headerContainer">
         {/* {userCompanies != '' && <Header userCompanies={userCompanies} />} */}
         <Header chosenCompany={handleChosenCompany} />
       </div>
-      <List className="listMenu" type="unstyled">
+
+      <List className="listMenu container" type="unstyled">
         {/* <div className="mainSection"> */}
         <li className="listItem">
-          <Link to={{ pathname: '/home', state: chosenCompany }}>
+          <Link to={{ pathname: '/tasks', state: chosenCompany }}>
             {/* to={{ pathname: `task/${task.id}`, state: task }} */}
 
             <Row className="listRow">
@@ -126,7 +127,7 @@ const Menu = () => {
           </li>
         </div>
       </List>
-    </Container>
+    </div>
   );
 };
 export default Menu;

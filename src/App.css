@@ -1,11 +1,11 @@
 @import url('./assets/css/globalStyles.css');
 
-.headerDiv{
-    display: none;
+.headerDiv {
+  display: none;
 }
 
 @media only screen and (max-width: 991px) {
-.menuResponsiveness{
+  .menuResponsiveness {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -21,9 +21,9 @@
     -ms-flex-align: start;
     -webkit-align-items: flex-start;
     align-items: flex-start;
-}
+  }
 
-.menuResponsiveness .firstCol {
+  .menuResponsiveness .firstCol {
     -webkit-box-ordinal-group: 2;
     -moz-box-ordinal-group: 2;
     -ms-flex-order: 2;
@@ -41,16 +41,15 @@
     -ms-flex-order: 1;
     -webkit-order: 1;
     order: 1;
-
   }
-  .headerDiv{
-      display: block;
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      background-color: white;
-      z-index: 1;
-      padding-top: 1rem;
-      box-shadow: 0 6px 6px -6px black;
+  .headerDiv {
+    display: block;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+    padding-top: 1rem;
+    box-shadow: 0 6px 6px -6px black;
   }
 }

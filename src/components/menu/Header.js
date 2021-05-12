@@ -6,6 +6,7 @@ import globalConsts from '../../globalConsts';
 
 // Reactstrap components
 import {
+  Container,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -54,10 +55,10 @@ const Header = (props) => {
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
   return (
-    <React.Fragment>
+    <Container className="headerContainerContainer">
       <Row>
         <Col className="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-xs-6 col-6">
-          <Link to={'/home'}>
+          <Link to={'/tasks'}>
             <img
               className="holder100Image"
               src={logoBlack}
@@ -92,7 +93,7 @@ const Header = (props) => {
           </Dropdown>
         </Col>
       </Row>
-    </React.Fragment>
+    </Container>
   );
 };
 export default Header;

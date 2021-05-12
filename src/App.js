@@ -15,6 +15,7 @@ import Pincode from './components/pincode/Pincode';
 import Tasks from './components/tasks/Tasks';
 import Information from './components/information/Information';
 // import Header from './components/menu/Header';
+import Home from './components/home/Home';
 import Menu from './components/menu/Menu';
 import SpecificTask from './components/specificTask/SpecificTask';
 import ChangePassword from './components/changePassword/ChangePassword';
@@ -68,16 +69,24 @@ function App() {
 
   return (
     <Router>
-      {(!window.location.href.includes('/pincode') ||
-        !window.location.href.includes('/login')) && (
-        <Col className="firstCol" lg="3">
-          <Menu />
-        </Col>
-      )}
+      {!window.location.href.includes('/pincode') &&
+        !window.location.href.includes('/login') &&
+        window.location.href !== 'http://localhost:3000/' &&
+        window.location.href !== 'https://mit.holder100.dk/' &&
+        localStorage.getItem('token') && (
+          <Col className="firstCol" lg="3">
+            <Menu />
+          </Col>
+        )}
 
       <Switch>
         <Route path="/login" exact component={Login} />
         <Route path="/pincode" exact component={Pincode} />
+        <Route
+          exact
+          path="/"
+          render={() => window.location.replace('/login')}
+        />
         {/* {doneFetching ? (
           <Auth path="/home" render={() => <Home />} />
         ) : (
@@ -88,23 +97,16 @@ function App() {
 
         {doneFetching ? (
           <Auth
-            path="/home"
+            path="/tasks"
             render={() => (
-              <Container className="contentWrapper menuResponsiveness">
-                <Row>
-                  {/* <Col className="firstCol" lg="3">
-                    <Menu />
-                  </Col> */}
-                  <Col className="secondCol">
-                    {/* <div className="headerDiv">
+              <Col className="secondCol">
+                {/* <div className="headerDiv">
                       <Header />
                     </div> */}
-                    <Container className="homeContainer">
-                      <Tasks />
-                    </Container>
-                  </Col>
-                </Row>
-              </Container>
+                <Container className="homeContainer">
+                  <Tasks />
+                </Container>
+              </Col>
             )}
           />
         ) : (
@@ -116,21 +118,14 @@ function App() {
           <Auth
             path="/information"
             render={() => (
-              <Container className="contentWrapper menuResponsiveness">
-                <Row>
-                  {/* <Col className="firstCol" lg="3">
-                    <Menu />
-                  </Col> */}
-                  <Col className="secondCol">
-                    {/* <div className="headerDiv">
+              <Col className="secondCol">
+                {/* <div className="headerDiv">
                       <Header />
                     </div> */}
-                    <Container className="homeContainer">
-                      <Information />
-                    </Container>
-                  </Col>
-                </Row>
-              </Container>
+                <Container className="homeContainer">
+                  <Information />
+                </Container>
+              </Col>
             )}
           />
         ) : (
@@ -142,21 +137,14 @@ function App() {
           <Auth
             path="/change-password"
             render={() => (
-              <Container className="contentWrapper menuResponsiveness">
-                <Row>
-                  {/* <Col className="firstCol" lg="3">
-                    <Menu />
-                  </Col> */}
-                  <Col className="secondCol">
-                    {/* <div className="headerDiv">
+              <Col className="secondCol">
+                {/* <div className="headerDiv">
                       <Header />
                     </div> */}
-                    <Container className="homeContainer">
-                      <ChangePassword />
-                    </Container>
-                  </Col>
-                </Row>
-              </Container>
+                <Container className="homeContainer">
+                  <ChangePassword />
+                </Container>
+              </Col>
             )}
           />
         ) : (
@@ -168,21 +156,14 @@ function App() {
           <Auth
             path="/task/:id"
             render={() => (
-              <Container className="contentWrapper menuResponsiveness">
-                <Row>
-                  {/* <Col className="firstCol" lg="3">
-                    <Menu />
-                  </Col> */}
-                  <Col className="secondCol">
-                    {/* <div className="headerDiv">
+              <Col className="secondCol">
+                {/* <div className="headerDiv">
                       <Header />
                     </div> */}
-                    <Container className="homeContainer">
-                      <SpecificTask />
-                    </Container>
-                  </Col>
-                </Row>
-              </Container>
+                <Container className="homeContainer">
+                  <SpecificTask />
+                </Container>
+              </Col>
             )}
           />
         ) : (

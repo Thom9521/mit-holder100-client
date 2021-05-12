@@ -67,7 +67,7 @@ const Tasks = (props) => {
   }, []);
   if (loading) {
     return (
-      <div className="contentCenter centerHorizontal homeContainer">
+      <div className="contentCenter centerHorizontal spinnerStyles">
         <Loader type="TailSpin" color="#ff9414" height={80} width={80} />
       </div>
     );

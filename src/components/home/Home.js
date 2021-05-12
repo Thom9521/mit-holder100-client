@@ -9,6 +9,8 @@ import ChangePassword from '../changePassword/ChangePassword';
 import { Container, Row, Col } from 'reactstrap';
 
 const Home = () => {
+  // window.location.replace('/login');
+
   const [chosenMenuPage, setChosenMenuPage] = useState('');
 
   const handleMenuPage = (childData) => {

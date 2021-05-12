@@ -5,5 +5,14 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { Container, Row } from 'reactstrap';
+
+ReactDOM.render(
+  <Container className="contentWrapper">
+    <Row>
+      <App />
+    </Row>
+  </Container>,
+  document.getElementById('root')
+);
 serviceWorkerRegistration.register();

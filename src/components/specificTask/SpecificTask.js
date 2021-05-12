@@ -36,7 +36,7 @@ const SpecificTask = () => {
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
     // if (modalSuccess) {
-    //   window.location = '/home';
+    //   window.location = '/tasks';
     // }
   };
 
@@ -381,7 +381,7 @@ const SpecificTask = () => {
           Tak for dit svar. Din besvarelse er blevet indsendt til Holder 100.
         </ModalBody>
         <ModalFooter>
-          <Link to={'/home'}>
+          <Link to={'/tasks'}>
             <Button className="closeModal" onClick={toggleModalSuccess}>
               Luk
             </Button>{' '}
