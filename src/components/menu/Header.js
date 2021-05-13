@@ -18,7 +18,10 @@ import {
 const Header = (props) => {
   const [userCompanies, setUserCompanies] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [chosenCompany, setChosenCompany] = useState('');
+  const [chosenCompany, setChosenCompany] = useState({
+    id: '0',
+    name: 'Alle firmaer',
+  });
 
   // eslint-disable-next-line
   if (userCompanies == '') {
@@ -33,13 +36,14 @@ const Header = (props) => {
       data: userData,
     })
       .then((response) => {
-        console.log(response);
         const companyArray = response.data.companies;
 
         setUserCompanies(companyArray);
-        console.log(companyArray);
-        setChosenCompany(companyArray[0]);
-        props.chosenCompany(companyArray[0]);
+        // setChosenCompany(companyArray[0]);
+        props.chosenCompany({
+          id: '0',
+          name: 'Alle firmaer',
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -49,7 +53,7 @@ const Header = (props) => {
   const handleChosenCompany = (e) => {
     e.preventDefault();
     setChosenCompany({ id: e.target.value, name: e.target.name });
-    props.chosenCompany(e.target.value);
+    props.chosenCompany({ id: e.target.value, name: e.target.name });
   };
 
   const toggle = () => setDropdownOpen(!dropdownOpen);
@@ -75,8 +79,15 @@ const Header = (props) => {
             <DropdownToggle caret>
               {userCompanies !== '' && chosenCompany.name}
             </DropdownToggle>
-            {console.log(userCompanies)}
             <DropdownMenu>
+              <DropdownItem
+                className="mb-3"
+                name="Alle firmaer"
+                value="0"
+                onClick={(e) => handleChosenCompany(e)}
+              >
+                Alle firmaer
+              </DropdownItem>
               {userCompanies !== '' &&
                 userCompanies.map((company, index) => (
                   <DropdownItem

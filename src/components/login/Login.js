@@ -77,7 +77,7 @@ const Login = () => {
   };
 
   return (
-    <div className="contentWrapper orangeBackground contentCenter">
+    <div className="contentWrapper orangeBackgroundContent contentCenter">
       <Container>
         <img className="logoStyles" src={logo} alt="Holder 100 Logo" />
         <h2 className="headerStyles mb-4">Login på din konto</h2>

@@ -9,7 +9,7 @@
   color: #707070;
 }
 .listItem a {
-  color: black;
+  color: #707070;
 }
 .listItem a:hover,
 a:active {
@@ -68,7 +68,25 @@ a:active {
 .dropdownStyles * {
   white-space: normal !important;
 }
-
+.dropdownStyles button,
+.show {
+  background-color: white !important;
+  color: #707070 !important;
+  border-color: var(--holder100Orange) !important;
+}
+.dropdownStyles button:hover,
+button:active * {
+  background-color: var(--holder100Orange) !important;
+  border-color: var(--holder100Orange) !important;
+  color: white !important;
+}
+.dropdownStyles button:focus {
+  box-shadow: 0 0 0 0.2rem white !important;
+}
+.dropdown-item {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
 @media only screen and (max-width: 991px) {
   .headerContainer {
     /* display: none !important; */

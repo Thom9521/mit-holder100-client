@@ -28,7 +28,6 @@ const Menu = () => {
     setChosenCompany(childData);
     if (window.location.href.includes('/tasks')) {
       history.push('/tasks', childData);
-      console.log(childData);
     }
   };
 

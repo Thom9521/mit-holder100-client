@@ -14,6 +14,11 @@
   background-color: var(--holder100Orange);
   width: 100vw;
   height: 100vh;
+}
+.orangeBackgroundContent {
+  color: white;
+  width: 100%;
+  height: 100%;
   color: white;
 }
 .inputStyles {
@@ -26,7 +31,7 @@
 }
 
 @media only screen and (max-width: 991px) {
-  .contentWrapper{
+  .contentWrapper {
     padding-top: 0rem;
   }
 }

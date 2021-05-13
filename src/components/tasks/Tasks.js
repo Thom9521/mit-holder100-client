@@ -9,16 +9,9 @@ import { useLocation } from 'react-router';
 
 const Tasks = (props) => {
   const { state } = useLocation();
-  console.log(state);
-  // const [clickUpClientId, setClickUpClientId] = useState('');
-  // const [clickUpCompanies, setClickUpCompanies] = useState('');
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [noTasks, setNoTasks] = useState(false);
-
-  // const handleTasksMenu = () => {
-  //   props.selectedMenuPage('Task');
-  // };
 
   useEffect(() => {
     setLoading(true);
@@ -65,6 +58,19 @@ const Tasks = (props) => {
         setNoTasks(true);
       });
   }, []);
+
+  const showTasksForChosenCompany = (companyId, task) => {
+    var taskCompanyId = '';
+    if (task.custom_fields[0].value[0]) {
+      taskCompanyId = task.custom_fields[0].value[0].id;
+      if (companyId == taskCompanyId || companyId === '0') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div className="contentCenter centerHorizontal spinnerStyles">
@@ -78,15 +84,18 @@ const Tasks = (props) => {
         {noTasks ? (
           <p>Du har ingen tilgængelige opgaver.</p>
         ) : (
-          tasks.map((task) => (
-            <Link
-              key={task.id}
-              to={{ pathname: `task/${task.id}`, state: task }}
-              className="taskLink"
-            >
-              <Task key={task.id} task={task} />
-            </Link>
-          ))
+          tasks.map(
+            (task) =>
+              showTasksForChosenCompany(state.id, task) && (
+                <Link
+                  key={task.id}
+                  to={{ pathname: `task/${task.id}`, state: task }}
+                  className="taskLink"
+                >
+                  <Task key={task.id} task={task} />
+                </Link>
+              )
+          )
         )}
       </div>
     );
