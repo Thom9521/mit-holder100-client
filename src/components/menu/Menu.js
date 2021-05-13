@@ -22,6 +22,8 @@ const Menu = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('ID');
+    localStorage.removeItem('username');
     window.location = '/';
   };
   const handleChosenCompany = (childData) => {

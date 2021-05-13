@@ -39,8 +39,9 @@ const Header = (props) => {
     })
       .then((response) => {
         const companyArray = response.data.companies;
-
-        setUserCompanies(companyArray);
+        if (companyArray !== undefined) {
+          setUserCompanies(companyArray);
+        }
         // setChosenCompany(companyArray[0]);
         props.chosenCompany({
           id: '0',
@@ -87,7 +88,7 @@ const Header = (props) => {
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem
-                className="mb-3"
+                className="mb-2 mt-1"
                 name="Alle opgaver"
                 value="0"
                 onClick={(e) => handleChosenCompany(e)}
@@ -98,7 +99,7 @@ const Header = (props) => {
                 userCompanies.map((company, index) => (
                   <DropdownItem
                     key={index}
-                    className="mb-3"
+                    className="mb-2 mt-1"
                     name={company.name}
                     value={company.id}
                     onClick={(e) => handleChosenCompany(e)}
