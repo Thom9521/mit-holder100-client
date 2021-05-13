@@ -31,7 +31,6 @@ const SpecificTask = () => {
   // var selectedTags = [];
 
   const { state } = useLocation();
-  // console.log(state.tags);
 
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
@@ -41,8 +40,8 @@ const SpecificTask = () => {
   };
 
   var deadlineColor = '';
-  if (state.due_date !== null) {
-    var deadline = new Date(parseInt(state.due_date));
+  if (state.task.due_date !== null) {
+    var deadline = new Date(parseInt(state.task.due_date));
     var deadlineFormat = deadline.toISOString().slice(0, 10).toString();
     if (deadline <= new Date()) {
       deadlineColor = 'red';
@@ -175,12 +174,12 @@ const SpecificTask = () => {
     };
 
     const commentData = new FormData();
-    commentData.append('taskId', state.id);
+    commentData.append('taskId', state.task.id);
     commentData.append('comment_text', taskText);
-    commentData.append('status', state.status.status);
+    commentData.append('status', state.task.status.status);
 
-    if (state.assignees.length > 0) {
-      commentData.append('assignee', state.assignees[0].id);
+    if (state.task.assignees.length > 0) {
+      commentData.append('assignee', state.task.assignees[0].id);
     }
     axios({
       method: 'POST',
@@ -193,7 +192,7 @@ const SpecificTask = () => {
         setTaskTest('');
         if (selectedFiles.length > 0) {
           const fileData = new FormData();
-          fileData.append('taskId', state.id);
+          fileData.append('taskId', state.task.id);
           for (let i = 0; i < selectedFiles.length; i++) {
             fileData.append('file[]', selectedFiles[i], selectedFiles[i].name);
             fileData.append('comment[]', selectedFiles[i].comment);
@@ -204,8 +203,8 @@ const SpecificTask = () => {
             }
             fileData.append('tags[]', tagsString);
           }
-          if (state.assignees.length > 0) {
-            fileData.append('assignee', state.assignees[0].id);
+          if (state.task.assignees.length > 0) {
+            fileData.append('assignee', state.task.assignees[0].id);
           }
           axios({
             method: 'POST',
@@ -245,13 +244,13 @@ const SpecificTask = () => {
           <div className="taskWrapper listHeader">
             {/* <h4 className=" mb-3">Opgaven</h4> */}
             <div className="taskContent">
-              <h5>{state.name}</h5>
+              <h5>{state.task.name}</h5>
               <p className="taskDeadline" style={{ color: deadlineColor }}>
-                {state.due_date !== null
+                {state.task.due_date !== null
                   ? 'Deadline: ' + deadlineFormat
                   : 'Ingen deadline'}
               </p>
-              <p className="taskDescription">{state.description}</p>
+              <p className="taskDescription">{state.task.description}</p>
             </div>
             {/* <h4 className="mb-3 mt-4">Din løsning</h4> */}
             <div className="taskContent mt-3">
@@ -316,7 +315,7 @@ const SpecificTask = () => {
                       <p>{selectedFiles[index] && selectedFiles[index].name}</p>
                     </Col>
                     <Col>
-                      {state.tags.map((tag, tagIndex) => (
+                      {state.task.tags.map((tag, tagIndex) => (
                         <button
                           type="button"
                           key={tagIndex}
@@ -375,13 +374,17 @@ const SpecificTask = () => {
           </div>
         </FormGroup>
       </Form>
-      <Modal isOpen={modalSuccess} toggle={toggleModalSuccess}>
+      <Modal
+        isOpen={modalSuccess}
+        toggle={toggleModalSuccess}
+        className="modalStyles"
+      >
         <ModalHeader toggle={toggleModalSuccess}>Succes!</ModalHeader>
         <ModalBody>
           Tak for dit svar. Din besvarelse er blevet indsendt til Holder 100.
         </ModalBody>
         <ModalFooter>
-          <Link to={'/tasks'}>
+          <Link to={{ pathname: '/tasks', state: state.companyState }}>
             <Button className="closeModal" onClick={toggleModalSuccess}>
               Luk
             </Button>{' '}

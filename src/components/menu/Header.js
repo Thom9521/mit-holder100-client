@@ -22,7 +22,7 @@ const Header = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
-    name: 'Alle firmaer',
+    name: 'Alle opgaver',
   });
 
   // eslint-disable-next-line
@@ -88,11 +88,11 @@ const Header = (props) => {
             <DropdownMenu>
               <DropdownItem
                 className="mb-3"
-                name="Alle firmaer"
+                name="Alle opgaver"
                 value="0"
                 onClick={(e) => handleChosenCompany(e)}
               >
-                Alle firmaer
+                Alle opgaver
               </DropdownItem>
               {userCompanies !== '' &&
                 userCompanies.map((company, index) => (

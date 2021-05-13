@@ -59,15 +59,26 @@ const Tasks = (props) => {
       });
   }, []);
 
-  const showTasksForChosenCompany = (companyId, task) => {
+  // handles the showing of tasks depending of the dropdown value
+  const showTasksForChosenCompany = (state, task) => {
     var taskCompanyId = '';
-    if (task.custom_fields[0].value[0]) {
+    var companyId = '';
+
+    // if the task has a "kunde" value and the state is set
+    if (task.custom_fields[0].value[0] && state) {
+      companyId = state.id;
       taskCompanyId = task.custom_fields[0].value[0].id;
-      if (companyId == taskCompanyId || companyId === '0') {
+
+      // if the companyId on the dropdown is equal to the task "kunde" field or the dropdown value is set to 0
+      if (companyId === taskCompanyId || companyId === '0') {
         return true;
       } else {
         return false;
       }
+    }
+    // if the task doesnt have a "kunde" and the dropdown value is set to all
+    else if (task.custom_fields[0].value[0] === undefined && state.id === '0') {
+      return true;
     }
   };
 
@@ -86,10 +97,13 @@ const Tasks = (props) => {
         ) : (
           tasks.map(
             (task) =>
-              showTasksForChosenCompany(state.id, task) && (
+              showTasksForChosenCompany(state, task) && (
                 <Link
                   key={task.id}
-                  to={{ pathname: `task/${task.id}`, state: task }}
+                  to={{
+                    pathname: `task/${task.id}`,
+                    state: { task: task, companyState: state },
+                  }}
                   className="taskLink"
                 >
                   <Task key={task.id} task={task} />

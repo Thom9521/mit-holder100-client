@@ -7,7 +7,7 @@ import globalConsts from './globalConsts';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Reactstrap components
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Col } from 'reactstrap';
 
 // Local components
 import Login from './components/login/Login';
@@ -15,7 +15,7 @@ import Pincode from './components/pincode/Pincode';
 import Tasks from './components/tasks/Tasks';
 import Information from './components/information/Information';
 // import Header from './components/menu/Header';
-import Home from './components/home/Home';
+// import Home from './components/home/Home';
 import Menu from './components/menu/Menu';
 import SpecificTask from './components/specificTask/SpecificTask';
 import ChangePassword from './components/changePassword/ChangePassword';

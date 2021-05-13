@@ -13,7 +13,7 @@ import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 
 // Reactstrap components
-import { Container, List, Row, Col } from 'reactstrap';
+import { List, Row, Col } from 'reactstrap';
 
 const Menu = () => {
   const history = useHistory();
