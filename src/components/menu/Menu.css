@@ -21,6 +21,11 @@ a:active {
   color: var(--holder100Orange);
   margin-right: 1rem;
 }
+.fontAwesomeIconHeader {
+  color: var(--holder100Orange);
+  /* margin-left: 1rem;
+  margin-right: 1rem; */
+}
 .listCol {
   max-width: 3rem !important;
   padding-left: 2.4rem !important;
@@ -75,10 +80,18 @@ a:active {
   border-color: var(--holder100Orange) !important;
 }
 .dropdownStyles button:hover,
-button:active * {
+button:active {
   background-color: var(--holder100Orange) !important;
   border-color: var(--holder100Orange) !important;
   color: white !important;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.dropdownStyles button:hover *,
+button:active * {
+  color: white !important;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .dropdownStyles button:focus {
   box-shadow: 0 0 0 0.2rem white !important;

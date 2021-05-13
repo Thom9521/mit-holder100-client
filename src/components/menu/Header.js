@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import logoBlack from '../../assets/images/logoBlack.svg';
 import globalConsts from '../../globalConsts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 // Reactstrap components
 import {
@@ -76,8 +78,12 @@ const Header = (props) => {
             toggle={toggle}
             className="dropdownStyles"
           >
-            <DropdownToggle caret>
-              {userCompanies !== '' && chosenCompany.name}
+            <DropdownToggle>
+              {userCompanies !== '' && chosenCompany.name}{' '}
+              <FontAwesomeIcon
+                className="fontAwesomeIconHeader"
+                icon={faCaretDown}
+              ></FontAwesomeIcon>
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem
