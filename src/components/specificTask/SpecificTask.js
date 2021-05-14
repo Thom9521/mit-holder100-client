@@ -56,6 +56,7 @@ const SpecificTask = () => {
   }
 
   useEffect(() => {
+    console.log(selectedTags);
     if (!selectedFile) {
       return;
     }
@@ -63,6 +64,8 @@ const SpecificTask = () => {
     setPreviews((prevState) => {
       return [...prevState, objectUrl];
     });
+    console.log(previews);
+    setSelectedFile(null);
   }, [selectedFile, selectedTags]);
 
   const onSelectFile = (e) => {
@@ -122,31 +125,7 @@ const SpecificTask = () => {
           setSelectedTags((prevState) => {
             return prevState.filter((tag) => tag.id !== tagObject.id);
           });
-          // localTagsArray = localTagsArray.filter(
-          //   (tag) => tag.id !== tagObject.id
-          // );
         }
-        // if (selectedTags[i].fileIndex === tagObject.fileIndex) {
-        //   console.log(tagObject.fileIndex);
-        //   let files = [...selectedFiles];
-        //   let file = files[fileIndex];
-        //   var tagsArray;
-        //   if (file.tags !== undefined) {
-        //     tagsArray = file.tags;
-        //   } else {
-        //     tagsArray = [];
-        //   }
-        //   if (!tagsArray.some((tag) => tag.value === tagObject.value)) {
-        //     tagsArray.push(tagObject);
-        //     console.log('test1');
-        //   } else {
-        //     console.log('test2');
-        //     return tagsArray.filter((tag) => tag.id !== tagObject.id);
-        //   }
-        //   file.tags = tagsArray;
-        //   files[fileIndex] = file;
-        //   setSelectedFiles(files);
-        // }
       }
     }
     if (!inArray) {
@@ -155,10 +134,6 @@ const SpecificTask = () => {
         return [...prevState, tagObject];
       });
     }
-    // if (!localTagsArray.some((tag) => tag.value === tagObject.value)) {
-    //   localTagsArray.push(tagObject);
-    // }
-    // console.log(localTagsArray);
   };
 
   const handleSubmit = (event) => {
@@ -184,6 +159,7 @@ const SpecificTask = () => {
     commentData.append('taskId', state.task.id);
     commentData.append('comment_text', taskText);
     commentData.append('status', state.task.status.status);
+    commentData.append('name', localStorage.getItem('name'));
 
     if (state.task.assignees.length > 0) {
       commentData.append('assignee', state.task.assignees[0].id);
@@ -203,13 +179,16 @@ const SpecificTask = () => {
           for (let i = 0; i < selectedFiles.length; i++) {
             fileData.append('file[]', selectedFiles[i], selectedFiles[i].name);
             fileData.append('comment[]', selectedFiles[i].comment);
+            fileData.append('name[]', localStorage.getItem('name'));
             var tagsString = '';
             for (let i = 0; i < selectedTags.length; i++) {
               // eslint-disable-next-line
               tagsString += '"' + selectedTags[i].value + '"' + ' ';
+              console.log(selectedTags[i].value);
             }
             fileData.append('tags[]', tagsString);
           }
+
           if (state.task.assignees.length > 0) {
             fileData.append('assignee', state.task.assignees[0].id);
           }

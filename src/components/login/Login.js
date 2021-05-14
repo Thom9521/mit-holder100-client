@@ -55,9 +55,11 @@ const Login = () => {
             data: formDataLogin,
           })
             .then((response) => {
+              console.log(response);
               localStorage.setItem('token', response.data.token);
               localStorage.setItem('ID', response.data.user_id);
               localStorage.setItem('username', response.data.user_nicename);
+              localStorage.setItem('name', response.data.user_display_name);
               window.location = '/tasks';
             })
             .catch((error) => {
