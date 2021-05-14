@@ -4,13 +4,18 @@ import logo from '../../assets/images/logo.svg';
 import { Container, Button } from 'reactstrap';
 
 const NotFound = () => {
+  const handleBackButton = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('ID');
+    localStorage.removeItem('username');
+  };
   return (
-    <div className="contentWrapper orangeBackground contentCenter">
+    <div className="contentWrapper orangeBackgroundContent contentCenter">
       <Container>
         <img className="logoStyles" src={logo} alt="Holder 100 Logo" />
         <h1 className="mt-5">Siden findes desværre ikke</h1>
         <Link to="/login">
-          <Button>Find tilbage</Button>
+          <Button onClick={handleBackButton}>Find tilbage</Button>
         </Link>
       </Container>
     </div>

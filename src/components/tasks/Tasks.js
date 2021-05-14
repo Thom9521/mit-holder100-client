@@ -7,7 +7,7 @@ import Task from './Task';
 import './Tasks.css';
 import { useLocation } from 'react-router';
 
-const Tasks = (props) => {
+const Tasks = () => {
   const { state } = useLocation();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);

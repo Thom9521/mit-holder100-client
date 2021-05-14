@@ -34,17 +34,18 @@ const SpecificTask = () => {
 
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
-    // if (modalSuccess) {
-    //   window.location = '/tasks';
-    // }
   };
 
-  var deadlineColor = '';
-  if (state.task.due_date !== null) {
-    var deadline = new Date(parseInt(state.task.due_date));
-    var deadlineFormat = deadline.toISOString().slice(0, 10).toString();
-    if (deadline <= new Date()) {
-      deadlineColor = 'red';
+  if (state === undefined) {
+    window.location = '/NotFound';
+  } else {
+    var deadlineColor = '';
+    if (state.task.due_date !== null) {
+      var deadline = new Date(parseInt(state.task.due_date));
+      var deadlineFormat = deadline.toISOString().slice(0, 10).toString();
+      if (deadline <= new Date()) {
+        deadlineColor = 'red';
+      }
     }
   }
 

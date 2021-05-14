@@ -4,7 +4,7 @@ import './App.css';
 import globalConsts from './globalConsts';
 
 // Routing components
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
 // Reactstrap components
 import { Container, Col } from 'reactstrap';
@@ -24,6 +24,7 @@ import NotFound from './components/notFound/NotFound';
 function App() {
   const [validToken, setValidToken] = useState(false);
   const [doneFetching, setDoneFetching] = useState(false);
+  const locationDom = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -66,19 +67,28 @@ function App() {
       }
     />
   );
+  const handleMenu = () => {
+    if (
+      // New paths needs to be added here
+      (locationDom.pathname.includes('/task/') ||
+        locationDom.pathname === '/tasks' ||
+        locationDom.pathname === '/change-password' ||
+        locationDom.pathname === '/information') &&
+      localStorage.token
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
-    <Router>
-      {!window.location.href.includes('/pincode') &&
-        !window.location.href.includes('/login') &&
-        window.location.href !== 'http://localhost:3000/' &&
-        window.location.href !== 'https://mit.holder100.dk/' &&
-        localStorage.getItem('token') && (
-          <Col className="firstCol" lg="3">
-            <Menu />
-          </Col>
-        )}
-
+    <React.Fragment>
+      {handleMenu() && (
+        <Col className="firstCol" lg="3">
+          <Menu />
+        </Col>
+      )}
       <Switch>
         <Route path="/login" exact component={Login} />
         <Route path="/pincode" exact component={Pincode} />
@@ -87,101 +97,68 @@ function App() {
           path="/"
           render={() => window.location.replace('/login')}
         />
-        {/* {doneFetching ? (
-          <Auth path="/home" render={() => <Home />} />
-        ) : (
-          <Route>
-            <Container>Loading...</Container>
-          </Route>
-        )} */}
-
-        {doneFetching ? (
+        {doneFetching && (
           <Auth
+            exact
             path="/tasks"
             render={() => (
               <Col className="secondCol">
-                {/* <div className="headerDiv">
-                      <Header />
-                    </div> */}
                 <Container className="homeContainer">
                   <Tasks />
                 </Container>
               </Col>
             )}
           />
-        ) : (
-          <Route>
-            <Container>Loading...</Container>
-          </Route>
         )}
-        {doneFetching ? (
+
+        {doneFetching && (
           <Auth
+            exact
             path="/information"
             render={() => (
               <Col className="secondCol">
-                {/* <div className="headerDiv">
-                      <Header />
-                    </div> */}
                 <Container className="homeContainer">
                   <Information />
                 </Container>
               </Col>
             )}
           />
-        ) : (
-          <Route>
-            <Container>Loading...</Container>
-          </Route>
         )}
-        {doneFetching ? (
+        {doneFetching && (
           <Auth
+            exact
             path="/change-password"
             render={() => (
               <Col className="secondCol">
-                {/* <div className="headerDiv">
-                      <Header />
-                    </div> */}
                 <Container className="homeContainer">
                   <ChangePassword />
                 </Container>
               </Col>
             )}
           />
-        ) : (
-          <Route>
-            <Container>Loading...</Container>
-          </Route>
         )}
-        {doneFetching ? (
+        {doneFetching && (
           <Auth
+            exact
             path="/task/:id"
             render={() => (
               <Col className="secondCol">
-                {/* <div className="headerDiv">
-                      <Header />
-                    </div> */}
                 <Container className="homeContainer">
                   <SpecificTask />
                 </Container>
               </Col>
             )}
           />
-        ) : (
-          <Route>
-            <Container>Loading...</Container>
-          </Route>
         )}
-        {!window.location.href.includes(`${globalConsts[0]}/wordpress`) ? (
-          // window.location.href !== `${globalConsts[0]}/wordpress/wp-admin` || window.location.href !== `${globalConsts[0]}/wordpress/wp-login.php?loggedout=true&wp_lang=da_DK` ? (
-          // window.location.href !== `${globalConsts[0]}/wordpress/wp-admin` ? (
-          <Route exact component={NotFound} />
-        ) : (
-          window.location.replace(
-            `${globalConsts[0]}/wordpress/wp-admin/index.php`
-          )
-        )}
+
+        {!window.location.href.includes(`${globalConsts[0]}/wordpress`)
+          ? doneFetching && <Route exact component={NotFound} />
+          : doneFetching &&
+            window.location.replace(
+              `${globalConsts[0]}/wordpress/wp-admin/index.php`
+            )}
       </Switch>
-    </Router>
+    </React.Fragment>
   );
 }
 
