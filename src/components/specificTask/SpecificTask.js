@@ -28,9 +28,15 @@ const SpecificTask = () => {
   const [previews, setPreviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
-  // var selectedTags = [];
+  var taskDescription = '';
 
   const { state } = useLocation();
+
+  for (let i = 0; i < state.task.custom_fields.length; i++) {
+    if (state.task.custom_fields[i].name === 'Kundens opgave') {
+      taskDescription = state.task.custom_fields[i].value;
+    }
+  }
 
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
@@ -251,7 +257,7 @@ const SpecificTask = () => {
                   ? 'Deadline: ' + deadlineFormat
                   : 'Ingen deadline'}
               </p>
-              <p className="taskDescription">{state.task.description}</p>
+              <p className="taskDescription">{taskDescription}</p>
             </div>
             {/* <h4 className="mb-3 mt-4">Din løsning</h4> */}
             <div className="taskContent mt-3">
