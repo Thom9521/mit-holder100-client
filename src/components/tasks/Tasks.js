@@ -41,9 +41,10 @@ const Tasks = () => {
               var byDate = response.data.slice(0);
               byDate.sort((a, b) => {
                 // console.log(b.due_date);
-                if (b.due_date !== null) {
-                  return a.due_date - b.due_date;
-                } else {
+                return a.due_date - b.due_date;
+              });
+              byDate.sort((a, b) => {
+                if (a.due_date === null || b.due_date === null) {
                   return b.due_date - a.due_date;
                 }
               });
