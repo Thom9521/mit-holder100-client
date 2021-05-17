@@ -81,7 +81,7 @@ a:active {
   border-color: var(--holder100Orange) !important;
 }
 .dropdownStyles button:hover,
-button:active {
+.dropdownStyles button:active {
   background-color: var(--holder100Orange) !important;
   border-color: var(--holder100Orange) !important;
   color: white !important;
@@ -89,7 +89,7 @@ button:active {
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .dropdownStyles button:hover *,
-button:active * {
+.dropdownStyles button:active * {
   color: white !important;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;

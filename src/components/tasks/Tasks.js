@@ -13,6 +13,7 @@ const Tasks = () => {
   const [loading, setLoading] = useState(true);
   const [noTasks, setNoTasks] = useState(false);
   useEffect(() => {
+    let isMounted = true;
     setLoading(true);
     const wordPressId = localStorage.getItem('ID');
     const token = localStorage.getItem('token');
@@ -28,39 +29,43 @@ const Tasks = () => {
       headers: headers,
     })
       .then((response) => {
-        if (response.status === 200) {
-          axios({
-            method: 'get',
-            url: `${globalConsts[0]}/tasks/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
-            headers: headers,
-          })
-            .then((response) => {
-              if (response.data.length <= 0) {
-                setNoTasks(true);
-              }
-              var byDate = response.data.slice(0);
-              byDate.sort((a, b) => {
-                // console.log(b.due_date);
-                return a.due_date - b.due_date;
-              });
-              byDate.sort((a, b) => {
-                if (a.due_date === null || b.due_date === null) {
-                  return b.due_date - a.due_date;
-                }
-              });
-
-              console.log(byDate);
-              setTasks(byDate);
-              setLoading(false);
+        if (isMounted) {
+          if (response.status === 200) {
+            axios({
+              method: 'get',
+              url: `${globalConsts[0]}/tasks/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
+              headers: headers,
             })
-            .catch((error) => {
-              console.log(error);
-              setLoading(false);
-              setNoTasks(true);
-            });
-        } else {
-          setNoTasks(true);
-          setLoading(false);
+              .then((response) => {
+                if (isMounted) {
+                  if (response.data.length <= 0) {
+                    setNoTasks(true);
+                  }
+                  var byDate = response.data.slice(0);
+                  byDate.sort((a, b) => {
+                    return a.due_date - b.due_date;
+                  });
+                  // eslint-disable-next-line
+                  byDate.sort((a, b) => {
+                    if (a.due_date === null || b.due_date === null) {
+                      return b.due_date - a.due_date;
+                    }
+                  });
+
+                  // console.log(byDate);
+                  setTasks(byDate);
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                setLoading(false);
+                setNoTasks(true);
+              });
+          } else {
+            setNoTasks(true);
+            setLoading(false);
+          }
         }
       })
       .catch((error) => {
@@ -68,6 +73,9 @@ const Tasks = () => {
         setLoading(false);
         setNoTasks(true);
       });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // handles the showing of tasks depending of the dropdown value
@@ -116,6 +124,7 @@ const Tasks = () => {
                     state: { task: task, companyState: state },
                   }}
                   className="taskLink"
+                  onClick={() => window.scrollTo(0, 0)}
                 >
                   <Task key={task.id} task={task} />
                 </Link>

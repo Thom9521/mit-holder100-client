@@ -56,7 +56,6 @@ const SpecificTask = () => {
   }
 
   useEffect(() => {
-    console.log(selectedTags);
     if (!selectedFile) {
       return;
     }
@@ -64,7 +63,6 @@ const SpecificTask = () => {
     setPreviews((prevState) => {
       return [...prevState, objectUrl];
     });
-    console.log(previews);
     setSelectedFile(null);
   }, [selectedFile, selectedTags]);
 
@@ -138,95 +136,105 @@ const SpecificTask = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (selectedFiles.length > 0 || taskText !== '') {
+      console.log('test');
+      console.log(selectedFiles);
+      console.log(taskText);
+      // Setting tags on file object
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const tagsWithMatchingFileIndex = selectedTags.filter(
+          (tag) => tag.fileIndex === i
+        );
+        let files = [...selectedFiles];
+        let file = files[i];
+        file.tags = tagsWithMatchingFileIndex;
+        files[i] = file;
+      }
+      setLoading(true);
 
-    // Setting tags on file object
-    for (let i = 0; i < selectedFiles.length; i++) {
-      const tagsWithMatchingFileIndex = selectedTags.filter(
-        (tag) => tag.fileIndex === i
-      );
-      let files = [...selectedFiles];
-      let file = files[i];
-      file.tags = tagsWithMatchingFileIndex;
-      files[i] = file;
-    }
-    setLoading(true);
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+      };
 
-    const headers = {
-      'Content-Type': 'multipart/form-data',
-    };
+      const commentData = new FormData();
+      commentData.append('taskId', state.task.id);
+      commentData.append('comment_text', taskText);
+      commentData.append('status', state.task.status.status);
+      commentData.append('name', localStorage.getItem('name'));
 
-    const commentData = new FormData();
-    commentData.append('taskId', state.task.id);
-    commentData.append('comment_text', taskText);
-    commentData.append('status', state.task.status.status);
-    commentData.append('name', localStorage.getItem('name'));
-
-    if (state.task.assignees.length > 0) {
-      commentData.append('assignee', state.task.assignees[0].id);
-    }
-    axios({
-      method: 'POST',
-      url: `${globalConsts[0]}/tasks/addComment.php`,
-      data: commentData,
-    })
-      .then((result) => {
-        // console.log(result);
-
-        setTaskTest('');
-        if (selectedFiles.length > 0) {
-          const fileData = new FormData();
-          fileData.append('taskId', state.task.id);
-          for (let i = 0; i < selectedFiles.length; i++) {
-            fileData.append('file[]', selectedFiles[i], selectedFiles[i].name);
-            fileData.append('comment[]', selectedFiles[i].comment);
-            fileData.append('name[]', localStorage.getItem('name'));
-            var tagsString = '';
-            for (let j = 0; j < selectedTags.length; j++) {
-              if (selectedTags[j].fileIndex === i) {
-                // eslint-disable-next-line
-                tagsString += '"' + selectedTags[j].value + '"' + ' ';
-                console.log(selectedTags[j].value);
-              }
-            }
-            fileData.append('tags[]', tagsString);
-          }
-
-          if (state.task.assignees.length > 0) {
-            fileData.append('assignee', state.task.assignees[0].id);
-          }
-          axios({
-            method: 'POST',
-            url: `${globalConsts[0]}/tasks/addAttachments.php`,
-            data: fileData,
-            headers: headers,
-          })
-            .then((result) => {
-              if (result.status === 200) {
-                console.log(result);
-                setSelectedFiles([]);
-                setPreviews([]);
-                setSelectedFile();
-                setLoading(false);
-                toggleModalSuccess();
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-              setLoading(false);
-            });
-        } else {
-          toggleModalSuccess();
-          setLoading(false);
-        }
+      if (state.task.assignees.length > 0) {
+        commentData.append('assignee', state.task.assignees[0].id);
+      }
+      axios({
+        method: 'POST',
+        url: `${globalConsts[0]}/tasks/addComment.php`,
+        data: commentData,
       })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+        .then((result) => {
+          // console.log(result);
+
+          setTaskTest('');
+          if (selectedFiles.length > 0) {
+            const fileData = new FormData();
+            fileData.append('taskId', state.task.id);
+            for (let i = 0; i < selectedFiles.length; i++) {
+              fileData.append(
+                'file[]',
+                selectedFiles[i],
+                selectedFiles[i].name
+              );
+              fileData.append('comment[]', selectedFiles[i].comment);
+              fileData.append('name[]', localStorage.getItem('name'));
+              fileData.append('status[]', state.task.status.status);
+
+              var tagsString = '';
+              for (let j = 0; j < selectedTags.length; j++) {
+                if (selectedTags[j].fileIndex === i) {
+                  // eslint-disable-next-line
+                  tagsString += '"' + selectedTags[j].value + '"' + ' ';
+                  console.log(selectedTags[j].value);
+                }
+              }
+              fileData.append('tags[]', tagsString);
+            }
+
+            if (state.task.assignees.length > 0) {
+              fileData.append('assignee', state.task.assignees[0].id);
+            }
+            axios({
+              method: 'POST',
+              url: `${globalConsts[0]}/tasks/addAttachments.php`,
+              data: fileData,
+              headers: headers,
+            })
+              .then((result) => {
+                if (result.status === 200) {
+                  console.log(result);
+                  setSelectedFiles([]);
+                  setPreviews([]);
+                  setSelectedFile();
+                  setLoading(false);
+                  toggleModalSuccess();
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                setLoading(false);
+              });
+          } else {
+            toggleModalSuccess();
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+        });
+    }
   };
 
   return (
-    <div className="contentWrapper contentCenter ">
+    <div className="contentWrapper contentCenter contentMarginVertical">
       <Form onSubmit={handleSubmit} method="POST">
         <FormGroup>
           <div className="taskWrapper listHeader">
@@ -247,7 +255,6 @@ const SpecificTask = () => {
                 type="textarea"
                 value={taskText}
                 placeholder="Tilføj en tekst til opgaven"
-                required
                 style={{ minHeight: 100 }}
                 onChange={(event) => setTaskTest(event.target.value)}
               />
@@ -259,9 +266,7 @@ const SpecificTask = () => {
                   <h5>Fil {index + 1}</h5>
                   {selectedFiles[index] && (
                     <Row>
-                      {(selectedFiles[index].type === 'video/mp4' ||
-                        selectedFiles[index].type === 'video/mov' ||
-                        selectedFiles[index].type === 'video/wmv') && (
+                      {selectedFiles[index].type.includes('video/') && (
                         <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
                           <video
                             src={previews[index]}
@@ -273,11 +278,7 @@ const SpecificTask = () => {
                           </video>
                         </Col>
                       )}
-                      {(selectedFiles[index].type === 'image/jpeg' ||
-                        selectedFiles[index].type === 'image/jpg' ||
-                        selectedFiles[index].type === 'image/svg+xml' ||
-                        selectedFiles[index].type === 'image/gif' ||
-                        selectedFiles[index].type === 'image/png') && (
+                      {selectedFiles[index].type.includes('image/') && (
                         <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
                           <img
                             src={previews[index]}
@@ -300,7 +301,9 @@ const SpecificTask = () => {
                   )}
                   <Row>
                     <Col>
-                      <p>{selectedFiles[index] && selectedFiles[index].name}</p>
+                      <p className="filePreviewName">
+                        {selectedFiles[index] && selectedFiles[index].name}
+                      </p>
                     </Col>
                     <Col>
                       {state.task.tags.map((tag, tagIndex) => (
