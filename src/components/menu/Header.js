@@ -25,6 +25,8 @@ const Header = (props) => {
     name: 'Alle opgaver',
   });
 
+  const toggle = () => setDropdownOpen(!dropdownOpen);
+
   // eslint-disable-next-line
   if (userCompanies == '') {
     var wordPressID = localStorage.getItem('ID');
@@ -59,8 +61,6 @@ const Header = (props) => {
     props.chosenCompany({ id: e.target.value, name: e.target.name });
   };
 
-  const toggle = () => setDropdownOpen(!dropdownOpen);
-
   return (
     <Container className="headerContainerContainer">
       <Row>
@@ -77,7 +77,7 @@ const Header = (props) => {
           <Dropdown
             isOpen={dropdownOpen}
             toggle={toggle}
-            className="dropdownStyles"
+            className="dropdownStyles dropdownStylesHeader"
           >
             <DropdownToggle>
               {userCompanies !== '' && chosenCompany.name}{' '}

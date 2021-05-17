@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import './Menu.css';
+import axios from 'axios';
+import globalConsts from '../../globalConsts';
+
+// Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 // import { faCalenderCheck } from '@fortawesome/free-solid-svg-icons'
@@ -10,15 +14,53 @@ import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+
 import { useHistory } from 'react-router-dom';
 
 // Reactstrap components
-import { List, Row, Col } from 'reactstrap';
+import {
+  List,
+  Row,
+  Col,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
 
 const Menu = () => {
   const history = useHistory();
 
   const [chosenCompany, setChosenCompany] = useState('');
+  const [embeddedLinks, setEmbeddedLinks] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen(!dropdownOpen);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (chosenCompany !== '') {
+      axios({
+        method: 'GET',
+        url: `${globalConsts[0]}/links/getEmbeddedLinks.php?company=${chosenCompany.id}`,
+      })
+        .then((response) => {
+          if (isMounted) {
+            console.log(response);
+            setEmbeddedLinks(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [chosenCompany]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -57,7 +99,63 @@ const Menu = () => {
             </Row>
           </Link>
         </li>
-        <li className="listItem">
+        {embeddedLinks.length > 0 && (
+          <li className="listItem">
+            <Row className="listRow">
+              <Col className="listCol">
+                <FontAwesomeIcon
+                  className="fontAwesomeIconMenu"
+                  icon={faLink}
+                ></FontAwesomeIcon>
+              </Col>
+              <Col className="listColText">
+                <Dropdown
+                  isOpen={dropdownOpen}
+                  toggle={toggle}
+                  className="dropdownStyles dropdownLinks"
+                >
+                  <DropdownToggle className="dropdownToggle">
+                    Links{' '}
+                    <FontAwesomeIcon
+                      className="fontAwesomeIconHeader"
+                      icon={faCaretDown}
+                    ></FontAwesomeIcon>
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {embeddedLinks.length > 0 &&
+                      embeddedLinks.map((embeddedLink, index) => (
+                        <DropdownItem
+                          key={index}
+                          className="mb-2 mt-1"
+                          value={embeddedLink.id}
+                        >
+                          <Link to={'/information'}>{embeddedLink.id}</Link>
+                        </DropdownItem>
+                      ))}
+                  </DropdownMenu>
+                </Dropdown>
+              </Col>
+            </Row>
+          </li>
+        )}
+
+        {/* {embeddedLinks.length > 0 &&
+          embeddedLinks.map((embeddedLink) => (
+            <li key={embeddedLink.id} className="listItem">
+              <Link to={'/information'}>
+                <Row className="listRow">
+                  <Col className="listCol">
+                    <FontAwesomeIcon
+                      className="fontAwesomeIconMenu"
+                      icon={faInfoCircle}
+                    ></FontAwesomeIcon>
+                  </Col>
+                  <Col className="listColText">{embeddedLink.id}</Col>
+                </Row>
+              </Link>
+            </li>
+          ))} */}
+        {/* <li className="listItem">
           <Link to={'/information'}>
             <Row className="listRow">
               <Col className="listCol">
@@ -69,7 +167,7 @@ const Menu = () => {
               <Col className="listColText">Information</Col>
             </Row>
           </Link>
-        </li>
+        </li> */}
 
         <li className="listItem">
           <Link to={'/change-password'}>
