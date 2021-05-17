@@ -181,10 +181,12 @@ const SpecificTask = () => {
             fileData.append('comment[]', selectedFiles[i].comment);
             fileData.append('name[]', localStorage.getItem('name'));
             var tagsString = '';
-            for (let i = 0; i < selectedTags.length; i++) {
-              // eslint-disable-next-line
-              tagsString += '"' + selectedTags[i].value + '"' + ' ';
-              console.log(selectedTags[i].value);
+            for (let j = 0; j < selectedTags.length; j++) {
+              if (selectedTags[j].fileIndex === i) {
+                // eslint-disable-next-line
+                tagsString += '"' + selectedTags[j].value + '"' + ' ';
+                console.log(selectedTags[j].value);
+              }
             }
             fileData.append('tags[]', tagsString);
           }
