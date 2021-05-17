@@ -28,6 +28,7 @@ const SpecificTask = () => {
   const [previews, setPreviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(false);
   var taskDescription = '';
 
   const { state } = useLocation();
@@ -66,12 +67,18 @@ const SpecificTask = () => {
     setSelectedFile(null);
   }, [selectedFile, selectedTags]);
 
+  const handleTaskText = (e) => {
+    setTaskTest(e.target.value);
+    setErrorMessage(false);
+  };
+
   const onSelectFile = (e) => {
     const fileObject = e.target.files[0];
     if (!fileObject || fileObject.length === 0) {
       setSelectedFile(undefined);
       return;
     }
+    setErrorMessage(false);
     setSelectedFile(fileObject);
     setSelectedFiles((prevState) => {
       // selectedFiles: [...prevState, fileObject],
@@ -151,7 +158,8 @@ const SpecificTask = () => {
         files[i] = file;
       }
       setLoading(true);
-
+      var submitButton = document.getElementById('submitButton');
+      submitButton.disabled = true;
       const headers = {
         'Content-Type': 'multipart/form-data',
       };
@@ -214,6 +222,7 @@ const SpecificTask = () => {
                   setPreviews([]);
                   setSelectedFile();
                   setLoading(false);
+
                   toggleModalSuccess();
                 }
               })
@@ -230,6 +239,8 @@ const SpecificTask = () => {
           console.log(error);
           setLoading(false);
         });
+    } else {
+      setErrorMessage(true);
     }
   };
 
@@ -256,7 +267,7 @@ const SpecificTask = () => {
                 value={taskText}
                 placeholder="Tilføj en tekst til opgaven"
                 style={{ minHeight: 100 }}
-                onChange={(event) => setTaskTest(event.target.value)}
+                onChange={handleTaskText}
               />
             </div>
 
@@ -348,8 +359,9 @@ const SpecificTask = () => {
                 onClick={(e) => (e.target.value = null)} // Setting value to null so the same file can be picked more than once in a row
               />
             </div>
+
             <div className="taskButtonDiv">
-              <Button className="taskButton">
+              <Button id="submitButton" className="taskButton">
                 {loading ? (
                   <Loader
                     type="TailSpin"
@@ -362,6 +374,11 @@ const SpecificTask = () => {
                 )}
               </Button>
             </div>
+            {errorMessage && (
+              <p className="errorMessage">
+                Der er ikke tilføjet noget materiale...
+              </p>
+            )}
           </div>
         </FormGroup>
       </Form>

@@ -23,3 +23,11 @@
 .spinnerStyles {
   padding-top: 10rem;
 }
+.endlessDataCol {
+  display: flex;
+  justify-content: flex-end;
+}
+.fontAwesomeIconTasks {
+  font-size: 1.5rem !important;
+  color: var(--holder100Orange);
+}
