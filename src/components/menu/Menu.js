@@ -9,7 +9,7 @@ import globalConsts from '../../globalConsts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 // import { faCalenderCheck } from '@fortawesome/free-solid-svg-icons'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+// import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -49,7 +49,7 @@ const Menu = () => {
       })
         .then((response) => {
           if (isMounted) {
-            console.log(response);
+            // console.log(response);
             setEmbeddedLinks(response.data);
           }
         })
@@ -99,16 +99,16 @@ const Menu = () => {
             </Row>
           </Link>
         </li>
-        {embeddedLinks.length > 0 && (
-          <li className="listItem">
-            <Row className="listRow">
-              <Col className="listCol">
-                <FontAwesomeIcon
-                  className="fontAwesomeIconMenu"
-                  icon={faLink}
-                ></FontAwesomeIcon>
-              </Col>
-              <Col className="listColText">
+        <li className="listItem">
+          <Row className="listRow">
+            <Col className="listCol">
+              <FontAwesomeIcon
+                className="fontAwesomeIconMenu"
+                icon={faLink}
+              ></FontAwesomeIcon>
+            </Col>
+            <Col className="listColText">
+              {embeddedLinks.length > 0 ? (
                 <Dropdown
                   isOpen={dropdownOpen}
                   toggle={toggle}
@@ -123,35 +123,57 @@ const Menu = () => {
                   </DropdownToggle>
                   <DropdownMenu>
                     {embeddedLinks.length > 0 &&
-                      embeddedLinks.map((embeddedLink, index) => (
-                        <DropdownItem
-                          key={index}
-                          className="mb-2 mt-1"
-                          value={embeddedLink.id}
-                        >
-                          <Link to={'/information'}>{embeddedLink.id}</Link>
-                        </DropdownItem>
-                      ))}
+                      embeddedLinks.map((embeddedLink, index) =>
+                        embeddedLink.custom_fields.map((customField) =>
+                          (customField.name === "Link type" && customField.value === 0) ? (
+                            <Link key={customField.id} to={{ pathname: `/information/${embeddedLink.id}`, state: embeddedLink }}>
+                              <DropdownItem
+                                key={index}
+                                className="mb-2 mt-1"
+                                name={embeddedLink.name}
+                                value={embeddedLink.id}
+                              >{embeddedLink.name}
+                              </DropdownItem>
+                            </Link>
+                          ) : (
+                            (customField.name === "Link type" && customField.value === 1) && (
+                              embeddedLink.custom_fields.map((customField2) =>
+                                customField2.name === "Link" && (
+
+                                  <a key={customField.id} href={customField2.value} target="_blank" rel="noreferrer">
+                                    <DropdownItem
+                                      key={index}
+                                      className="mb-2 mt-1"
+                                      name={embeddedLink.name}
+                                      value={embeddedLink.id}
+                                    >{embeddedLink.name}
+                                    </DropdownItem>
+                                  </a>
+                                )
+                              )
+                            )
+                          )
+                        ))}
                   </DropdownMenu>
                 </Dropdown>
-              </Col>
-            </Row>
-          </li>
-        )}
+              ) : (<i className="noLinks">Ingen links</i>)}
+            </Col>
+          </Row>
+        </li>
 
         {/* {embeddedLinks.length > 0 &&
           embeddedLinks.map((embeddedLink) => (
             <li key={embeddedLink.id} className="listItem">
-              <Link to={'/information'}>
-                <Row className="listRow">
-                  <Col className="listCol">
-                    <FontAwesomeIcon
-                      className="fontAwesomeIconMenu"
-                      icon={faInfoCircle}
-                    ></FontAwesomeIcon>
-                  </Col>
-                  <Col className="listColText">{embeddedLink.id}</Col>
-                </Row>
+                          < Link to = { '/information'} >
+                          <Row className="listRow">
+                            <Col className="listCol">
+                              <FontAwesomeIcon
+                                className="fontAwesomeIconMenu"
+                                icon={faInfoCircle}
+                              ></FontAwesomeIcon>
+                            </Col>
+                            <Col className="listColText">{embeddedLink.id}</Col>
+                          </Row>
               </Link>
             </li>
           ))} */}

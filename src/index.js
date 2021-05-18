@@ -13,7 +13,7 @@ var stylingClassesContainerRow = 'contentWrapper';
 // New paths needs to be added here
 if (
   window.location.pathname !== '/tasks' &&
-  window.location.pathname !== '/information' &&
+  !window.location.pathname.includes('/information/') &&
   window.location.pathname !== '/change-password' &&
   !window.location.pathname.includes('/task/')
 ) {

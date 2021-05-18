@@ -73,7 +73,7 @@ function App() {
       (locationDom.pathname.includes('/task/') ||
         locationDom.pathname === '/tasks' ||
         locationDom.pathname === '/change-password' ||
-        locationDom.pathname === '/information') &&
+        locationDom.pathname.includes('/information/')) &&
       localStorage.token
     ) {
       return true;
@@ -114,7 +114,7 @@ function App() {
         {doneFetching && (
           <Auth
             exact
-            path="/information"
+            path="/information/:id"
             render={() => (
               <Col className="secondCol">
                 <Container className="homeContainer">
@@ -154,9 +154,9 @@ function App() {
         {!window.location.href.includes(`${globalConsts[0]}/wordpress`)
           ? doneFetching && <Route exact component={NotFound} />
           : doneFetching &&
-            window.location.replace(
-              `${globalConsts[0]}/wordpress/wp-admin/index.php`
-            )}
+          window.location.replace(
+            `${globalConsts[0]}/wordpress/wp-admin/index.php`
+          )}
       </Switch>
     </React.Fragment>
   );

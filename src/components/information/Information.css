@@ -1,0 +1,6 @@
+.linkDescription{
+    white-space: pre-line;
+}
+.iFrameStyles{
+    border:1px solid var(--holder100Orange);
+}

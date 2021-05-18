@@ -121,8 +121,8 @@ const SpecificTask = () => {
       for (let i = 0; i < selectedTags.length; i++) {
         if (
           selectedTags[i].value +
-            selectedTags[i].tagIndex +
-            selectedTags[i].fileIndex ===
+          selectedTags[i].tagIndex +
+          selectedTags[i].fileIndex ===
           tagObject.id
         ) {
           inArray = true;
@@ -144,9 +144,6 @@ const SpecificTask = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (selectedFiles.length > 0 || taskText !== '') {
-      console.log('test');
-      console.log(selectedFiles);
-      console.log(taskText);
       // Setting tags on file object
       for (let i = 0; i < selectedFiles.length; i++) {
         const tagsWithMatchingFileIndex = selectedTags.filter(
@@ -200,7 +197,6 @@ const SpecificTask = () => {
                 if (selectedTags[j].fileIndex === i) {
                   // eslint-disable-next-line
                   tagsString += '"' + selectedTags[j].value + '"' + ' ';
-                  console.log(selectedTags[j].value);
                 }
               }
               fileData.append('tags[]', tagsString);
@@ -217,7 +213,6 @@ const SpecificTask = () => {
             })
               .then((result) => {
                 if (result.status === 200) {
-                  console.log(result);
                   setSelectedFiles([]);
                   setPreviews([]);
                   setSelectedFile();
