@@ -12,7 +12,12 @@ const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [noTasks, setNoTasks] = useState(false);
+
+
+
   useEffect(() => {
+    console.log(state)
+
     let isMounted = true;
 
     const wordPressId = localStorage.getItem('ID');
@@ -41,6 +46,8 @@ const Tasks = () => {
 
                   if (response.data.length <= 0) {
                     setNoTasks(true);
+                    setLoading(false);
+
                   } else {
                     var byDate = response.data.slice(0);
                     byDate.sort((a, b) => {
@@ -55,8 +62,8 @@ const Tasks = () => {
 
                     // console.log(byDate);
                     setTasks(byDate);
+                    setLoading(false);
                   }
-                  setLoading(false);
                 }
 
               })
@@ -78,7 +85,9 @@ const Tasks = () => {
       });
     return () => {
       isMounted = false;
-    };
+    }
+
+
   }, []);
 
   // handles the showing of tasks depending of the dropdown value
@@ -104,7 +113,7 @@ const Tasks = () => {
     }
   };
 
-  if (loading) {
+  if (loading || state === undefined) {
     return (
       <div className="contentCenter centerHorizontal spinnerStyles">
         <Loader type="TailSpin" color="#ff9414" height={80} width={80} />

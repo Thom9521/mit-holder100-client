@@ -40,6 +40,7 @@ const Menu = () => {
   const [embeddedLinks, setEmbeddedLinks] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [fetchedLinks, setFetchedLinks] = useState(false);
+
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
   useEffect(() => {
@@ -71,11 +72,16 @@ const Menu = () => {
     localStorage.removeItem('name');
     window.location = '/';
   };
-  const handleChosenCompany = (chosenCompany, fetched) => {
-    setChosenCompany(chosenCompany);
+  const handleChosenCompany = (chosenCompanyParam, fetched) => {
+    setChosenCompany(chosenCompanyParam);
     setFetchedLinks(fetched);
-    if (window.location.href.includes('/tasks')) {
-      history.push('/tasks', chosenCompany);
+    console.log(fetchedLinks)
+    console.log(chosenCompany)
+    console.log(chosenCompanyParam)
+    console.log(chosenCompanyParam.id != chosenCompany.id)
+    if (window.location.href.includes('/tasks') && fetchedLinks && chosenCompanyParam.id == chosenCompany.id) {
+      console.log('test');
+      history.push('/tasks', chosenCompanyParam);
     }
   };
 
