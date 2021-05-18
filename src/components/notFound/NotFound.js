@@ -8,6 +8,7 @@ const NotFound = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('ID');
     localStorage.removeItem('username');
+    localStorage.removeItem('name');
   };
   return (
     <div className="contentWrapper orangeBackgroundContent contentCenter">

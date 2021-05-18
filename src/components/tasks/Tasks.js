@@ -29,8 +29,8 @@ const Tasks = () => {
       headers: headers,
     })
       .then((response) => {
-        if (isMounted) {
-          if (response.status === 200) {
+        if (response.status === 200) {
+          if (isMounted) {
             axios({
               method: 'get',
               url: `${globalConsts[0]}/tasks/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
@@ -38,6 +38,7 @@ const Tasks = () => {
             })
               .then((response) => {
                 if (isMounted) {
+
                   if (response.data.length <= 0) {
                     setNoTasks(true);
                   } else {
@@ -57,6 +58,7 @@ const Tasks = () => {
                   }
                   setLoading(false);
                 }
+
               })
               .catch((error) => {
                 console.log(error);

@@ -68,6 +68,7 @@ const Menu = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('ID');
     localStorage.removeItem('username');
+    localStorage.removeItem('name');
     window.location = '/';
   };
   const handleChosenCompany = (chosenCompany, fetched) => {
@@ -126,7 +127,6 @@ const Menu = () => {
                   </DropdownToggle>
                   <DropdownMenu>
                     {embeddedLinks.length > 0 && (
-
                       embeddedLinks.map((embeddedLink, index) =>
                         embeddedLink.custom_fields.map((customField) =>
                           (customField.name === "Link type" && customField.value === 0) ? (

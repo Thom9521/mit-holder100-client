@@ -70,3 +70,7 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+caches.keys().then(function (names) {
+  for (let name of names)
+    caches.delete(name);
+});

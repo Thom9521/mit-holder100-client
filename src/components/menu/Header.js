@@ -51,6 +51,10 @@ const Header = (props) => {
             if (companyArray !== undefined) {
               setUserCompanies(companyArray);
             }
+            chosenCompanyHeader({
+              id: '0',
+              name: 'Alle firmaer',
+            });
           }
         })
         .catch((error) => {
