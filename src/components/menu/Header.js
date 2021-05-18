@@ -32,7 +32,6 @@ const Header = (props) => {
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
   useEffect(() => {
-    console.log('header');
     let isMounted = true;
     if (userCompanies.length === 0 && !fetchedCompanies) {
       var wordPressID = localStorage.getItem('ID');
@@ -49,14 +48,9 @@ const Header = (props) => {
           if (isMounted) {
             setFetchedCompanies(true);
             const companyArray = response.data.companies;
-            console.log(companyArray)
             if (companyArray !== undefined) {
               setUserCompanies(companyArray);
             }
-            chosenCompanyHeader({
-              id: '0',
-              name: 'Alle firmaer',
-            });
           }
         })
         .catch((error) => {

@@ -33,7 +33,10 @@ import {
 const Menu = () => {
   const history = useHistory();
 
-  const [chosenCompany, setChosenCompany] = useState('');
+  const [chosenCompany, setChosenCompany] = useState({
+    id: '0',
+    name: 'Alle firmaer',
+  });
   const [embeddedLinks, setEmbeddedLinks] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [fetchedLinks, setFetchedLinks] = useState(false);
@@ -41,8 +44,6 @@ const Menu = () => {
 
   useEffect(() => {
     let isMounted = true;
-    console.log('menu')
-
     if (chosenCompany !== '' && !fetchedLinks) {
       axios({
         method: 'GET',
