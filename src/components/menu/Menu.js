@@ -36,20 +36,21 @@ const Menu = () => {
   const [chosenCompany, setChosenCompany] = useState('');
   const [embeddedLinks, setEmbeddedLinks] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [fetchedLinks, setFetchedLinks] = useState(false);
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
   useEffect(() => {
     let isMounted = true;
+    console.log('menu')
 
-    if (chosenCompany !== '') {
+    if (chosenCompany !== '' && !fetchedLinks) {
       axios({
         method: 'GET',
         url: `${globalConsts[0]}/links/getEmbeddedLinks.php?company=${chosenCompany.id}`,
       })
         .then((response) => {
           if (isMounted) {
-            // console.log(response);
+            setFetchedLinks(true);
             setEmbeddedLinks(response.data);
           }
         })
@@ -60,7 +61,7 @@ const Menu = () => {
     return () => {
       isMounted = false;
     };
-  }, [chosenCompany]);
+  }, [chosenCompany, embeddedLinks, fetchedLinks]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -68,10 +69,11 @@ const Menu = () => {
     localStorage.removeItem('username');
     window.location = '/';
   };
-  const handleChosenCompany = (childData) => {
-    setChosenCompany(childData);
+  const handleChosenCompany = (chosenCompany, fetched) => {
+    setChosenCompany(chosenCompany);
+    setFetchedLinks(fetched);
     if (window.location.href.includes('/tasks')) {
-      history.push('/tasks', childData);
+      history.push('/tasks', chosenCompany);
     }
   };
 
@@ -79,7 +81,7 @@ const Menu = () => {
     <div className="listContainer">
       <div className="headerContainer">
         {/* {userCompanies != '' && <Header userCompanies={userCompanies} />} */}
-        <Header chosenCompany={handleChosenCompany} />
+        <Header chosenCompanyHeader={handleChosenCompany} />
       </div>
 
       <List className="listMenu container" type="unstyled">
@@ -122,7 +124,8 @@ const Menu = () => {
                     ></FontAwesomeIcon>
                   </DropdownToggle>
                   <DropdownMenu>
-                    {embeddedLinks.length > 0 &&
+                    {embeddedLinks.length > 0 && (
+
                       embeddedLinks.map((embeddedLink, index) =>
                         embeddedLink.custom_fields.map((customField) =>
                           (customField.name === "Link type" && customField.value === 0) ? (
@@ -153,13 +156,14 @@ const Menu = () => {
                               )
                             )
                           )
-                        ))}
+                        )))}
                   </DropdownMenu>
                 </Dropdown>
               ) : (<i className="noLinks">Ingen links</i>)}
             </Col>
           </Row>
         </li>
+
 
         {/* {embeddedLinks.length > 0 &&
           embeddedLinks.map((embeddedLink) => (

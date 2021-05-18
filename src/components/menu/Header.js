@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import logoBlack from '../../assets/images/logoBlack.svg';
@@ -18,47 +18,60 @@ import {
 } from 'reactstrap';
 
 const Header = (props) => {
+
+  const { chosenCompanyHeader } = props;
+
   const [userCompanies, setUserCompanies] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
     name: 'Alle opgaver',
   });
+  const [fetchedCompanies, setFetchedCompanies] = useState(false);
 
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
-  // eslint-disable-next-line
-  if (userCompanies == '') {
-    var wordPressID = localStorage.getItem('ID');
-    var wordPressToken = localStorage.getItem('token');
-    const userData = new FormData();
-    userData.append('id', wordPressID);
-    userData.append('token', wordPressToken);
-    axios({
-      method: 'POST',
-      url: `${globalConsts[0]}/users/me.php`,
-      data: userData,
-    })
-      .then((response) => {
-        const companyArray = response.data.companies;
-        if (companyArray !== undefined) {
-          setUserCompanies(companyArray);
-        }
-        // setChosenCompany(companyArray[0]);
-        props.chosenCompany({
-          id: '0',
-          name: 'Alle firmaer',
-        });
+  useEffect(() => {
+    console.log('header');
+    let isMounted = true;
+    if (userCompanies.length === 0 && !fetchedCompanies) {
+      var wordPressID = localStorage.getItem('ID');
+      var wordPressToken = localStorage.getItem('token');
+      const userData = new FormData();
+      userData.append('id', wordPressID);
+      userData.append('token', wordPressToken);
+      axios({
+        method: 'POST',
+        url: `${globalConsts[0]}/users/me.php`,
+        data: userData,
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+        .then((response) => {
+          if (isMounted) {
+            setFetchedCompanies(true);
+            const companyArray = response.data.companies;
+            console.log(companyArray)
+            if (companyArray !== undefined) {
+              setUserCompanies(companyArray);
+            }
+            chosenCompanyHeader({
+              id: '0',
+              name: 'Alle firmaer',
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [chosenCompanyHeader, userCompanies, fetchedCompanies])
 
   const handleChosenCompany = (e) => {
     e.preventDefault();
     setChosenCompany({ id: e.target.value, name: e.target.name });
-    props.chosenCompany({ id: e.target.value, name: e.target.name });
+    chosenCompanyHeader({ id: e.target.value, name: e.target.name }, false);
   };
 
   return (

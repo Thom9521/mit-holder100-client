@@ -13,6 +13,7 @@ const Tasks = () => {
   const [loading, setLoading] = useState(true);
   const [noTasks, setNoTasks] = useState(false);
   useEffect(() => {
+    console.log('tasks');
     let isMounted = true;
     setLoading(true);
     const wordPressId = localStorage.getItem('ID');
@@ -40,21 +41,23 @@ const Tasks = () => {
                 if (isMounted) {
                   if (response.data.length <= 0) {
                     setNoTasks(true);
-                  }
-                  var byDate = response.data.slice(0);
-                  byDate.sort((a, b) => {
-                    return a.due_date - b.due_date;
-                  });
-                  // eslint-disable-next-line
-                  byDate.sort((a, b) => {
-                    if (a.due_date === null || b.due_date === null) {
-                      return b.due_date - a.due_date;
-                    }
-                  });
+                  } else {
 
-                  // console.log(byDate);
-                  setTasks(byDate);
-                  setLoading(false);
+                    var byDate = response.data.slice(0);
+                    byDate.sort((a, b) => {
+                      return a.due_date - b.due_date;
+                    });
+                    // eslint-disable-next-line
+                    byDate.sort((a, b) => {
+                      if (a.due_date === null || b.due_date === null) {
+                        return b.due_date - a.due_date;
+                      }
+                    });
+
+                    // console.log(byDate);
+                    setTasks(byDate);
+                    setLoading(false);
+                  }
                 }
               })
               .catch((error) => {
