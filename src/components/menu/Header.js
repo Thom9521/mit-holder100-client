@@ -76,7 +76,7 @@ const Header = (props) => {
     <Container className="headerContainerContainer">
       <Row>
         <Col className="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-xs-6 col-6">
-          <Link to={'/tasks'}>
+          <Link to={{ pathname: '/tasks', state: chosenCompany }}>
             <img
               className="holder100Image"
               src={logoBlack}
