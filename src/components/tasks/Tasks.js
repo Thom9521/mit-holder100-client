@@ -51,6 +51,7 @@ const Tasks = () => {
                     setNoTasks(true);
                     setLoading(false);
                   } else {
+                    // Sorting task array by date
                     var byDate = response.data.slice(0);
                     byDate.sort((a, b) => {
                       return a.due_date - b.due_date;
@@ -61,8 +62,6 @@ const Tasks = () => {
                         return b.due_date - a.due_date;
                       }
                     });
-
-                    // console.log(byDate);
                     setTasks(byDate);
                     setLoading(false);
                   }
