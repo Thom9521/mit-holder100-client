@@ -10,6 +10,7 @@ import { Container, Row } from 'reactstrap';
 
 var stylingClassesContainer = 'contentWrapper';
 var stylingClassesContainerRow = 'contentWrapper';
+var useRow = true;
 // New paths needs to be added here
 if (
   window.location.pathname !== '/tasks' &&
@@ -19,16 +20,23 @@ if (
 ) {
   stylingClassesContainer = 'contentWrapper orangeBackground';
   stylingClassesContainerRow = 'orangeBackgroundContent';
+  useRow = false;
 }
 
 ReactDOM.render(
   <div className={stylingClassesContainer}>
     <Container className={stylingClassesContainerRow}>
-      <Row className={stylingClassesContainerRow}>
+      {useRow ? (
+        <Row className={stylingClassesContainerRow}>
+          <Router>
+            <App />
+          </Router>
+        </Row>
+      ) : (
         <Router>
           <App />
         </Router>
-      </Row>
+      )}
     </Container>
   </div>,
   document.getElementById('root')

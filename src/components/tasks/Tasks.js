@@ -13,7 +13,15 @@ const Tasks = () => {
   const [loading, setLoading] = useState(true);
   const [noTasks, setNoTasks] = useState(false);
 
+  var theState = state;
+  if (theState === undefined) {
+    theState = { id: '0', name: 'Alle opgaver' };
+  }
+
   useEffect(() => {
+    // Clearing state history on page reload
+    window.history.replaceState({}, document.title);
+
     let isMounted = true;
 
     const wordPressId = localStorage.getItem('ID');
@@ -104,7 +112,7 @@ const Tasks = () => {
     }
   };
 
-  if (loading || state === undefined) {
+  if (loading || theState === undefined) {
     return (
       <div className="contentCenter centerHorizontal spinnerStyles">
         <Loader type="TailSpin" color="#ff9414" height={80} width={80} />
@@ -119,12 +127,12 @@ const Tasks = () => {
         ) : (
           tasks.map(
             (task) =>
-              showTasksForChosenCompany(state, task) && (
+              showTasksForChosenCompany(theState, task) && (
                 <Link
                   key={task.id}
                   to={{
                     pathname: `task/${task.id}`,
-                    state: { task: task, companyState: state },
+                    state: { task: task, companyState: theState },
                   }}
                   className="taskLink"
                   onClick={() => window.scrollTo(0, 0)}

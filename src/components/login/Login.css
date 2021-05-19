@@ -1,7 +1,8 @@
 .logoStyles {
   color: white;
   display: block;
-  width: 20rem;
+  width: 100%;
+  max-width: 20rem;
   margin-bottom: 2rem;
 }
 .submitStyles {

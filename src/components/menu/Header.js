@@ -24,7 +24,7 @@ const Header = (props) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
-    name: 'Alle opgaver',
+    name: 'Alle firmaer',
   });
   const [fetchedCompanies, setFetchedCompanies] = useState(false);
 
@@ -50,6 +50,12 @@ const Header = (props) => {
             if (companyArray !== undefined) {
               setUserCompanies(companyArray);
             }
+            if (chosenCompany === undefined) {
+              setChosenCompany({
+                id: '0',
+                name: 'Alle firmaer',
+              });
+            }
             chosenCompanyHeader(
               {
                 id: '0',
@@ -66,7 +72,7 @@ const Header = (props) => {
     return () => {
       isMounted = false;
     };
-  }, [chosenCompanyHeader, userCompanies, fetchedCompanies]);
+  }, [chosenCompanyHeader, userCompanies, fetchedCompanies, chosenCompany]);
 
   const handleChosenCompany = (e) => {
     e.preventDefault();
@@ -93,7 +99,7 @@ const Header = (props) => {
             className="dropdownStyles dropdownStylesHeader"
           >
             <DropdownToggle>
-              {userCompanies !== '' && chosenCompany.name}{' '}
+              {userCompanies !== '' && chosenCompany && chosenCompany.name}{' '}
               <FontAwesomeIcon
                 className="fontAwesomeIconHeader"
                 icon={faCaretDown}

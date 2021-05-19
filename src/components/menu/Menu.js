@@ -72,12 +72,11 @@ const Menu = () => {
     localStorage.removeItem('name');
     window.location = '/';
   };
-  const handleChosenCompany = (chosenCompanyParam, push) => {
-    setChosenCompany(chosenCompanyParam);
-
+  const handleChosenCompany = (chosenCompany, push) => {
+    setChosenCompany(chosenCompany);
+    setFetchedLinks(!push);
     if (window.location.href.includes('/tasks') && push) {
-      console.log('test');
-      history.push('/tasks', chosenCompanyParam);
+      history.push('/tasks', chosenCompany);
     }
   };
 
@@ -111,6 +110,7 @@ const Menu = () => {
               <FontAwesomeIcon
                 className="fontAwesomeIconMenu"
                 icon={faLink}
+                onClick={toggle}
               ></FontAwesomeIcon>
             </Col>
             <Col className="listColText">
