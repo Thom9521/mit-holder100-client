@@ -18,7 +18,6 @@ import {
 } from 'reactstrap';
 
 const Header = (props) => {
-
   const { chosenCompanyHeader } = props;
 
   const [userCompanies, setUserCompanies] = useState([]);
@@ -51,10 +50,13 @@ const Header = (props) => {
             if (companyArray !== undefined) {
               setUserCompanies(companyArray);
             }
-            chosenCompanyHeader({
-              id: '0',
-              name: 'Alle firmaer',
-            });
+            chosenCompanyHeader(
+              {
+                id: '0',
+                name: 'Alle firmaer',
+              },
+              false
+            );
           }
         })
         .catch((error) => {
@@ -64,12 +66,12 @@ const Header = (props) => {
     return () => {
       isMounted = false;
     };
-  }, [chosenCompanyHeader, userCompanies, fetchedCompanies])
+  }, [chosenCompanyHeader, userCompanies, fetchedCompanies]);
 
   const handleChosenCompany = (e) => {
     e.preventDefault();
     setChosenCompany({ id: e.target.value, name: e.target.name });
-    chosenCompanyHeader({ id: e.target.value, name: e.target.name }, false);
+    chosenCompanyHeader({ id: e.target.value, name: e.target.name }, true);
   };
 
   return (

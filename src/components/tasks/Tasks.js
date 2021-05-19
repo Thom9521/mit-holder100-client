@@ -13,11 +13,7 @@ const Tasks = () => {
   const [loading, setLoading] = useState(true);
   const [noTasks, setNoTasks] = useState(false);
 
-
-
   useEffect(() => {
-    console.log(state)
-
     let isMounted = true;
 
     const wordPressId = localStorage.getItem('ID');
@@ -43,11 +39,9 @@ const Tasks = () => {
             })
               .then((response) => {
                 if (isMounted) {
-
                   if (response.data.length <= 0) {
                     setNoTasks(true);
                     setLoading(false);
-
                   } else {
                     var byDate = response.data.slice(0);
                     byDate.sort((a, b) => {
@@ -65,7 +59,6 @@ const Tasks = () => {
                     setLoading(false);
                   }
                 }
-
               })
               .catch((error) => {
                 console.log(error);
@@ -85,9 +78,7 @@ const Tasks = () => {
       });
     return () => {
       isMounted = false;
-    }
-
-
+    };
   }, []);
 
   // handles the showing of tasks depending of the dropdown value

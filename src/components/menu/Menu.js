@@ -72,14 +72,10 @@ const Menu = () => {
     localStorage.removeItem('name');
     window.location = '/';
   };
-  const handleChosenCompany = (chosenCompanyParam, fetched) => {
+  const handleChosenCompany = (chosenCompanyParam, push) => {
     setChosenCompany(chosenCompanyParam);
-    setFetchedLinks(fetched);
-    console.log(fetchedLinks)
-    console.log(chosenCompany)
-    console.log(chosenCompanyParam)
-    console.log(chosenCompanyParam.id != chosenCompany.id)
-    if (window.location.href.includes('/tasks') && fetchedLinks && chosenCompanyParam.id == chosenCompany.id) {
+
+    if (window.location.href.includes('/tasks') && push) {
       console.log('test');
       history.push('/tasks', chosenCompanyParam);
     }
@@ -132,45 +128,61 @@ const Menu = () => {
                     ></FontAwesomeIcon>
                   </DropdownToggle>
                   <DropdownMenu>
-                    {embeddedLinks.length > 0 && (
+                    {embeddedLinks.length > 0 &&
                       embeddedLinks.map((embeddedLink, index) =>
                         embeddedLink.custom_fields.map((customField) =>
-                          (customField.name === "Link type" && customField.value === 0) ? (
-                            <Link key={customField.id} to={{ pathname: `/information/${embeddedLink.id}`, state: embeddedLink }}>
+                          customField.name === 'Link type' &&
+                          customField.value === 0 ? (
+                            <Link
+                              key={customField.id}
+                              to={{
+                                pathname: `/information/${embeddedLink.id}`,
+                                state: embeddedLink,
+                              }}
+                            >
                               <DropdownItem
                                 key={index}
                                 className="mb-2 mt-1"
                                 name={embeddedLink.name}
                                 value={embeddedLink.id}
-                              >{embeddedLink.name}
+                              >
+                                {embeddedLink.name}
                               </DropdownItem>
                             </Link>
                           ) : (
-                            (customField.name === "Link type" && customField.value === 1) && (
-                              embeddedLink.custom_fields.map((customField2) =>
-                                customField2.name === "Link" && (
-
-                                  <a key={customField.id} href={customField2.value} target="_blank" rel="noreferrer">
+                            customField.name === 'Link type' &&
+                            customField.value === 1 &&
+                            embeddedLink.custom_fields.map(
+                              (customField2) =>
+                                customField2.name === 'Link' && (
+                                  <a
+                                    key={customField.id}
+                                    href={customField2.value}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
                                     <DropdownItem
                                       key={index}
                                       className="mb-2 mt-1"
                                       name={embeddedLink.name}
                                       value={embeddedLink.id}
-                                    >{embeddedLink.name}
+                                    >
+                                      {embeddedLink.name}
                                     </DropdownItem>
                                   </a>
                                 )
-                              )
                             )
                           )
-                        )))}
+                        )
+                      )}
                   </DropdownMenu>
                 </Dropdown>
-              ) : (<i className="noLinks">Ingen links</i>)}
+              ) : (
+                <i className="noLinks">Ingen links</i>
+              )}
             </Col>
           </Row>
         </li>
-
 
         {/* {embeddedLinks.length > 0 &&
           embeddedLinks.map((embeddedLink) => (
