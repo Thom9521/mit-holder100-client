@@ -48,6 +48,7 @@ function App() {
         .catch((error) => {
           setDoneFetching(true);
           localStorage.removeItem('token');
+          console.log(error)
         });
     } else {
       setDoneFetching(true);
@@ -74,7 +75,7 @@ function App() {
         locationDom.pathname === '/tasks' ||
         locationDom.pathname === '/change-password' ||
         locationDom.pathname.includes('/information/')) &&
-      localStorage.token
+      validToken
     ) {
       return true;
     } else {

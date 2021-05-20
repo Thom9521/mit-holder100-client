@@ -4,6 +4,7 @@ import './Information.css';
 
 const Information = () => {
 
+  // State parsed with navigation link
   const state = useLocation();
 
   var linkDescription, linkLink;
@@ -23,9 +24,12 @@ const Information = () => {
 
   return (
     <div className="contentWrapper contentCenter homeContainerContainer">
-      <h4>{state.state.name}</h4>
-      <p className="linkDescription">{linkDescription}</p>
-      <iframe className="iFrameStyles" src={linkLink} title={state.state.name} allowFullScreen height="630px"></iframe>
+      <div className="taskContent">
+
+        <h4>{state.state.name}</h4>
+        <p className="linkDescription">{linkDescription}</p>
+        <iframe className="iFrameStyles" src={linkLink} title={state.state.name} allowFullScreen height="630px"></iframe>
+      </div>
     </div>);
 };
 export default Information;
