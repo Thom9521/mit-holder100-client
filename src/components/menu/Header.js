@@ -108,11 +108,11 @@ const Header = (props) => {
             <DropdownMenu>
               <DropdownItem
                 className="mb-2 mt-1"
-                name="Alle opgaver"
+                name="Alle firmaer"
                 value="0"
                 onClick={(e) => handleChosenCompany(e)}
               >
-                Alle opgaver
+                Alle firmaer
               </DropdownItem>
               {userCompanies !== '' &&
                 userCompanies.map((company, index) => (

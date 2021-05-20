@@ -108,7 +108,6 @@ const SpecificTask = () => {
   };
 
   const handleTags = (e, tagIndex, fileIndex, bgColor) => {
-    // var localTagsArray = selectedTags;
     const tagObject = {
       id: e.target.value + tagIndex + fileIndex,
       value: e.target.value,
