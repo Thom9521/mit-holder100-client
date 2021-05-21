@@ -19,25 +19,36 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
+// Component that renderes the possiblity to get a new pincode as a password
 const Pincode = () => {
+
+  // States with React Hooks
   const [phone, setPhone] = useState('');
   const [modalSuccess, setModalSuccess] = useState(false);
   const [modalError, setModalError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Handles the succes modal
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
     if (modalSuccess) {
       window.location = '/login';
     }
   };
+
+  // Handles the error modal
   const toggleModalError = () => setModalError(!modalError);
 
+  // Handles the submit
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
+
+    // Data for the POST request
     const formData = new FormData();
     formData.append('phone', phone);
+
+    // POST request to send the mail
     axios({
       method: 'POST',
       url: `${globalConsts[0]}/users/sendMailByPhone.php`,
@@ -45,6 +56,7 @@ const Pincode = () => {
     })
       .then((response) => {
         if (response.data.status === 200) {
+          // Resets the state
           setPhone('');
           toggleModalSuccess();
         } else if (response.data.status === 400) {
@@ -76,6 +88,7 @@ const Pincode = () => {
               onChange={(event) => setPhone(event.target.value)}
             />
             <Button className="submitStyles">
+              {/*Shows a loading animation if loading is true */}
               {loading ? (
                 <Loader
                   type="TailSpin"
@@ -95,6 +108,7 @@ const Pincode = () => {
           </Link>
         </p>
       </Container>
+      {/*Shows is the request was a success */}
       <Modal isOpen={modalSuccess} toggle={toggleModalSuccess}>
         <ModalHeader toggle={toggleModalSuccess}>Succes!</ModalHeader>
         <ModalBody>Din nye pinkode er blevet sendt til din email.</ModalBody>
@@ -104,6 +118,7 @@ const Pincode = () => {
           </Button>{' '}
         </ModalFooter>
       </Modal>
+      {/*Shows is the request failed */}
       <Modal isOpen={modalError} toggle={toggleModalError}>
         <ModalHeader toggle={toggleModalError}>Fejl</ModalHeader>
         <ModalBody>

@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
 import { Container, Button } from 'reactstrap';
 
+// Component that renderes the not found page
 const NotFound = () => {
+
+  // Handles the go back button
   const handleBackButton = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('ID');

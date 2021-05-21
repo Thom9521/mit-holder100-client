@@ -17,27 +17,36 @@ import {
   Col,
 } from 'reactstrap';
 
+// Child component that renderes the header
 const Header = (props) => {
+  // Destructuring the props
   const { chosenCompanyHeader } = props;
 
+  // States with React Hooks
   const [userCompanies, setUserCompanies] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [fetchedCompanies, setFetchedCompanies] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
     name: 'Alle firmaer',
   });
-  const [fetchedCompanies, setFetchedCompanies] = useState(false);
 
+  // Toggle dropdown
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
+  // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
     let isMounted = true;
     if (userCompanies.length === 0 && !fetchedCompanies) {
       var wordPressID = localStorage.getItem('ID');
       var wordPressToken = localStorage.getItem('token');
+
+      // Data for the POST request to get the logged in user
       const userData = new FormData();
       userData.append('id', wordPressID);
       userData.append('token', wordPressToken);
+
+      // POST request to get the logged in user
       axios({
         method: 'POST',
         url: `${globalConsts[0]}/users/me.php`,
@@ -72,8 +81,10 @@ const Header = (props) => {
     return () => {
       isMounted = false;
     };
+    // Clean up. The following states will only be updated once mounted
   }, [chosenCompanyHeader, userCompanies, fetchedCompanies, chosenCompany]);
 
+  // Handles the choice of company
   const handleChosenCompany = (e) => {
     e.preventDefault();
     setChosenCompany({ id: e.target.value, name: e.target.name });
@@ -114,6 +125,7 @@ const Header = (props) => {
               >
                 Alle firmaer
               </DropdownItem>
+              {/*Mapping through the array of companies if it is not empty */}
               {userCompanies !== '' &&
                 userCompanies.map((company, index) => (
                   <DropdownItem

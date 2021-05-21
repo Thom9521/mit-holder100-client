@@ -30,22 +30,27 @@ import {
   DropdownItem,
 } from 'reactstrap';
 
+// Component that renderes the menu
 const Menu = () => {
   const history = useHistory();
 
+  // States with React Hooks
+  const [embeddedLinks, setEmbeddedLinks] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [fetchedLinks, setFetchedLinks] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
     name: 'Alle firmaer',
   });
-  const [embeddedLinks, setEmbeddedLinks] = useState([]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [fetchedLinks, setFetchedLinks] = useState(false);
 
+  // Toggles dropdown
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
+  // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
     let isMounted = true;
     if (chosenCompany !== '' && !fetchedLinks) {
+      // GET request to get all the links for the chosen company
       axios({
         method: 'GET',
         url: `${globalConsts[0]}/links/getEmbeddedLinks.php?company=${chosenCompany.id}`,
@@ -63,8 +68,10 @@ const Menu = () => {
     return () => {
       isMounted = false;
     };
+    // Clean up. The following states will only be updated once mounted
   }, [chosenCompany, embeddedLinks, fetchedLinks]);
 
+  // Handles the logout
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('ID');
@@ -72,10 +79,12 @@ const Menu = () => {
     localStorage.removeItem('name');
     window.location = '/';
   };
+  // Handles the company choice
   const handleChosenCompany = (chosenCompany, push) => {
     setChosenCompany(chosenCompany);
     setFetchedLinks(!push);
     if (window.location.href.includes('/tasks') && push) {
+      // Pushing the choice to the tasks component
       history.push('/tasks', chosenCompany);
     }
   };
@@ -83,16 +92,12 @@ const Menu = () => {
   return (
     <div className="listContainer">
       <div className="headerContainer">
-        {/* {userCompanies != '' && <Header userCompanies={userCompanies} />} */}
+        {/*Renderes the Header component with props */}
         <Header chosenCompanyHeader={handleChosenCompany} />
       </div>
-
       <List className="listMenu container" type="unstyled">
-        {/* <div className="mainSection"> */}
         <li className="listItem">
           <Link to={{ pathname: '/tasks', state: chosenCompany }}>
-            {/* to={{ pathname: `task/${task.id}`, state: task }} */}
-
             <Row className="listRow">
               <Col className="listCol">
                 <FontAwesomeIcon
@@ -114,6 +119,7 @@ const Menu = () => {
               ></FontAwesomeIcon>
             </Col>
             <Col className="listColText">
+              {/*Shows if the embeddedLinks array is higher then 0 */}
               {embeddedLinks.length > 0 ? (
                 <Dropdown
                   isOpen={dropdownOpen}
@@ -128,15 +134,19 @@ const Menu = () => {
                     ></FontAwesomeIcon>
                   </DropdownToggle>
                   <DropdownMenu>
+                    {/*Shows if the embeddedLinks array is higher then 0.*/}
                     {embeddedLinks.length > 0 &&
+                      // Maps through the array with embeddedLinks and show a dropdown option for each
                       embeddedLinks.map((embeddedLink, index) =>
+                        // Maps through the custom fields in each link
                         embeddedLink.custom_fields.map((customField) =>
+                          // Shows if the name of the customfield is equal to 'Link type' and value is equal to 0
                           customField.name === 'Link type' &&
-                          customField.value === 0 ? (
+                            customField.value === 0 ? (
                             <Link
                               key={customField.id}
                               to={{
-                                pathname: `/information/${embeddedLink.id}`,
+                                pathname: `/embeddedLink/${embeddedLink.id}`,
                                 state: embeddedLink,
                               }}
                             >
@@ -152,8 +162,10 @@ const Menu = () => {
                           ) : (
                             customField.name === 'Link type' &&
                             customField.value === 1 &&
+                            // Maps through the custom fields in each link
                             embeddedLink.custom_fields.map(
                               (customField2) =>
+                                // Shows if the name of the customfield is equal to 'Link'
                                 customField2.name === 'Link' && (
                                   <a
                                     key={customField.id}
@@ -178,42 +190,12 @@ const Menu = () => {
                   </DropdownMenu>
                 </Dropdown>
               ) : (
+                // Shows if the array with links is empty
                 <i className="noLinks">Ingen links</i>
               )}
             </Col>
           </Row>
         </li>
-
-        {/* {embeddedLinks.length > 0 &&
-          embeddedLinks.map((embeddedLink) => (
-            <li key={embeddedLink.id} className="listItem">
-                          < Link to = { '/information'} >
-                          <Row className="listRow">
-                            <Col className="listCol">
-                              <FontAwesomeIcon
-                                className="fontAwesomeIconMenu"
-                                icon={faInfoCircle}
-                              ></FontAwesomeIcon>
-                            </Col>
-                            <Col className="listColText">{embeddedLink.id}</Col>
-                          </Row>
-              </Link>
-            </li>
-          ))} */}
-        {/* <li className="listItem">
-          <Link to={'/information'}>
-            <Row className="listRow">
-              <Col className="listCol">
-                <FontAwesomeIcon
-                  className="fontAwesomeIconMenu"
-                  icon={faInfoCircle}
-                ></FontAwesomeIcon>
-              </Col>
-              <Col className="listColText">Information</Col>
-            </Row>
-          </Link>
-        </li> */}
-
         <li className="listItem">
           <Link to={'/change-password'}>
             <Row className="listRow">

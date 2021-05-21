@@ -13,7 +13,7 @@ import { Container, Col } from 'reactstrap';
 import Login from './components/login/Login';
 import Pincode from './components/pincode/Pincode';
 import Tasks from './components/tasks/Tasks';
-import Information from './components/information/Information';
+import EmbeddedLinks from './components/embeddedLinks/EmbeddedLinks';
 // import Header from './components/menu/Header';
 // import Home from './components/home/Home';
 import Menu from './components/menu/Menu';
@@ -21,19 +21,25 @@ import SpecificTask from './components/specificTask/SpecificTask';
 import ChangePassword from './components/changePassword/ChangePassword';
 import NotFound from './components/notFound/NotFound';
 
+// App component that holds the entire app
 function App() {
+
+  // States with React Hooks
   const [validToken, setValidToken] = useState(false);
   const [doneFetching, setDoneFetching] = useState(false);
   const locationDom = useLocation();
 
+  // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      const tokenHeader = 'Bearer ' + token;
+      const tokenHeader = 'Bearer ' + token
+      // Headers for the POST request
       const headers = {
         'Content-Type': 'application/json',
         Authorization: tokenHeader,
       };
+      // POST request that validates the token
       axios({
         method: 'post',
         url: `${globalConsts[0]}/wordpress/wp-json/jwt-auth/v1/token/validate`,
@@ -53,6 +59,7 @@ function App() {
     } else {
       setDoneFetching(true);
     }
+    // Clean up. When left empty this useEffect will only be called once
   }, []);
 
   // Defining Auth route
@@ -68,13 +75,14 @@ function App() {
       }
     />
   );
+  // Handles the menu component
   const handleMenu = () => {
     if (
       // New paths needs to be added here
       (locationDom.pathname.includes('/task/') ||
         locationDom.pathname === '/tasks' ||
         locationDom.pathname === '/change-password' ||
-        locationDom.pathname.includes('/information/')) &&
+        locationDom.pathname.includes('/embeddedLink/')) &&
       validToken
     ) {
       return true;
@@ -85,12 +93,14 @@ function App() {
 
   return (
     <React.Fragment>
+      {/*Shows the menu if handleMenu returns true */}
       {handleMenu() && (
         <Col className="firstCol" lg="3">
           <Menu />
         </Col>
       )}
       <Switch>
+        {/*Public routes */}
         <Route path="/login" exact component={Login} />
         <Route path="/pincode" exact component={Pincode} />
         <Route
@@ -98,6 +108,8 @@ function App() {
           path="/"
           render={() => window.location.replace('/login')}
         />
+
+        {/*Auth routes */}
         {doneFetching && (
           <Auth
             exact
@@ -115,11 +127,11 @@ function App() {
         {doneFetching && (
           <Auth
             exact
-            path="/information/:id"
+            path="/embeddedLink/:id"
             render={() => (
               <Col className="secondCol">
                 <Container className="homeContainer">
-                  <Information />
+                  <EmbeddedLinks />
                 </Container>
               </Col>
             )}
@@ -152,6 +164,7 @@ function App() {
           />
         )}
 
+        {/*Handles the routing if the route includes 'wordpress', so we can access the WordPress Backend */}
         {!window.location.href.includes(`${globalConsts[0]}/wordpress`)
           ? doneFetching && <Route exact component={NotFound} />
           : doneFetching &&

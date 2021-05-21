@@ -7,8 +7,12 @@ import Task from './Task';
 import './Tasks.css';
 import { useLocation } from 'react-router';
 
+// Component that renderes the list of tasks
 const Tasks = () => {
+  // Destructuring the state from the navigation
   const { state } = useLocation();
+
+  // States with React Hooks
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [noTasks, setNoTasks] = useState(false);
@@ -18,6 +22,7 @@ const Tasks = () => {
     theState = { id: '0', name: 'Alle opgaver' };
   }
 
+  // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
     // Clearing state history on page reload
     window.history.replaceState({}, document.title);
@@ -28,10 +33,12 @@ const Tasks = () => {
     const token = localStorage.getItem('token');
 
     const tokenHeader = 'Bearer ' + token;
+    // Headers for the GET request
     const headers = {
       'Content-Type': 'application/json',
       Authorization: tokenHeader,
     };
+    // GET request that the logged in user
     axios({
       method: 'get',
       url: `${globalConsts[0]}/wordpress/wp-json/wp/v2/users/${wordPressId}`,
@@ -40,6 +47,7 @@ const Tasks = () => {
       .then((response) => {
         if (response.status === 200) {
           if (isMounted) {
+            // GET request that gets the tasks depending of the user
             axios({
               method: 'get',
               url: `${globalConsts[0]}/tasks/getTasks.php?clickUpClientId=${response.data.acf.user_fields_click_up_id}&clickUpCompanies=${response.data.acf.user_fields_companies}`,
@@ -86,26 +94,27 @@ const Tasks = () => {
     return () => {
       isMounted = false;
     };
+    // Clean up. When left empty this useEffect will only be called once
   }, []);
 
-  // handles the showing of tasks depending of the dropdown value
+  // Handles the showing of tasks depending of the dropdown value
   const showTasksForChosenCompany = (state, task) => {
     var taskCompanyId = '';
     var companyId = '';
 
-    // if the task has a "kunde" value and the state is set
+    // If the task has a "kunde" value and the state is set
     if (task.custom_fields[0].value[0] && state) {
       companyId = state.id;
       taskCompanyId = task.custom_fields[0].value[0].id;
 
-      // if the companyId on the dropdown is equal to the task "kunde" field or the dropdown value is set to 0
+      // If the companyId on the dropdown is equal to the task "kunde" field or the dropdown value is set to 0
       if (companyId === taskCompanyId || companyId === '0') {
         return true;
       } else {
         return false;
       }
     }
-    // if the task doesnt have a "kunde" and the dropdown value is set to all
+    // If the task doesnt have a "kunde" and the dropdown value is set to all
     else if (task.custom_fields[0].value[0] === undefined && state.id === '0') {
       return true;
     }
@@ -121,26 +130,31 @@ const Tasks = () => {
     return (
       <div className="contentWrapper contentCenter homeContainerContainer">
         <h4>Opgaver</h4>
+        {/*Shows if there are no tasks */}
         {noTasks ? (
           <p>Du har ingen tilgængelige opgaver.</p>
-        ) : (
-          tasks.map(
-            (task) =>
-              showTasksForChosenCompany(theState, task) && (
-                <Link
-                  key={task.id}
-                  to={{
-                    pathname: `task/${task.id}`,
-                    state: { task: task, companyState: theState },
-                  }}
-                  className="taskLink"
-                  onClick={() => window.scrollTo(0, 0)}
-                >
-                  <Task key={task.id} task={task} />
-                </Link>
-              )
-          )
-        )}
+        ) :
+          // Shows if there are tasks
+          (
+            // Mapping through the tasks and returns a Link for each one.
+            tasks.map(
+              (task) =>
+                // Checking the task with the showTasksForChosenCompany method
+                showTasksForChosenCompany(theState, task) && (
+                  <Link
+                    key={task.id}
+                    to={{
+                      pathname: `task/${task.id}`,
+                      state: { task: task, companyState: theState },
+                    }}
+                    className="taskLink"
+                    onClick={() => window.scrollTo(0, 0)}
+                  >
+                    <Task key={task.id} task={task} />
+                  </Link>
+                )
+            )
+          )}
       </div>
     );
   }

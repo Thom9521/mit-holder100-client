@@ -19,20 +19,29 @@ import {
   ModalFooter,
 } from 'reactstrap';
 
+// Compenent that renderes the login
 const Login = () => {
+
+  // States with React Hooks
   const [userLogin, setUserLogin] = useState('');
   const [password, setPassword] = useState('');
   const [modalError, setModalError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Toggle modal
   const toggleModalError = () => setModalError(!modalError);
 
+  // Handles the submit when loggin in
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
+
+    // Data for the POST request to get username
     const formData = new FormData();
     formData.append('phone', userLogin);
     formData.append('email', userLogin);
+
+    // POST request to get the username
     axios({
       method: 'POST',
       url: `${globalConsts[0]}/users/getUsername.php`,
@@ -45,20 +54,25 @@ const Login = () => {
           username !== '' &&
           password !== ''
         ) {
+
+          // Data for the POST request that gets the user
           const formDataLogin = new FormData();
           formDataLogin.append('username', username);
           formDataLogin.append('password', password);
 
+          // POST request to get user
           axios({
             method: 'POST',
             url: `${globalConsts[0]}/wordpress/wp-json/jwt-auth/v1/token`,
             data: formDataLogin,
           })
             .then((response) => {
+              // Sets items for the local storage
               localStorage.setItem('token', response.data.token);
               localStorage.setItem('ID', response.data.user_id);
               localStorage.setItem('username', response.data.user_nicename);
               localStorage.setItem('name', response.data.user_display_name);
+              // Redirecting to the tasks component
               window.location = '/tasks';
             })
             .catch((error) => {
@@ -72,6 +86,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
+        console.log(error);
         setLoading(false);
         toggleModalError();
       });
@@ -101,6 +116,7 @@ const Login = () => {
               onChange={(event) => setPassword(event.target.value)}
             />
             <Button className="submitStyles">
+              {/*Shows loading animation if loading is true */}
               {loading ? (
                 <Loader
                   type="TailSpin"
@@ -121,6 +137,7 @@ const Login = () => {
           </Link>
         </p>
       </Container>
+      {/*Shows modal if the attempt to login failed */}
       <Modal isOpen={modalError} toggle={toggleModalError}>
         <ModalHeader toggle={toggleModalError}>Mislykket</ModalHeader>
         <ModalBody>

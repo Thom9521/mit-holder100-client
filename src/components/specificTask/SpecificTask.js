@@ -20,7 +20,12 @@ import {
   Col,
 } from 'reactstrap';
 
+// Component that renderes a specifik task
 const SpecificTask = () => {
+  // Destructuring the state from the navigation
+  const { state } = useLocation();
+
+  // States with React Hooks
   const [taskText, setTaskTest] = useState('');
   const [modalSuccess, setModalSuccess] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
@@ -29,26 +34,31 @@ const SpecificTask = () => {
   const [loading, setLoading] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [errorMessage, setErrorMessage] = useState(false);
+
+  // Local variables
   var taskDescription = '';
 
-  const { state } = useLocation();
+  // Toggles modal
+  const toggleModalSuccess = () => {
+    setModalSuccess(!modalSuccess);
+  };
 
+  // Loopes through the custom fields to get 'Kundens opgave'
   for (let i = 0; i < state.task.custom_fields.length; i++) {
     if (state.task.custom_fields[i].name === 'Kundens opgave') {
       taskDescription = state.task.custom_fields[i].value;
     }
   }
 
-  const toggleModalSuccess = () => {
-    setModalSuccess(!modalSuccess);
-  };
-
   if (state === undefined) {
+    // Redirectiong to not found component
     window.location = '/NotFound';
   } else {
     var deadlineColor = '';
     if (state.task.due_date !== null) {
+      // Getting the date with the 'due_date' from the task
       var deadline = new Date(parseInt(state.task.due_date));
+      // Getting the right date format
       var deadlineFormat = deadline.toISOString().slice(0, 10).toString();
       if (deadline <= new Date()) {
         deadlineColor = 'red';
@@ -56,22 +66,27 @@ const SpecificTask = () => {
     }
   }
 
+  // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
     if (!selectedFile) {
       return;
     }
+    // Creates an object URL for the previews of images/videos
     const objectUrl = URL.createObjectURL(selectedFile);
     setPreviews((prevState) => {
       return [...prevState, objectUrl];
     });
     setSelectedFile(null);
+    // Clean up. The following states will only be updated once mounted
   }, [selectedFile, selectedTags]);
 
+  // Handles the task text input
   const handleTaskText = (e) => {
     setTaskTest(e.target.value);
     setErrorMessage(false);
   };
 
+  // Handles the selecting of files
   const onSelectFile = (e) => {
     const fileObject = e.target.files[0];
     if (!fileObject || fileObject.length === 0) {
@@ -80,19 +95,22 @@ const SpecificTask = () => {
     }
     setErrorMessage(false);
     setSelectedFile(fileObject);
+    // Adds the file to the array of files
     setSelectedFiles((prevState) => {
-      // selectedFiles: [...prevState, fileObject],
       return [...prevState, fileObject];
     });
   };
 
+  // Handles the file when removed
   const onFileRemove = (fileName, previewName) => {
     URL.revokeObjectURL(previewName);
     setSelectedFile();
 
+    // Removes the file from the array of files
     setSelectedFiles((prevState) => {
       return prevState.filter((file) => file.name !== fileName);
     });
+    // Removes the preview from the array of previews
     setPreviews((prevState) => {
       return prevState.filter((preview) => preview !== previewName);
     });
@@ -107,7 +125,10 @@ const SpecificTask = () => {
     setSelectedFiles(files);
   };
 
+  // Handles the tags
   const handleTags = (e, tagIndex, fileIndex, bgColor) => {
+
+    // Creates a new object with the tag values
     const tagObject = {
       id: e.target.value + tagIndex + fileIndex,
       value: e.target.value,
@@ -116,8 +137,10 @@ const SpecificTask = () => {
     };
     var inArray = false;
 
+    // If the array of tags is higher then 0
     if (selectedTags.length > 0) {
       for (let i = 0; i < selectedTags.length; i++) {
+        // If the tag already exists in the array of tags
         if (
           selectedTags[i].value +
           selectedTags[i].tagIndex +
@@ -126,6 +149,7 @@ const SpecificTask = () => {
         ) {
           inArray = true;
           e.target.style.borderColor = bgColor;
+          // Removes the tag from the array of tags
           setSelectedTags((prevState) => {
             return prevState.filter((tag) => tag.id !== tagObject.id);
           });
@@ -134,12 +158,14 @@ const SpecificTask = () => {
     }
     if (!inArray) {
       e.target.style.borderColor = 'yellow';
+      // Adds the tag to the array of tags
       setSelectedTags((prevState) => {
         return [...prevState, tagObject];
       });
     }
   };
 
+  // Handles the submit
   const handleSubmit = (event) => {
     event.preventDefault();
     if (selectedFiles.length > 0 || taskText !== '') {
@@ -156,10 +182,8 @@ const SpecificTask = () => {
       setLoading(true);
       var submitButton = document.getElementById('submitButton');
       submitButton.disabled = true;
-      const headers = {
-        'Content-Type': 'multipart/form-data',
-      };
 
+      // Data for the POST request
       const commentData = new FormData();
       commentData.append('taskId', state.task.id);
       commentData.append('comment_text', taskText);
@@ -169,16 +193,22 @@ const SpecificTask = () => {
       if (state.task.assignees.length > 0) {
         commentData.append('assignee', state.task.assignees[0].id);
       }
+      // POST request that adds the task text as a comment in Click Up
       axios({
         method: 'POST',
         url: `${globalConsts[0]}/tasks/addComment.php`,
         data: commentData,
       })
         .then((result) => {
-          // console.log(result);
-
           setTaskTest('');
           if (selectedFiles.length > 0) {
+
+            // Headers for the POST request
+            const headers = {
+              'Content-Type': 'multipart/form-data',
+            };
+
+            // Data for the POST request
             const fileData = new FormData();
             fileData.append('taskId', state.task.id);
             for (let i = 0; i < selectedFiles.length; i++) {
@@ -192,6 +222,8 @@ const SpecificTask = () => {
               fileData.append('status[]', state.task.status.status);
 
               var tagsString = '';
+
+              // Adding the right tags for each file
               for (let j = 0; j < selectedTags.length; j++) {
                 if (selectedTags[j].fileIndex === i) {
                   // eslint-disable-next-line
@@ -204,6 +236,8 @@ const SpecificTask = () => {
             if (state.task.assignees.length > 0) {
               fileData.append('assignee', state.task.assignees[0].id);
             }
+
+            // POST requst that adds the attached files
             axios({
               method: 'POST',
               url: `${globalConsts[0]}/tasks/addAttachments.php`,
@@ -212,6 +246,7 @@ const SpecificTask = () => {
             })
               .then((result) => {
                 if (result.status === 200) {
+                  // Clearing the states
                   setSelectedFiles([]);
                   setPreviews([]);
                   setSelectedFile();
@@ -243,17 +278,16 @@ const SpecificTask = () => {
       <Form onSubmit={handleSubmit} method="POST">
         <FormGroup>
           <div className="taskWrapper listHeader">
-            {/* <h4 className=" mb-3">Opgaven</h4> */}
             <div className="taskContent">
               <h5>{state.task.name}</h5>
               <p className="taskDeadline" style={{ color: deadlineColor }}>
+                {/*Showing depending the deadline */}
                 {state.task.due_date !== null
                   ? 'Deadline: ' + deadlineFormat
                   : 'Ingen deadline'}
               </p>
               <p className="taskDescription">{taskDescription}</p>
             </div>
-            {/* <h4 className="mb-3 mt-4">Din løsning</h4> */}
             <div className="taskContent mt-3">
               <h5>Tilføj en tekst</h5>
               <Input
@@ -264,13 +298,15 @@ const SpecificTask = () => {
                 onChange={handleTaskText}
               />
             </div>
-
+            {/*If the array of files is not empty */}
             {selectedFiles !== '' &&
+              // Maps through the array of files and shows a div for each one
               selectedFiles.map((file, index) => (
                 <div key={index} className="taskContent mt-3">
                   <h5>Fil {index + 1}</h5>
                   {selectedFiles[index] && (
                     <Row>
+                      {/*Shows if the file type is a video*/}
                       {selectedFiles[index].type.includes('video/') && (
                         <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
                           <video
@@ -283,6 +319,7 @@ const SpecificTask = () => {
                           </video>
                         </Col>
                       )}
+                      {/*Shows if the file type is an image*/}
                       {selectedFiles[index].type.includes('image/') && (
                         <Col className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 fileCol">
                           <img
@@ -311,6 +348,7 @@ const SpecificTask = () => {
                       </p>
                     </Col>
                     <Col>
+                      {/*Looping through the tags and shows a button for each one */}
                       {state.task.tags.map((tag, tagIndex) => (
                         <button
                           type="button"
@@ -356,6 +394,7 @@ const SpecificTask = () => {
 
             <div className="taskButtonDiv">
               <Button id="submitButton" className="taskButton">
+                {/*Shows a loading animation if loading is true */}
                 {loading ? (
                   <Loader
                     type="TailSpin"
@@ -376,6 +415,7 @@ const SpecificTask = () => {
           </div>
         </FormGroup>
       </Form>
+      {/*Shows the submit was a success */}
       <Modal
         isOpen={modalSuccess}
         toggle={toggleModalSuccess}

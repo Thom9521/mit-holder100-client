@@ -4,29 +4,34 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
+// Routing components
 import { BrowserRouter as Router } from 'react-router-dom';
 
+// Reactstrap components
 import { Container, Row } from 'reactstrap';
 
 var stylingClassesContainer = 'contentWrapper';
 var stylingClassesContainerRow = 'contentWrapper';
-var useRow = true;
-// New paths needs to be added here
+var specificRoute = true;
+
+// Handles the orange background style for some chosen routes
 if (
+  // New paths needs to be added here
   window.location.pathname !== '/tasks' &&
-  !window.location.pathname.includes('/information/') &&
+  !window.location.pathname.includes('/embeddedLink/') &&
   window.location.pathname !== '/change-password' &&
   !window.location.pathname.includes('/task/')
 ) {
   stylingClassesContainer = 'contentWrapper orangeBackground';
   stylingClassesContainerRow = 'orangeBackgroundContent';
-  useRow = false;
+  specificRoute = false;
 }
 
 ReactDOM.render(
   <div className={stylingClassesContainer}>
     <Container className={stylingClassesContainerRow}>
-      {useRow ? (
+      {specificRoute ? (
         <Row className={stylingClassesContainerRow}>
           <Router>
             <App />

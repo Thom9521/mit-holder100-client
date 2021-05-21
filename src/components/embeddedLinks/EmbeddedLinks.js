@@ -1,12 +1,14 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import './Information.css';
+import './EmbeddedLinks.css';
 
-const Information = () => {
+// Component that renderes the embedded links
+const EmbeddedLinks = () => {
 
   // State parsed with navigation link
   const state = useLocation();
 
+  // Local variables
   var linkDescription, linkLink;
 
 
@@ -32,4 +34,4 @@ const Information = () => {
       </div>
     </div>);
 };
-export default Information;
+export default EmbeddedLinks;
