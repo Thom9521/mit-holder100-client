@@ -27,3 +27,5 @@ In the `public` folder all the information available to the public is set. This 
 The service-worker files shouldn't be touched and handles the PWA functions.
 
 The app is build with functional components and all components can be found in the `components` folder. Here each folder consists of atleast one parent component and a stylesheet.
+
+To access the WordPress backend use the following url: `https://mit.holder100.dk/server/wordpress`
