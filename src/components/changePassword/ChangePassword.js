@@ -64,7 +64,7 @@ const ChangePassword = () => {
       formDataLogin.append('username', localStorage.getItem('username'));
       formDataLogin.append('password', oldPassword);
 
-      // HTTP POST request
+      // HTTP POST request that makes sure the old password is correct
       axios({
         method: 'POST',
         url: `${globalConsts[0]}/wordpress/wp-json/jwt-auth/v1/token`,
