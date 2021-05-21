@@ -8,14 +8,13 @@ import globalConsts from '../../globalConsts';
 // Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
-// import { faCalenderCheck } from '@fortawesome/free-solid-svg-icons'
-// import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
+// import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { useHistory } from 'react-router-dom';
 
