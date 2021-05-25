@@ -81,7 +81,7 @@ const Header = (props) => {
     return () => {
       isMounted = false;
     };
-    // Clean up. The following states will only be updated once mounted
+    // Clean up. The following states will only be updated once when mounted
   }, [chosenCompanyHeader, userCompanies, fetchedCompanies, chosenCompany]);
 
   // Handles the choice of company

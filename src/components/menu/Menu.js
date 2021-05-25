@@ -4,6 +4,7 @@ import Header from './Header';
 import './Menu.css';
 import axios from 'axios';
 import globalConsts from '../../globalConsts';
+import { useHistory } from 'react-router-dom';
 
 // Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +17,6 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 // import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { useHistory } from 'react-router-dom';
 
 // Reactstrap components
 import {
@@ -67,7 +67,7 @@ const Menu = () => {
     return () => {
       isMounted = false;
     };
-    // Clean up. The following states will only be updated once mounted
+    // Clean up. The following states will only be updated once when mounted
   }, [chosenCompany, embeddedLinks, fetchedLinks]);
 
   // Handles the logout
@@ -82,7 +82,7 @@ const Menu = () => {
   const handleChosenCompany = (chosenCompany, push) => {
     setChosenCompany(chosenCompany);
     setFetchedLinks(!push);
-    if (window.location.href.includes('/tasks') && push) {
+    if (push) {
       // Pushing the choice to the tasks component
       history.push('/tasks', chosenCompany);
     }

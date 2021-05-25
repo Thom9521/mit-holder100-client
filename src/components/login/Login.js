@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css';
 import logo from '../../assets/images/logo.svg';
 import axios from 'axios';
 import Loader from 'react-loader-spinner';
 import globalConsts from '../../globalConsts';
+import { useLocation } from 'react-router';
 
 // Reactstrap components
 import {
@@ -21,12 +22,22 @@ import {
 
 // Compenent that renderes the login
 const Login = () => {
+  // Destructuring the state from the navigation
+  const { state } = useLocation();
 
   // States with React Hooks
   const [userLogin, setUserLogin] = useState('');
   const [password, setPassword] = useState('');
   const [modalError, setModalError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // useEffect with React Hooks. Runs when the component has mounted
+  useEffect(() => {
+    if (state !== undefined) {
+      setUserLogin(state);
+    }
+    // Clean up. The following states will only be updated once when mounted
+  }, [state])
 
   // Toggle modal
   const toggleModalError = () => setModalError(!modalError);

@@ -31,9 +31,6 @@ const Pincode = () => {
   // Handles the succes modal
   const toggleModalSuccess = () => {
     setModalSuccess(!modalSuccess);
-    if (modalSuccess) {
-      window.location = '/login';
-    }
   };
 
   // Handles the error modal
@@ -56,8 +53,6 @@ const Pincode = () => {
     })
       .then((response) => {
         if (response.data.status === 200) {
-          // Resets the state
-          setPhone('');
           toggleModalSuccess();
         } else if (response.data.status === 400) {
           toggleModalError();
@@ -113,9 +108,11 @@ const Pincode = () => {
         <ModalHeader toggle={toggleModalSuccess}>Succes!</ModalHeader>
         <ModalBody>Din nye pinkode er blevet sendt til din email.</ModalBody>
         <ModalFooter>
-          <Button className="closeModal" onClick={toggleModalSuccess}>
-            Luk
+          <Link to={{ pathname: '/login', state: phone }}>
+            <Button className="closeModal" onClick={toggleModalSuccess}>
+              Luk
           </Button>{' '}
+          </Link>
         </ModalFooter>
       </Modal>
       {/*Shows is the request failed */}

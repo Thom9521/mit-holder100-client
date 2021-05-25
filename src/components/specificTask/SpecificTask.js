@@ -77,7 +77,7 @@ const SpecificTask = () => {
       return [...prevState, objectUrl];
     });
     setSelectedFile(null);
-    // Clean up. The following states will only be updated once mounted
+    // Clean up. The following states will only be updated once when mounted
   }, [selectedFile, selectedTags]);
 
   // Handles the task text input
