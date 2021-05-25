@@ -15,7 +15,8 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
-// import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 
 // Reactstrap components
@@ -35,7 +36,10 @@ const Menu = () => {
 
   // States with React Hooks
   const [embeddedLinks, setEmbeddedLinks] = useState([]);
+  const [externalLinks, setExternalLinks] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpenEmbedded, setDropdownOpenEmbedded] = useState(false);
+  const [dropdownOpenSettings, setDropdownOpenSettings] = useState(false);
   const [fetchedLinks, setFetchedLinks] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
@@ -44,6 +48,8 @@ const Menu = () => {
 
   // Toggles dropdown
   const toggle = () => setDropdownOpen(!dropdownOpen);
+  const toggleSettings = () => setDropdownOpenSettings(!dropdownOpenSettings);
+  const toggleEmbedded = () => setDropdownOpenEmbedded(!dropdownOpenEmbedded);
 
   // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
@@ -56,8 +62,24 @@ const Menu = () => {
       })
         .then((response) => {
           if (isMounted) {
+            setEmbeddedLinks('')
+            setExternalLinks('')
             setFetchedLinks(true);
-            setEmbeddedLinks(response.data);
+            console.log(response.data)
+            for (let i = 0; i < response.data.length; i++) {
+              for (let j = 0; j < response.data[i].custom_fields.length; j++) {
+                if (response.data[i].custom_fields[j].name === "Link type" && response.data[i].custom_fields[j].value === 0) {
+                  setEmbeddedLinks((prevstate) => {
+                    return [...prevstate, response.data[i]]
+                  })
+                } else if (response.data[i].custom_fields[j].name === "Link type" && response.data[i].custom_fields[j].value === 1) {
+                  console.log(response.data[i]);
+                  setExternalLinks((prevstate) => {
+                    return [...prevstate, response.data[i]]
+                  })
+                }
+              }
+            }
           }
         })
         .catch((error) => {
@@ -108,21 +130,43 @@ const Menu = () => {
             </Row>
           </Link>
         </li>
-        <li className="listItem">
-          <Row className="listRow">
-            <Col className="listCol">
-              <FontAwesomeIcon
-                className="fontAwesomeIconMenu"
-                icon={faLink}
-                onClick={toggle}
-              ></FontAwesomeIcon>
-            </Col>
-            <Col className="listColText">
-              {/*Shows if the embeddedLinks array is higher then 0 */}
-              {embeddedLinks.length > 0 ? (
+        {embeddedLinks.length > 0 &&
+          // Maps through the array with embeddedLinks and show a dropdown option for each
+          embeddedLinks.map((embeddedLink) =>
+            <li className="listItem embeddedLinksItems" key={embeddedLink.id}>
+              <Link
+                to={{
+                  pathname: `/embeddedLink/${embeddedLink.id}`,
+                  state: embeddedLink,
+                }}
+              >
+                <Row className="listRow">
+                  <Col className="listCol">
+                    <FontAwesomeIcon
+                      className="fontAwesomeIconMenu"
+                      icon={faLink}
+                    ></FontAwesomeIcon>
+                  </Col>
+                  <Col className="listColText">{embeddedLink.name}</Col>
+                </Row>
+              </Link>
+            </li>
+          )}
+        {embeddedLinks.length > 1 && (
+          <li className="listItem embeddedLinksDropdown">
+            <Row className="listRow">
+              <Col className="listCol">
+                <FontAwesomeIcon
+                  className="fontAwesomeIconMenu"
+                  icon={faLink}
+                  onClick={toggleEmbedded}
+                ></FontAwesomeIcon>
+              </Col>
+              <Col className="listColText">
+                {/*Shows if the embeddedLinks array is higher then 0 */}
                 <Dropdown
-                  isOpen={dropdownOpen}
-                  toggle={toggle}
+                  isOpen={dropdownOpenEmbedded}
+                  toggle={toggleEmbedded}
                   className="dropdownStyles dropdownLinks"
                 >
                   <DropdownToggle className="dropdownToggle">
@@ -137,65 +181,154 @@ const Menu = () => {
                     {embeddedLinks.length > 0 &&
                       // Maps through the array with embeddedLinks and show a dropdown option for each
                       embeddedLinks.map((embeddedLink, index) =>
+
+                        <Link
+                          key={embeddedLink.id}
+                          to={{
+                            pathname: `/embeddedLink/${embeddedLink.id}`,
+                            state: embeddedLink,
+                          }}
+                        >
+                          <DropdownItem
+                            key={index}
+                            className="mb-2 mt-1"
+                            name={embeddedLink.name}
+                            value={embeddedLink.id}
+                          >
+                            {embeddedLink.name}
+                          </DropdownItem>
+                        </Link>
+                      )}
+                  </DropdownMenu>
+                </Dropdown>
+              </Col>
+            </Row>
+          </li>
+        )}
+        {embeddedLinks.length === 1 &&
+
+          <li className="listItem embeddedLinksDropdown" key={embeddedLinks[0].id}>
+            <Link
+              to={{
+                pathname: `/embeddedLink/${embeddedLinks[0].id}`,
+                state: embeddedLinks[0],
+              }}
+            >
+              <Row className="listRow">
+                <Col className="listCol">
+                  <FontAwesomeIcon
+                    className="fontAwesomeIconMenu"
+                    icon={faLink}
+                  ></FontAwesomeIcon>
+                </Col>
+                <Col className="listColText">{embeddedLinks[0].name}</Col>
+              </Row>
+            </Link>
+          </li>
+        }
+        {externalLinks.length > 0 && (
+          <li className="listItem">
+            <Row className="listRow">
+              <Col className="listCol">
+                <FontAwesomeIcon
+                  className="fontAwesomeIconMenu"
+                  icon={faExternalLinkAlt}
+                  onClick={toggle}
+                ></FontAwesomeIcon>
+              </Col>
+              <Col className="listColText">
+                {/*Shows if the embeddedLinks array is higher then 0 */}
+                <Dropdown
+                  isOpen={dropdownOpen}
+                  toggle={toggle}
+                  className="dropdownStyles dropdownLinks"
+                >
+                  <DropdownToggle className="dropdownToggle">
+                    Links{' '}
+                    <FontAwesomeIcon
+                      className="fontAwesomeIconHeader"
+                      icon={faCaretDown}
+                    ></FontAwesomeIcon>
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {/*Shows if the embeddedLinks array is higher then 0.*/}
+                    {externalLinks.length > 0 &&
+                      // Maps through the array with externalLinks and show a dropdown option for each
+                      externalLinks.map((externalLink, index) =>
                         // Maps through the custom fields in each link
-                        embeddedLink.custom_fields.map((customField) =>
-                          // Shows if the name of the customfield is equal to 'Link type' and value is equal to 0
-                          customField.name === 'Link type' &&
-                            customField.value === 0 ? (
-                            <Link
-                              key={customField.id}
-                              to={{
-                                pathname: `/embeddedLink/${embeddedLink.id}`,
-                                state: embeddedLink,
-                              }}
+                        externalLink.custom_fields.map((customField) =>
+                          customField.name === 'Link' &&
+                          <a
+                            key={customField.id}
+                            href={customField.value}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <DropdownItem
+                              key={index}
+                              className="mb-2 mt-1"
+                              name={externalLink.name}
+                              value={externalLink.id}
                             >
-                              <DropdownItem
-                                key={index}
-                                className="mb-2 mt-1"
-                                name={embeddedLink.name}
-                                value={embeddedLink.id}
-                              >
-                                {embeddedLink.name}
-                              </DropdownItem>
-                            </Link>
-                          ) : (
-                            customField.name === 'Link type' &&
-                            customField.value === 1 &&
-                            // Maps through the custom fields in each link
-                            embeddedLink.custom_fields.map(
-                              (customField2) =>
-                                // Shows if the name of the customfield is equal to 'Link'
-                                customField2.name === 'Link' && (
-                                  <a
-                                    key={customField.id}
-                                    href={customField2.value}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                  >
-                                    <DropdownItem
-                                      key={index}
-                                      className="mb-2 mt-1"
-                                      name={embeddedLink.name}
-                                      value={embeddedLink.id}
-                                    >
-                                      {embeddedLink.name}
-                                    </DropdownItem>
-                                  </a>
-                                )
-                            )
-                          )
+                              {externalLink.name}
+                            </DropdownItem>
+                          </a>
+
                         )
                       )}
                   </DropdownMenu>
                 </Dropdown>
-              ) : (
-                // Shows if the array with links is empty
-                <i className="noLinks">Ingen links</i>
-              )}
+              </Col>
+            </Row>
+          </li>
+        )}
+        < li className="listItem">
+          <Row className="listRow">
+            <Col className="listCol">
+              <FontAwesomeIcon
+                className="fontAwesomeIconMenu"
+                icon={faCog}
+                onClick={toggleSettings}
+              ></FontAwesomeIcon>
             </Col>
+            <Col className="listColText">
+              <Dropdown
+                isOpen={dropdownOpenSettings}
+                toggle={toggleSettings}
+                className="dropdownStyles dropdownLinks"
+              >
+                <DropdownToggle className="dropdownToggle">
+                  Indstillinger{' '}
+                  <FontAwesomeIcon
+                    className="fontAwesomeIconHeader"
+                    icon={faCaretDown}
+                  ></FontAwesomeIcon>
+                </DropdownToggle>
+                <DropdownMenu>
+                  <Link
+                    to={'/change-password'}
+                  >
+                    <DropdownItem
+                      className="mb-2 mt-1"
+                    >
+                      Skift adgangskode
+                    </DropdownItem>
+                  </Link>
+
+                  <DropdownItem
+                    className="mb-2 mt-1"
+                    onClick={handleLogout}
+                  >
+                    Log ud
+                    </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+
+            </Col>
+
           </Row>
         </li>
-        <li className="listItem">
+        {/* <li className="listItem">
           <Link to={'/change-password'}>
             <Row className="listRow">
               <Col className="listCol">
@@ -218,8 +351,7 @@ const Menu = () => {
             </Col>
             <Col className="listColText">Log ud</Col>
           </Row>
-        </li>
-        {/* </div> */}
+        </li> */}
         <div className="contactSection">
           <li className="listHeader">
             <h5>Kontakt os</h5>
@@ -252,7 +384,7 @@ const Menu = () => {
           </li>
         </div>
       </List>
-    </div>
+    </div >
   );
 };
 export default Menu;

@@ -5,6 +5,7 @@ import logoBlack from '../../assets/images/logoBlack.svg';
 import globalConsts from '../../globalConsts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Loader from 'react-loader-spinner';
 
 // Reactstrap components
 import {
@@ -28,7 +29,7 @@ const Header = (props) => {
   const [fetchedCompanies, setFetchedCompanies] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
-    name: 'Alle firmaer',
+    name: ''
   });
 
   // Toggle dropdown
@@ -58,19 +59,11 @@ const Header = (props) => {
             const companyArray = response.data.companies;
             if (companyArray !== undefined) {
               setUserCompanies(companyArray);
-            }
-            if (chosenCompany === undefined) {
-              setChosenCompany({
-                id: '0',
-                name: 'Alle firmaer',
-              });
+              setChosenCompany(companyArray[0])
             }
             chosenCompanyHeader(
-              {
-                id: '0',
-                name: 'Alle firmaer',
-              },
-              false
+              companyArray[0],
+              true
             );
           }
         })
@@ -110,21 +103,29 @@ const Header = (props) => {
             className="dropdownStyles dropdownStylesHeader"
           >
             <DropdownToggle>
-              {userCompanies !== '' && chosenCompany && chosenCompany.name}{' '}
+              {userCompanies !== '' && chosenCompany.name !== '' ? chosenCompany.name : (
+                <Loader
+                  className="loaderHeader"
+                  type="TailSpin"
+                  color="#ff9414"
+                  height={23}
+                  width={23}
+                />
+              )}{' '}
               <FontAwesomeIcon
                 className="fontAwesomeIconHeader"
                 icon={faCaretDown}
               ></FontAwesomeIcon>
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem
+              {/* <DropdownItem
                 className="mb-2 mt-1"
                 name="Alle firmaer"
                 value="0"
                 onClick={(e) => handleChosenCompany(e)}
               >
                 Alle firmaer
-              </DropdownItem>
+              </DropdownItem> */}
               {/*Mapping through the array of companies if it is not empty */}
               {userCompanies !== '' &&
                 userCompanies.map((company, index) => (

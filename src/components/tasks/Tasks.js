@@ -18,9 +18,9 @@ const Tasks = () => {
   const [noTasks, setNoTasks] = useState(false);
 
   var theState = state;
-  if (theState === undefined) {
-    theState = { id: '0', name: 'Alle opgaver' };
-  }
+  // if (theState === undefined) {
+  //   theState = { id: '0', name: 'Alle opgaver' };
+  // }
 
   // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {

@@ -34,6 +34,7 @@ a:active {
   padding-left: 2.4rem !important;
   display: flex;
   justify-content: center;
+
 }
 .listColText {
   color: #707070;
@@ -110,6 +111,16 @@ a:active {
 }
 .dropdownCol {
   min-height: 4rem;
+}
+.dropdown-menu {
+  min-width: 12rem !important;
+}
+.loaderHeader{
+  display: inline;
+  margin-right: 1rem;
+}
+.embeddedLinksDropdown {
+  display: none;
 }
 
 @media only screen and (max-width: 991px) {
@@ -225,6 +236,12 @@ a:active {
   .listItem {
     margin-top: 0.5rem;
   }
+  .embeddedLinksItems {
+    display: none;
+  }
+  .embeddedLinksDropdown {
+    display: unset;
+  }
 }
 
 /* @media only screen and (min-width: 576px) {
@@ -273,12 +290,12 @@ a:active {
   }
 }
 @media (min-width: 576px) {
-  .headerContainer {
-    max-width: 510px;
+  .headerContainer, .listMenu {
+    max-width: 510px !important;
   }
 }
 @media (min-width: 768px) {
-  .headerContainer {
-    max-width: 690px;
+  .headerContainer, .listMenu {
+    max-width: 690px !important;
   }
 }
