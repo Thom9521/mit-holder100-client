@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
+import InstallPWAButton from './InstallPWAButton';
 import './Menu.css';
 import axios from 'axios';
 import globalConsts from '../../globalConsts';
 import { useHistory } from 'react-router-dom';
-
 // Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
@@ -41,6 +41,7 @@ const Menu = () => {
   const [dropdownOpenEmbedded, setDropdownOpenEmbedded] = useState(false);
   const [dropdownOpenSettings, setDropdownOpenSettings] = useState(false);
   const [fetchedLinks, setFetchedLinks] = useState(false);
+  const [installable, setInstallable] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
     name: 'Alle firmaer',
@@ -107,7 +108,9 @@ const Menu = () => {
       history.push('/tasks', chosenCompany);
     }
   };
-
+  const handleInstallable = (childData) => {
+    setInstallable(childData);
+  }
   return (
     <div className="listContainer">
       <div className="headerContainer">
@@ -303,6 +306,12 @@ const Menu = () => {
                   ></FontAwesomeIcon>
                 </DropdownToggle>
                 <DropdownMenu>
+                  {installable && (
+                    <DropdownItem>
+                      <InstallPWAButton installable={handleInstallable} />
+                    </DropdownItem>
+                  )
+                  }
                   <Link
                     to={'/change-password'}
                   >
