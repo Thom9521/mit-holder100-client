@@ -41,7 +41,6 @@ const Menu = () => {
   const [dropdownOpenEmbedded, setDropdownOpenEmbedded] = useState(false);
   const [dropdownOpenSettings, setDropdownOpenSettings] = useState(false);
   const [fetchedLinks, setFetchedLinks] = useState(false);
-  const [installable, setInstallable] = useState(false);
   const [chosenCompany, setChosenCompany] = useState({
     id: '0',
     name: 'Alle firmaer',
@@ -108,9 +107,7 @@ const Menu = () => {
       history.push('/tasks', chosenCompany);
     }
   };
-  const handleInstallable = (childData) => {
-    setInstallable(childData);
-  }
+
   return (
     <div className="listContainer">
       <div className="headerContainer">
@@ -306,12 +303,9 @@ const Menu = () => {
                   ></FontAwesomeIcon>
                 </DropdownToggle>
                 <DropdownMenu>
-                  {installable && (
-                    <DropdownItem>
-                      <InstallPWAButton installable={handleInstallable} />
-                    </DropdownItem>
-                  )
-                  }
+                  <DropdownItem>
+                    <InstallPWAButton />
+                  </DropdownItem>
                   <Link
                     to={'/change-password'}
                   >

@@ -31,6 +31,10 @@ function App() {
 
   // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      console.log(`'beforeinstallprompt' event was fired.`);
+    });
+
     const token = localStorage.getItem('token');
     if (token) {
       const tokenHeader = 'Bearer ' + token

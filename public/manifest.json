@@ -10,7 +10,8 @@
     {
       "src": "holder100Favicon.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "holder100Favicon.png",
@@ -18,7 +19,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://mit.holder100.dk",
   "display": "standalone",
   "theme_color": "#ff9414",
   "background_color": "#ffffff"
