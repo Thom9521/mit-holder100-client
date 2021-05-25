@@ -6,11 +6,11 @@ import { Row, Col, Tooltip } from 'reactstrap';
 // Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfinity } from '@fortawesome/free-solid-svg-icons';
+import { faUserLock } from '@fortawesome/free-solid-svg-icons';
 
 // Child component that renderes a single task in the list of tasks
 const Task = (props) => {
-  const { id, name, due_date, status } = props.task; // Destructuring
-
+  const { id, name, due_date, status, custom_fields } = props.task; // Destructuring
   // States with React Hooks
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
@@ -26,6 +26,14 @@ const Task = (props) => {
     if (deadline <= new Date()) {
       deadlineColor = 'red';
     }
+  }
+
+  var personalTask = false;
+  for (let i = 0; i < custom_fields.length; i++) {
+    if (custom_fields[i].id === "97466020-1ea9-42ce-bdf1-afdcfa21914d" && custom_fields[i].value !== undefined && custom_fields[i].value.length > 0) {
+      personalTask = true;
+    }
+
   }
 
   return (
@@ -55,6 +63,24 @@ const Task = (props) => {
               toggle={toggle}
             >
               Åben opgave. Her kan altid indsendes materiale.
+            </Tooltip>
+          </Col>
+        )}
+        {/*Shows if the task is personal to the user' */}
+        {personalTask && (
+          <Col className="col-2 endlessDataCol">
+            <FontAwesomeIcon
+              id={id}
+              className="fontAwesomeIconTasks"
+              icon={faUserLock}
+            ></FontAwesomeIcon>
+            <Tooltip
+              placement="auto"
+              isOpen={tooltipOpen}
+              target={id}
+              toggle={toggle}
+            >
+              Personlig opgave. Denne opgave er låst til dig.
             </Tooltip>
           </Col>
         )}
