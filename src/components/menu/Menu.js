@@ -9,8 +9,8 @@ import { useHistory } from 'react-router-dom';
 // Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
-import { faKey } from '@fortawesome/free-solid-svg-icons';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+// import { faKey } from '@fortawesome/free-solid-svg-icons';
+// import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -65,7 +65,6 @@ const Menu = () => {
             setEmbeddedLinks('')
             setExternalLinks('')
             setFetchedLinks(true);
-            console.log(response.data)
             for (let i = 0; i < response.data.length; i++) {
               for (let j = 0; j < response.data[i].custom_fields.length; j++) {
                 if (response.data[i].custom_fields[j].name === "Link type" && response.data[i].custom_fields[j].value === 0) {
@@ -73,7 +72,6 @@ const Menu = () => {
                     return [...prevstate, response.data[i]]
                   })
                 } else if (response.data[i].custom_fields[j].name === "Link type" && response.data[i].custom_fields[j].value === 1) {
-                  console.log(response.data[i]);
                   setExternalLinks((prevstate) => {
                     return [...prevstate, response.data[i]]
                   })
