@@ -124,11 +124,17 @@ function App() {
         {/*Public routes */}
         <Route path="/login" exact component={Login} />
         <Route path="/pincode" exact component={Pincode} />
-        <Route
-          exact
-          path="/"
-          render={() => window.location.replace('/login')}
-        />
+        {doneFetching && (
+          <Route
+            exact
+            path="/"
+            render={() =>
+              !validToken
+                ? (window.location = '/login')
+                : (window.location = '/tasks')
+            }
+          />
+        )}
 
         {/*Auth routes */}
         {doneFetching && (

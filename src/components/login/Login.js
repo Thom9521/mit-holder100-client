@@ -23,7 +23,7 @@ import {
 // Compenent that renderes the login
 const Login = () => {
   // Destructuring the state from the navigation
-  const { state } = useLocation();
+  const { phone } = useLocation();
 
   // States with React Hooks
   const [userLogin, setUserLogin] = useState('');
@@ -33,11 +33,11 @@ const Login = () => {
 
   // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
-    if (state !== undefined) {
-      setUserLogin(state);
+    if (phone !== undefined) {
+      setUserLogin(phone);
     }
     // Clean up. The following states will only be updated once when mounted
-  }, [state])
+  }, [phone]);
 
   // Toggle modal
   const toggleModalError = () => setModalError(!modalError);
@@ -65,7 +65,6 @@ const Login = () => {
           username !== '' &&
           password !== ''
         ) {
-
           // Data for the POST request that gets the user
           const formDataLogin = new FormData();
           formDataLogin.append('username', username);

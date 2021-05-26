@@ -131,7 +131,7 @@ const Tasks = () => {
         <h4>Opgaver</h4>
         {/*Shows if there are no tasks */}
         {noTasks ? (
-          <p>Du har ingen tilgængelige opgaver.</p>
+          <p>Du har ingen tilgængelige opgaver</p>
         ) : (
           // Shows if there are tasks
           // Mapping through the tasks and returns a Link for each one.

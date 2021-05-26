@@ -21,7 +21,6 @@ import {
 
 // Component that renderes the possiblity to get a new pincode as a password
 const Pincode = () => {
-
   // States with React Hooks
   const [phone, setPhone] = useState('');
   const [modalSuccess, setModalSuccess] = useState(false);
@@ -29,9 +28,7 @@ const Pincode = () => {
   const [loading, setLoading] = useState(false);
 
   // Handles the succes modal
-  const toggleModalSuccess = () => {
-    setModalSuccess(!modalSuccess);
-  };
+  const toggleModalSuccess = () => setModalSuccess(!modalSuccess);
 
   // Handles the error modal
   const toggleModalError = () => setModalError(!modalError);
@@ -108,10 +105,10 @@ const Pincode = () => {
         <ModalHeader toggle={toggleModalSuccess}>Succes!</ModalHeader>
         <ModalBody>Din nye pinkode er blevet sendt til din email.</ModalBody>
         <ModalFooter>
-          <Link to={{ pathname: '/login', state: phone }}>
+          <Link to={{ pathname: '/login', phone: phone }}>
             <Button className="closeModal" onClick={toggleModalSuccess}>
               Luk
-          </Button>{' '}
+            </Button>{' '}
           </Link>
         </ModalFooter>
       </Modal>

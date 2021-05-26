@@ -8,7 +8,7 @@ import { Button } from 'reactstrap';
 
 const HistoricalTasks = (props) => {
   const { theState } = props;
-  console.log(theState);
+
   // States with React Hooks
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +41,6 @@ const HistoricalTasks = (props) => {
             headers: headers,
           })
             .then((response) => {
-              console.log(response);
               if (response.data.length <= 0) {
                 setNoTasks(true);
                 setLoading(false);
@@ -126,7 +125,7 @@ const HistoricalTasks = (props) => {
           <h4 className="mt-5">Løste opgaver</h4>
           {/*Shows if there are no tasks */}
           {noTasks ? (
-            <p>Du har ingen historiske opgaver.</p>
+            <p>Du har ingen løste opgaver</p>
           ) : (
             // Shows if there are tasks
             // Mapping through the tasks and returns a Link for each one.
@@ -149,7 +148,7 @@ const HistoricalTasks = (props) => {
             )
           )}
           {showingTasks === 0 && checkedTasks === tasks.length && (
-            <p>Du har ingen historiske opgaver</p>
+            <p>Du har ingen løste opgaver</p>
           )}
         </div>
       );
