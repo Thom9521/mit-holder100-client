@@ -23,21 +23,36 @@ import NotFound from './components/notFound/NotFound';
 
 // App component that holds the entire app
 function App() {
+  const locationDom = useLocation();
 
   // States with React Hooks
   const [validToken, setValidToken] = useState(false);
   const [doneFetching, setDoneFetching] = useState(false);
-  const locationDom = useLocation();
+  const [deferredPrompt, setDeferredPrompt] = useState('');
 
   // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      setDeferredPrompt(e);
+
       console.log(`'beforeinstallprompt' event was fired.`);
     });
 
+    window.addEventListener('appinstalled', () => {
+      // Log install to analytics
+      console.log('INSTALL: Success');
+      setDeferredPrompt('');
+    });
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      console.log('installed?');
+    }
+
     const token = localStorage.getItem('token');
     if (token) {
-      const tokenHeader = 'Bearer ' + token
+      const tokenHeader = 'Bearer ' + token;
       // Headers for the POST request
       const headers = {
         'Content-Type': 'application/json',
@@ -58,7 +73,7 @@ function App() {
         .catch((error) => {
           setDoneFetching(true);
           localStorage.removeItem('token');
-          console.log(error)
+          console.log(error);
         });
     } else {
       setDoneFetching(true);
@@ -100,7 +115,7 @@ function App() {
       {/*Shows the menu if handleMenu returns true */}
       {handleMenu() && (
         <Col className="firstCol" lg="3">
-          <Menu />
+          <Menu deferredPrompt={deferredPrompt} />
         </Col>
       )}
       <Switch>
@@ -172,9 +187,9 @@ function App() {
         {!window.location.href.includes(`${globalConsts[0]}/wordpress`)
           ? doneFetching && <Route exact component={NotFound} />
           : doneFetching &&
-          window.location.replace(
-            `${globalConsts[0]}/wordpress/wp-admin/index.php`
-          )}
+            window.location.replace(
+              `${globalConsts[0]}/wordpress/wp-admin/index.php`
+            )}
       </Switch>
     </React.Fragment>
   );

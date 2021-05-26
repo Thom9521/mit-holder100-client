@@ -18,15 +18,9 @@ const Tasks = () => {
   const [noTasks, setNoTasks] = useState(false);
 
   var theState = state;
-  // if (theState === undefined) {
-  //   theState = { id: '0', name: 'Alle opgaver' };
-  // }
 
   // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
-    // Clearing state history on page reload
-    window.history.replaceState({}, document.title);
-
     let isMounted = true;
 
     const wordPressId = localStorage.getItem('ID');
@@ -133,28 +127,27 @@ const Tasks = () => {
         {/*Shows if there are no tasks */}
         {noTasks ? (
           <p>Du har ingen tilgængelige opgaver.</p>
-        ) :
+        ) : (
           // Shows if there are tasks
-          (
-            // Mapping through the tasks and returns a Link for each one.
-            tasks.map(
-              (task) =>
-                // Checking the task with the showTasksForChosenCompany method
-                showTasksForChosenCompany(theState, task) && (
-                  <Link
-                    key={task.id}
-                    to={{
-                      pathname: `task/${task.id}`,
-                      state: { task: task, companyState: theState },
-                    }}
-                    className="taskLink"
-                    onClick={() => window.scrollTo(0, 0)}
-                  >
-                    <Task key={task.id} task={task} />
-                  </Link>
-                )
-            )
-          )}
+          // Mapping through the tasks and returns a Link for each one.
+          tasks.map(
+            (task) =>
+              // Checking the task with the showTasksForChosenCompany method
+              showTasksForChosenCompany(theState, task) && (
+                <Link
+                  key={task.id}
+                  to={{
+                    pathname: `task/${task.id}`,
+                    state: { task: task, companyState: theState },
+                  }}
+                  className="taskLink"
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  <Task key={task.id} task={task} />
+                </Link>
+              )
+          )
+        )}
       </div>
     );
   }

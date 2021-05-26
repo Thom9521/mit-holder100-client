@@ -19,7 +19,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "https://mit.holder100.dk",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#ff9414",
   "background_color": "#ffffff"

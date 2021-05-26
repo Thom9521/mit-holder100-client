@@ -18,7 +18,6 @@ import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
-
 // Reactstrap components
 import {
   List,
@@ -31,7 +30,9 @@ import {
 } from 'reactstrap';
 
 // Component that renderes the menu
-const Menu = () => {
+const Menu = (props) => {
+  const { deferredPrompt } = props;
+
   const history = useHistory();
 
   // States with React Hooks
@@ -62,19 +63,25 @@ const Menu = () => {
       })
         .then((response) => {
           if (isMounted) {
-            setEmbeddedLinks('')
-            setExternalLinks('')
+            setEmbeddedLinks('');
+            setExternalLinks('');
             setFetchedLinks(true);
             for (let i = 0; i < response.data.length; i++) {
               for (let j = 0; j < response.data[i].custom_fields.length; j++) {
-                if (response.data[i].custom_fields[j].name === "Link type" && response.data[i].custom_fields[j].value === 0) {
+                if (
+                  response.data[i].custom_fields[j].name === 'Link type' &&
+                  response.data[i].custom_fields[j].value === 0
+                ) {
                   setEmbeddedLinks((prevstate) => {
-                    return [...prevstate, response.data[i]]
-                  })
-                } else if (response.data[i].custom_fields[j].name === "Link type" && response.data[i].custom_fields[j].value === 1) {
+                    return [...prevstate, response.data[i]];
+                  });
+                } else if (
+                  response.data[i].custom_fields[j].name === 'Link type' &&
+                  response.data[i].custom_fields[j].value === 1
+                ) {
                   setExternalLinks((prevstate) => {
-                    return [...prevstate, response.data[i]]
-                  })
+                    return [...prevstate, response.data[i]];
+                  });
                 }
               }
             }
@@ -130,7 +137,7 @@ const Menu = () => {
         </li>
         {embeddedLinks.length > 0 &&
           // Maps through the array with embeddedLinks and show a dropdown option for each
-          embeddedLinks.map((embeddedLink) =>
+          embeddedLinks.map((embeddedLink) => (
             <li className="listItem embeddedLinksItems" key={embeddedLink.id}>
               <Link
                 to={{
@@ -149,7 +156,7 @@ const Menu = () => {
                 </Row>
               </Link>
             </li>
-          )}
+          ))}
         {embeddedLinks.length > 1 && (
           <li className="listItem embeddedLinksDropdown">
             <Row className="listRow">
@@ -178,8 +185,7 @@ const Menu = () => {
                     {/*Shows if the embeddedLinks array is higher then 0.*/}
                     {embeddedLinks.length > 0 &&
                       // Maps through the array with embeddedLinks and show a dropdown option for each
-                      embeddedLinks.map((embeddedLink, index) =>
-
+                      embeddedLinks.map((embeddedLink, index) => (
                         <Link
                           key={embeddedLink.id}
                           to={{
@@ -196,16 +202,18 @@ const Menu = () => {
                             {embeddedLink.name}
                           </DropdownItem>
                         </Link>
-                      )}
+                      ))}
                   </DropdownMenu>
                 </Dropdown>
               </Col>
             </Row>
           </li>
         )}
-        {embeddedLinks.length === 1 &&
-
-          <li className="listItem embeddedLinksDropdown" key={embeddedLinks[0].id}>
+        {embeddedLinks.length === 1 && (
+          <li
+            className="listItem embeddedLinksDropdown"
+            key={embeddedLinks[0].id}
+          >
             <Link
               to={{
                 pathname: `/embeddedLink/${embeddedLinks[0].id}`,
@@ -223,7 +231,7 @@ const Menu = () => {
               </Row>
             </Link>
           </li>
-        }
+        )}
         {externalLinks.length > 0 && (
           <li className="listItem">
             <Row className="listRow">
@@ -254,24 +262,25 @@ const Menu = () => {
                       // Maps through the array with externalLinks and show a dropdown option for each
                       externalLinks.map((externalLink, index) =>
                         // Maps through the custom fields in each link
-                        externalLink.custom_fields.map((customField) =>
-                          customField.name === 'Link' &&
-                          <a
-                            key={customField.id}
-                            href={customField.value}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            <DropdownItem
-                              key={index}
-                              className="mb-2 mt-1"
-                              name={externalLink.name}
-                              value={externalLink.id}
-                            >
-                              {externalLink.name}
-                            </DropdownItem>
-                          </a>
-
+                        externalLink.custom_fields.map(
+                          (customField) =>
+                            customField.name === 'Link' && (
+                              <a
+                                key={customField.id}
+                                href={customField.value}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <DropdownItem
+                                  key={index}
+                                  className="mb-2 mt-1"
+                                  name={externalLink.name}
+                                  value={externalLink.id}
+                                >
+                                  {externalLink.name}
+                                </DropdownItem>
+                              </a>
+                            )
                         )
                       )}
                   </DropdownMenu>
@@ -280,7 +289,7 @@ const Menu = () => {
             </Row>
           </li>
         )}
-        < li className="listItem">
+        <li className="listItem">
           <Row className="listRow">
             <Col className="listCol">
               <FontAwesomeIcon
@@ -303,30 +312,22 @@ const Menu = () => {
                   ></FontAwesomeIcon>
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem>
-                    <InstallPWAButton />
-                  </DropdownItem>
-                  <Link
-                    to={'/change-password'}
-                  >
-                    <DropdownItem
-                      className="mb-2 mt-1"
-                    >
+                  {deferredPrompt !== '' && (
+                    <InstallPWAButton deferredPrompt={deferredPrompt} />
+                  )}
+
+                  <Link to={'/change-password'}>
+                    <DropdownItem className="mb-2 mt-1">
                       Skift adgangskode
                     </DropdownItem>
                   </Link>
 
-                  <DropdownItem
-                    className="mb-2 mt-1"
-                    onClick={handleLogout}
-                  >
+                  <DropdownItem className="mb-2 mt-1" onClick={handleLogout}>
                     Log ud
-                    </DropdownItem>
+                  </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
-
             </Col>
-
           </Row>
         </li>
         {/* <li className="listItem">
@@ -385,7 +386,7 @@ const Menu = () => {
           </li>
         </div>
       </List>
-    </div >
+    </div>
   );
 };
 export default Menu;
