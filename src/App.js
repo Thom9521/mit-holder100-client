@@ -18,6 +18,7 @@ import EmbeddedLinks from './components/embeddedLinks/EmbeddedLinks';
 // import Home from './components/home/Home';
 import Menu from './components/menu/Menu';
 import SpecificTask from './components/specificTask/SpecificTask';
+import SpecificHistoricalTask from './components/specificHistoricalTask/SpecificHistoricalTask';
 import ChangePassword from './components/changePassword/ChangePassword';
 import NotFound from './components/notFound/NotFound';
 
@@ -99,6 +100,7 @@ function App() {
     if (
       // New paths needs to be added here
       (locationDom.pathname.includes('/task/') ||
+        locationDom.pathname.includes('/historical-task/') ||
         locationDom.pathname === '/tasks' ||
         locationDom.pathname === '/change-password' ||
         locationDom.pathname.includes('/embeddedLink/')) &&
@@ -177,6 +179,19 @@ function App() {
               <Col className="secondCol">
                 <Container className="homeContainer">
                   <SpecificTask />
+                </Container>
+              </Col>
+            )}
+          />
+        )}
+        {doneFetching && (
+          <Auth
+            exact
+            path="/historical-task/:id"
+            render={() => (
+              <Col className="secondCol">
+                <Container className="homeContainer">
+                  <SpecificHistoricalTask />
                 </Container>
               </Col>
             )}

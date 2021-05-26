@@ -4,6 +4,7 @@ import axios from 'axios';
 import Loader from 'react-loader-spinner';
 import globalConsts from '../../globalConsts';
 import Task from './Task';
+import HistoricalTasks from './HistoricalTasks';
 import './Tasks.css';
 import { useLocation } from 'react-router';
 
@@ -91,11 +92,13 @@ const Tasks = () => {
     // Clean up. When left empty this useEffect will only be called once
   }, []);
 
+  var showingTasks = 0;
+  var checkedTasks = 0;
   // Handles the showing of tasks depending of the dropdown value
   const showTasksForChosenCompany = (state, task) => {
     var taskCompanyId = '';
     var companyId = '';
-
+    checkedTasks++;
     // If the task has a "kunde" value and the state is set
     if (task.custom_fields[0].value[0] && state) {
       companyId = state.id;
@@ -103,6 +106,7 @@ const Tasks = () => {
 
       // If the companyId on the dropdown is equal to the task "kunde" field or the dropdown value is set to 0
       if (companyId === taskCompanyId || companyId === '0') {
+        showingTasks++;
         return true;
       } else {
         return false;
@@ -110,6 +114,7 @@ const Tasks = () => {
     }
     // If the task doesnt have a "kunde" and the dropdown value is set to all
     else if (task.custom_fields[0].value[0] === undefined && state.id === '0') {
+      showingTasks++;
       return true;
     }
   };
@@ -148,6 +153,10 @@ const Tasks = () => {
               )
           )
         )}
+        {showingTasks === 0 && checkedTasks === tasks.length && (
+          <p>Du har ingen tilgængelige opgaver</p>
+        )}
+        {theState !== undefined && <HistoricalTasks theState={theState} />}
       </div>
     );
   }

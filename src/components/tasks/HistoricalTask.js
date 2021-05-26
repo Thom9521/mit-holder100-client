@@ -9,7 +9,7 @@ import { faInfinity } from '@fortawesome/free-solid-svg-icons';
 import { faUserLock } from '@fortawesome/free-solid-svg-icons';
 
 // Child component that renderes a single task in the list of tasks
-const Task = (props) => {
+const HistoricalTask = (props) => {
   const { id, name, due_date, status, custom_fields } = props.task; // Destructuring
   // States with React Hooks
   const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -17,15 +17,11 @@ const Task = (props) => {
   // Toggles tooltip
   const toggle = () => setTooltipOpen(!tooltipOpen);
 
-  var deadlineColor = '';
   if (due_date !== null) {
     // Getting the date with the 'due_date' from the task
     var deadline = new Date(parseInt(due_date));
     // Getting the right date format
     var deadlineFormat = deadline.toISOString().slice(0, 10).toString();
-    if (deadline <= new Date()) {
-      deadlineColor = 'red';
-    }
   }
 
   var personalTask = false;
@@ -44,7 +40,7 @@ const Task = (props) => {
       <Row>
         <Col className="col-10">
           <h5>{name}</h5>
-          <p style={{ color: deadlineColor }}>
+          <p>
             {/*Showing depending of the deadline */}
             {due_date !== null
               ? 'Deadline: ' + deadlineFormat
@@ -83,7 +79,7 @@ const Task = (props) => {
               target={id}
               toggle={toggle}
             >
-              Personlig opgave. Denne opgave kan kun løses af dig.
+              Personlig opgave. Denne opgave er kun løst af dig.
             </Tooltip>
           </Col>
         )}
@@ -91,4 +87,4 @@ const Task = (props) => {
     </div>
   );
 };
-export default Task;
+export default HistoricalTask;

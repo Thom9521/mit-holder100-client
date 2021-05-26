@@ -18,7 +18,7 @@ OBS: Remember to start the server to be able to access server responses.
 
 ## General info
 
-`App.js` handles all the routing.
+`App.js` handles all the routing. If a new route is added where the Menu should be shown, then a manual adding of the routes needs to be done in App.js and Index.js.
 
 `index.js` is the top level of the tree and renders the application.
 

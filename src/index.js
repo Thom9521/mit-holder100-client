@@ -21,7 +21,8 @@ if (
   window.location.pathname !== '/tasks' &&
   !window.location.pathname.includes('/embeddedLink/') &&
   window.location.pathname !== '/change-password' &&
-  !window.location.pathname.includes('/task/')
+  !window.location.pathname.includes('/task/') &&
+  !window.location.pathname.includes('/historical-task/')
 ) {
   stylingClassesContainer = 'contentWrapper orangeBackground';
   stylingClassesContainerRow = 'orangeBackgroundContent';
