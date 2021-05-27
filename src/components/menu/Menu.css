@@ -69,6 +69,8 @@ a:active {
 }
 .holder100Image {
   margin-bottom: 4rem;
+  height: auto;
+  width: inherit;
 }
 .dropdownStyles * {
   white-space: normal !important;
@@ -145,8 +147,6 @@ a:active {
   .homeContainerContainer {
     margin-left: 1rem;
     margin-right: 1rem;
-    padding-right: 1rem;
-    padding-left: 1rem;
     margin-bottom: 3rem;
     padding-top: 7rem;
   }
@@ -164,8 +164,6 @@ a:active {
   }
   .listRow {
     max-height: 100%;
-    height: 100%;
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
@@ -174,14 +172,14 @@ a:active {
     max-width: 100% !important;
   }
   .listColText {
+    display: flex;
+    justify-content: center;
     max-height: 1.2rem;
+    font-size: 0.9rem;
+    height: 10rem;
   }
   .fontAwesomeIconMenu {
     margin-right: 0rem;
-  }
-  .listColText {
-    font-size: 0.9rem;
-    color: #707070 !important;
   }
   .holder100Image {
     margin-bottom: 2rem;
@@ -198,8 +196,16 @@ a:active {
     padding-right: 0 !important;
   }
   .dropdown-menu {
-    min-width: 0 !important;
-    margin: 0 !important;
+    /* min-width: 0 !important;
+    margin: 0 !important; */
+    width: 92.2vw !important;
+    margin-left: 5vw !important;
+    margin-right: 2.8vw !important;
+    margin-bottom: 2.5rem !important;
+  }
+  .dropdown-menu * {
+    font-size: 1.2rem !important;
+    
   }
   .dropdownStylesHeader {
     padding-left: 1rem;
@@ -217,12 +223,24 @@ a:active {
   .listItem {
     margin-top: 0.5rem;
   }
+
   .embeddedLinksItems {
     display: none;
   }
   .embeddedLinksDropdown {
     display: unset;
   }
+  .dropdownToggle{
+    border: unset !important;
+  }
+  .dropdownStyles button:hover,
+  .dropdownStyles button:active {
+    background-color: white !important;
+    color: #707070 !important;
+  }
+.fontAwesomeCaret{
+  display: none;
+}
 
 }
 @media (min-width: 150px) {
@@ -236,9 +254,19 @@ a:active {
   .headerContainer, .listMenu {
     max-width: 510px !important;
   }
+  .dropdown-menu{
+    max-width: 66vw !important;
+    margin-left: 18vw !important;
+    margin-right: 16vw !important;
+    margin-bottom: 2.5rem !important;
+
+  }
 }
 @media (min-width: 768px) {
   .headerContainer, .listMenu {
     max-width: 690px !important;
+  }
+  .holder100Image{
+    max-width: 75%;
   }
 }

@@ -105,7 +105,7 @@ const HistoricalTasks = (props) => {
       <div className="taskButtonDiv">
         <Button
           id="submitButton"
-          className="secondaryBtn"
+          className="submitBtn"
           onClick={handleHistroicalTasks}
         >
           Se løste opgaver

@@ -31,6 +31,13 @@
   border-color: var(--holder100Orange) !important;
 }
 
+@media (min-width: 1200px) {
+  .container{
+    max-width: 1500px !important;
+  }
+}
+
+
 @media only screen and (max-width: 991px) {
   .contentWrapper {
     padding-top: 0rem;
@@ -39,4 +46,5 @@
     padding-top: 6rem;
     margin-bottom: 6rem;
   }
+
 }

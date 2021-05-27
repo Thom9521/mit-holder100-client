@@ -49,7 +49,7 @@ const Menu = (props) => {
 
   // Toggles dropdown
   const toggle = () => setDropdownOpen(!dropdownOpen);
-  const toggleSettings = () => setDropdownOpenSettings(!dropdownOpenSettings);
+  const toggleSettings = () => { setDropdownOpenSettings(!dropdownOpenSettings); console.log(dropdownOpenSettings) };
   const toggleEmbedded = () => setDropdownOpenEmbedded(!dropdownOpenEmbedded);
 
   // useEffect with React Hooks. Runs when the component has mounted
@@ -175,9 +175,9 @@ const Menu = (props) => {
                   className="dropdownStyles dropdownLinks"
                 >
                   <DropdownToggle className="dropdownToggle">
-                    Links{' '}
+                    Funktioner{' '}
                     <FontAwesomeIcon
-                      className="fontAwesomeIconHeader"
+                      className="fontAwesomeIconHeader fontAwesomeCaret"
                       icon={faCaretDown}
                     ></FontAwesomeIcon>
                   </DropdownToggle>
@@ -252,7 +252,7 @@ const Menu = (props) => {
                   <DropdownToggle className="dropdownToggle">
                     Links{' '}
                     <FontAwesomeIcon
-                      className="fontAwesomeIconHeader"
+                      className="fontAwesomeIconHeader fontAwesomeCaret"
                       icon={faCaretDown}
                     ></FontAwesomeIcon>
                   </DropdownToggle>
@@ -289,13 +289,12 @@ const Menu = (props) => {
             </Row>
           </li>
         )}
-        <li className="listItem">
-          <Row className="listRow">
+        <li className="listItem" >
+          <Row className="listRow" >
             <Col className="listCol">
               <FontAwesomeIcon
                 className="fontAwesomeIconMenu"
                 icon={faCog}
-                onClick={toggleSettings}
               ></FontAwesomeIcon>
             </Col>
             <Col className="listColText">
@@ -307,7 +306,7 @@ const Menu = (props) => {
                 <DropdownToggle className="dropdownToggle">
                   Indstillinger{' '}
                   <FontAwesomeIcon
-                    className="fontAwesomeIconHeader"
+                    className="fontAwesomeIconHeader fontAwesomeCaret"
                     icon={faCaretDown}
                   ></FontAwesomeIcon>
                 </DropdownToggle>
@@ -330,30 +329,6 @@ const Menu = (props) => {
             </Col>
           </Row>
         </li>
-        {/* <li className="listItem">
-          <Link to={'/change-password'}>
-            <Row className="listRow">
-              <Col className="listCol">
-                <FontAwesomeIcon
-                  className="fontAwesomeIconMenu"
-                  icon={faKey}
-                ></FontAwesomeIcon>
-              </Col>
-              <Col className="listColText">Skift adgangskode</Col>
-            </Row>
-          </Link>
-        </li>
-        <li className="listItem" onClick={handleLogout}>
-          <Row className="listRow">
-            <Col className="listCol">
-              <FontAwesomeIcon
-                className="fontAwesomeIconMenu"
-                icon={faSignOutAlt}
-              ></FontAwesomeIcon>
-            </Col>
-            <Col className="listColText">Log ud</Col>
-          </Row>
-        </li> */}
         <div className="contactSection">
           <li className="listHeader">
             <h5>Kontakt os</h5>
@@ -386,7 +361,7 @@ const Menu = (props) => {
           </li>
         </div>
       </List>
-    </div>
+    </div >
   );
 };
 export default Menu;

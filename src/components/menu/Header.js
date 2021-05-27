@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import logoBlack from '../../assets/images/logoBlack.svg';
+import holder100Logo from '../../assets/images/Holder100logo.svg';
 import globalConsts from '../../globalConsts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -91,7 +91,7 @@ const Header = (props) => {
           <Link to={{ pathname: '/tasks', state: chosenCompany }}>
             <img
               className="holder100Image"
-              src={logoBlack}
+              src={holder100Logo}
               alt="Holder100 logo"
             />
           </Link>
