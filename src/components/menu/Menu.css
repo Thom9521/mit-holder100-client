@@ -201,7 +201,7 @@ a:active {
     width: 92.2vw !important;
     margin-left: 5vw !important;
     margin-right: 2.8vw !important;
-    margin-bottom: 2.7rem !important;
+    margin-bottom: 0.7rem !important;
   }
   .dropdown-menu * {
     font-size: 1.5rem !important;
@@ -237,15 +237,21 @@ a:active {
   }
   .dropdownToggle{
     border: unset !important;
+    padding-top: 2rem !important;
+    margin-top: -2rem !important;
+    background-color: transparent !important;
+  }
+  .dropdownStyles button {
+    background-color: transparent !important;
   }
   .dropdownStyles button:hover,
   .dropdownStyles button:active {
-    background-color: white !important;
+    background-color: transparent !important;
     color: var(--holder100Orange) !important;
   }
   .dropdownStyles button:hover *,
   .dropdownStyles button:active *{
-    background-color: white !important;
+    background-color: transparent !important;
     color: var(--holder100Orange) !important;
   }
 .fontAwesomeCaret{

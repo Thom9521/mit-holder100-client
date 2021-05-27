@@ -320,7 +320,6 @@ const Menu = (props) => {
               <FontAwesomeIcon
                 className="fontAwesomeIconMenu"
                 icon={faCog}
-                onClick={toggleSettings}
               ></FontAwesomeIcon>
             </Col>
             <Col className="listColText">
