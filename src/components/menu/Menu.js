@@ -200,7 +200,7 @@ const Menu = (props) => {
                   className="dropdownStyles dropdownLinks"
                 >
                   <DropdownToggle className="dropdownToggle">
-                    <span className={embeddedBtnColor}>Funktioner</span>
+                    <span className={embeddedBtnColor}>Funktioner{' '}</span>
                     <FontAwesomeIcon
                       className="fontAwesomeIconHeader fontAwesomeCaret"
                       icon={faCaretDown}
@@ -275,7 +275,7 @@ const Menu = (props) => {
                   className="dropdownStyles dropdownLinks"
                 >
                   <DropdownToggle className="dropdownToggle">
-                    <span className={externalBtnColor}>Links</span>
+                    <span className={externalBtnColor}>Links{' '}</span>
                     <FontAwesomeIcon
                       className="fontAwesomeIconHeader fontAwesomeCaret"
                       icon={faCaretDown}
@@ -329,7 +329,7 @@ const Menu = (props) => {
                 className="dropdownStyles dropdownLinks"
               >
                 <DropdownToggle className="dropdownToggle">
-                  <span className={settingsBtnColor}>Indstillinger</span>
+                  <span className={settingsBtnColor}>Indstillinger{' '}</span>
                   <FontAwesomeIcon
                     className="fontAwesomeIconHeader fontAwesomeCaret"
                     icon={faCaretDown}
