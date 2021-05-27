@@ -34,12 +34,13 @@
   background-color: transparent !important;
 } */
 
+
 @media only screen and (max-width: 991px) {
   .contentWrapper {
     padding-top: 0rem;
   }
   .contentMarginVertical {
-    margin-top: 5rem;
+    padding-top: 6rem;
     margin-bottom: 6rem;
   }
 }

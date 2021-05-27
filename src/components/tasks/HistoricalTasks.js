@@ -108,7 +108,7 @@ const HistoricalTasks = (props) => {
           className="secondaryBtn"
           onClick={handleHistroicalTasks}
         >
-          Hent løste opgaver
+          Se løste opgaver
         </Button>
       </div>
     );

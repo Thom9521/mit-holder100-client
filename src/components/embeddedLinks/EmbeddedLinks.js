@@ -25,12 +25,13 @@ const EmbeddedLinks = () => {
   }
 
   return (
-    <div className="contentWrapper contentCenter homeContainerContainer">
+    <div className="contentWrapper contentCenter linkContainer">
       <div className="taskContent">
         <h4>{state.state.name}</h4>
         <p className="linkDescription">{linkDescription}</p>
         <iframe className="iFrameStyles" src={linkLink} title={state.state.name} allowFullScreen height="630px"></iframe>
       </div>
-    </div>);
+    </div>
+  );
 };
 export default EmbeddedLinks;

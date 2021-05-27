@@ -7,7 +7,7 @@ import globalConsts from './globalConsts';
 import { Switch, Route, useLocation } from 'react-router-dom';
 
 // Reactstrap components
-import { Container, Col } from 'reactstrap';
+import { Col } from 'reactstrap';
 
 // Local components
 import Login from './components/login/Login';
@@ -143,9 +143,9 @@ function App() {
             path="/tasks"
             render={() => (
               <Col className="secondCol">
-                <Container className="homeContainer">
+                <div className="homeContainer">
                   <Tasks />
-                </Container>
+                </div>
               </Col>
             )}
           />
@@ -157,9 +157,9 @@ function App() {
             path="/embeddedLink/:id"
             render={() => (
               <Col className="secondCol">
-                <Container className="homeContainer">
+                <div className="homeContainer">
                   <EmbeddedLinks />
-                </Container>
+                </div>
               </Col>
             )}
           />
@@ -170,9 +170,9 @@ function App() {
             path="/change-password"
             render={() => (
               <Col className="secondCol">
-                <Container className="homeContainer">
+                <div className="homeContainer">
                   <ChangePassword />
-                </Container>
+                </div>
               </Col>
             )}
           />
@@ -183,9 +183,9 @@ function App() {
             path="/task/:id"
             render={() => (
               <Col className="secondCol">
-                <Container className="homeContainer">
+                <div className="homeContainer">
                   <SpecificTask />
-                </Container>
+                </div>
               </Col>
             )}
           />
@@ -196,9 +196,9 @@ function App() {
             path="/historical-task/:id"
             render={() => (
               <Col className="secondCol">
-                <Container className="homeContainer">
+                <div className="homeContainer">
                   <SpecificHistoricalTask />
-                </Container>
+                </div>
               </Col>
             )}
           />
@@ -208,9 +208,9 @@ function App() {
         {!window.location.href.includes(`${globalConsts[0]}/wordpress`)
           ? doneFetching && <Route exact component={NotFound} />
           : doneFetching &&
-            window.location.replace(
-              `${globalConsts[0]}/wordpress/wp-admin/index.php`
-            )}
+          window.location.replace(
+            `${globalConsts[0]}/wordpress/wp-admin/index.php`
+          )}
       </Switch>
     </React.Fragment>
   );

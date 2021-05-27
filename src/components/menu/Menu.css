@@ -46,7 +46,6 @@ a:active {
   background-color: #f5f5f5;
   min-height: 90vh;
   border-radius: 1rem;
-  padding-bottom: 1rem;
 }
 .homeContainerContainer {
   margin-left: 5rem;
@@ -168,7 +167,7 @@ a:active {
     margin-right: 1rem;
     padding-right: 1rem;
     padding-left: 1rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
     padding-top: 7rem;
   }
   .contactSection {
@@ -211,6 +210,9 @@ a:active {
   .homeContainer {
     border-radius: 0;
     background-repeat: repeat-x;
+    min-height: 95vh;
+    padding-bottom: 1rem;
+
   }
   .headerContainerContainer {
     padding-left: 0 !important;
@@ -242,6 +244,7 @@ a:active {
   .embeddedLinksDropdown {
     display: unset;
   }
+
 }
 
 /* @media only screen and (min-width: 576px) {

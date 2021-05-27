@@ -5,3 +5,23 @@
     border:1px solid var(--holder100Orange);
     width: 100%;
 }
+
+.linkContainer {
+    margin-left: 5rem;
+    margin-right: 5rem;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+  }
+  .linkContainer h4 {
+    color: #707070;
+    margin-bottom: 2rem;
+  }
+
+@media only screen and (max-width: 991px) {
+.linkContainer {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    padding-top: 7rem;
+  }
+}
