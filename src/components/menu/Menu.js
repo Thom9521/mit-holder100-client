@@ -38,7 +38,7 @@ const Menu = (props) => {
   // States with React Hooks
   const [embeddedLinks, setEmbeddedLinks] = useState([]);
   const [externalLinks, setExternalLinks] = useState([]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpenExternal, setDropdownOpenExternal] = useState(false);
   const [dropdownOpenEmbedded, setDropdownOpenEmbedded] = useState(false);
   const [dropdownOpenSettings, setDropdownOpenSettings] = useState(false);
   const [fetchedLinks, setFetchedLinks] = useState(false);
@@ -46,11 +46,36 @@ const Menu = (props) => {
     id: '0',
     name: 'Alle firmaer',
   });
+  const [embeddedBtnColor, setEmbeddedBtnColor] = useState('');
+  const [externalBtnColor, setExternalBtnColor] = useState('');
+  const [settingsBtnColor, setSettingsBtnColor] = useState('');
 
   // Toggles dropdown
-  const toggle = () => setDropdownOpen(!dropdownOpen);
-  const toggleSettings = () => { setDropdownOpenSettings(!dropdownOpenSettings); console.log(dropdownOpenSettings) };
-  const toggleEmbedded = () => setDropdownOpenEmbedded(!dropdownOpenEmbedded);
+  const toggleExternal = () => {
+    setDropdownOpenExternal(!dropdownOpenExternal)
+    if (!dropdownOpenExternal) {
+      setExternalBtnColor('setOrangeColor')
+    } else {
+      setExternalBtnColor('')
+    }
+  };
+  const toggleSettings = () => {
+    setDropdownOpenSettings(!dropdownOpenSettings);
+    if (!dropdownOpenSettings) {
+      setSettingsBtnColor('setOrangeColor')
+    } else {
+      setSettingsBtnColor('')
+    }
+  }
+
+  const toggleEmbedded = () => {
+    setDropdownOpenEmbedded(!dropdownOpenEmbedded)
+    if (!dropdownOpenEmbedded) {
+      setEmbeddedBtnColor('setOrangeColor');
+    } else {
+      setEmbeddedBtnColor('');
+    }
+  };
 
   // useEffect with React Hooks. Runs when the component has mounted
   useEffect(() => {
@@ -175,7 +200,7 @@ const Menu = (props) => {
                   className="dropdownStyles dropdownLinks"
                 >
                   <DropdownToggle className="dropdownToggle">
-                    Funktioner{' '}
+                    <span className={embeddedBtnColor}>Funktioner</span>
                     <FontAwesomeIcon
                       className="fontAwesomeIconHeader fontAwesomeCaret"
                       icon={faCaretDown}
@@ -195,7 +220,7 @@ const Menu = (props) => {
                         >
                           <DropdownItem
                             key={index}
-                            className="mb-2 mt-1"
+                            className="mb-3 mt-3"
                             name={embeddedLink.name}
                             value={embeddedLink.id}
                           >
@@ -239,18 +264,18 @@ const Menu = (props) => {
                 <FontAwesomeIcon
                   className="fontAwesomeIconMenu"
                   icon={faExternalLinkAlt}
-                  onClick={toggle}
+                  onClick={toggleExternal}
                 ></FontAwesomeIcon>
               </Col>
               <Col className="listColText">
                 {/*Shows if the embeddedLinks array is higher then 0 */}
                 <Dropdown
-                  isOpen={dropdownOpen}
-                  toggle={toggle}
+                  isOpen={dropdownOpenExternal}
+                  toggle={toggleExternal}
                   className="dropdownStyles dropdownLinks"
                 >
                   <DropdownToggle className="dropdownToggle">
-                    Links{' '}
+                    <span className={externalBtnColor}>Links</span>
                     <FontAwesomeIcon
                       className="fontAwesomeIconHeader fontAwesomeCaret"
                       icon={faCaretDown}
@@ -273,7 +298,7 @@ const Menu = (props) => {
                               >
                                 <DropdownItem
                                   key={index}
-                                  className="mb-2 mt-1"
+                                  className="mb-3 mt-3"
                                   name={externalLink.name}
                                   value={externalLink.id}
                                 >
@@ -295,6 +320,7 @@ const Menu = (props) => {
               <FontAwesomeIcon
                 className="fontAwesomeIconMenu"
                 icon={faCog}
+                onClick={toggleSettings}
               ></FontAwesomeIcon>
             </Col>
             <Col className="listColText">
@@ -304,7 +330,7 @@ const Menu = (props) => {
                 className="dropdownStyles dropdownLinks"
               >
                 <DropdownToggle className="dropdownToggle">
-                  Indstillinger{' '}
+                  <span className={settingsBtnColor}>Indstillinger</span>
                   <FontAwesomeIcon
                     className="fontAwesomeIconHeader fontAwesomeCaret"
                     icon={faCaretDown}
@@ -316,12 +342,12 @@ const Menu = (props) => {
                   )}
 
                   <Link to={'/change-password'}>
-                    <DropdownItem className="mb-2 mt-1">
+                    <DropdownItem className="mb-3 mt-3">
                       Skift adgangskode
                     </DropdownItem>
                   </Link>
 
-                  <DropdownItem className="mb-2 mt-1" onClick={handleLogout}>
+                  <DropdownItem className="mb-3 mt-3" onClick={handleLogout}>
                     Log ud
                   </DropdownItem>
                 </DropdownMenu>

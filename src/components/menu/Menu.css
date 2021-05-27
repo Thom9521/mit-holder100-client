@@ -201,10 +201,10 @@ a:active {
     width: 92.2vw !important;
     margin-left: 5vw !important;
     margin-right: 2.8vw !important;
-    margin-bottom: 2.5rem !important;
+    margin-bottom: 2.7rem !important;
   }
   .dropdown-menu * {
-    font-size: 1.2rem !important;
+    font-size: 1.5rem !important;
     
   }
   .dropdownStylesHeader {
@@ -223,6 +223,11 @@ a:active {
   .listItem {
     margin-top: 0.5rem;
   }
+  .listItem:hover .listColText, .listItem:active .listColText, .listItem:hover .dropdownToggle, .listItem:active .dropdownToggle{
+    color: var(--holder100Orange) !important;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
 
   .embeddedLinksItems {
     display: none;
@@ -236,33 +241,35 @@ a:active {
   .dropdownStyles button:hover,
   .dropdownStyles button:active {
     background-color: white !important;
-    color: #707070 !important;
+    color: var(--holder100Orange) !important;
+  }
+  .dropdownStyles button:hover *,
+  .dropdownStyles button:active *{
+    background-color: white !important;
+    color: var(--holder100Orange) !important;
   }
 .fontAwesomeCaret{
   display: none;
 }
+.setOrangeColor{
+  color: var(--holder100Orange) !important
+}
 
 }
-@media (min-width: 150px) {
+@media only screen and (min-width: 150px) {
   .headerContainer,
   .listMenu {
     width: calc(100% - 1.85em) !important;
     padding-right: 0rem !important;
   }
 }
-@media (min-width: 576px) {
+@media only screen and (min-width: 576px) {
   .headerContainer, .listMenu {
     max-width: 510px !important;
   }
-  .dropdown-menu{
-    max-width: 66vw !important;
-    margin-left: 18vw !important;
-    margin-right: 16vw !important;
-    margin-bottom: 2.5rem !important;
 
-  }
 }
-@media (min-width: 768px) {
+@media only screen and (min-width: 768px) {
   .headerContainer, .listMenu {
     max-width: 690px !important;
   }
@@ -270,3 +277,4 @@ a:active {
     max-width: 75%;
   }
 }
+
