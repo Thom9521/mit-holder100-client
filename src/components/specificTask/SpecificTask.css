@@ -30,7 +30,6 @@
   border-color: var(--holder100Orange) !important;
   width: 100%;
 }
-
 .imagePreview {
   max-width: 20rem;
   width: 100%;
@@ -41,7 +40,7 @@
 }
 .fileLabel {
   background-color: white;
-  color: var(--holder100Orange);
+  color: #707070;
   display: block;
   font-size: 1rem;
   line-height: 1.5;
@@ -54,7 +53,7 @@
 }
 .removeFileBtn {
   background-color: white !important;
-  color: red !important;
+  color: #707070 !important;
   border-color: red !important;
 }
 .fileLabel:hover {

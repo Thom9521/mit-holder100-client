@@ -38,8 +38,6 @@ function App() {
       e.preventDefault();
       // Stash the event so it can be triggered later.
       setDeferredPrompt(e);
-
-      console.log(`'beforeinstallprompt' event was fired.`);
     });
 
     window.addEventListener('appinstalled', () => {

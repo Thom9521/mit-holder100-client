@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Pincode.css';
 import logo from '../../assets/images/logo.svg';
 import axios from 'axios';
 import Loader from 'react-loader-spinner';

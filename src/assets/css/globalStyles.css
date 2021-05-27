@@ -30,10 +30,6 @@
   background-color: var(--holder100Orange) !important;
   border-color: var(--holder100Orange) !important;
 }
-/* div:has(.modalStyles) {
-  background-color: transparent !important;
-} */
-
 
 @media only screen and (max-width: 991px) {
   .contentWrapper {

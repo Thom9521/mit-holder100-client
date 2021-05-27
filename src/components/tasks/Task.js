@@ -7,6 +7,7 @@ import { Row, Col, Tooltip } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfinity } from '@fortawesome/free-solid-svg-icons';
 import { faUserLock } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 // Child component that renderes a single task in the list of tasks
 const Task = (props) => {
@@ -24,7 +25,7 @@ const Task = (props) => {
     // Getting the right date format
     var deadlineFormat = deadline.toISOString().slice(0, 10).toString();
     if (deadline <= new Date()) {
-      deadlineColor = 'red';
+      deadlineColor = '#ff0f0f';
     }
   }
 
@@ -49,6 +50,11 @@ const Task = (props) => {
             {due_date !== null
               ? 'Deadline: ' + deadlineFormat
               : 'Ingen deadline'}
+            {deadlineColor !== '' && <FontAwesomeIcon
+
+              className="ml-1"
+              icon={faExclamationTriangle}
+            ></FontAwesomeIcon>}
           </p>
         </Col>
         {/*Shows if the task status is 'modtager data fra kunden' */}
