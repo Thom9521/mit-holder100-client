@@ -220,7 +220,7 @@ const Menu = (props) => {
                         >
                           <DropdownItem
                             key={index}
-                            className="mb-3 mt-3"
+                            className="pb-3 pt-3"
                             name={embeddedLink.name}
                             value={embeddedLink.id}
                           >
@@ -298,7 +298,7 @@ const Menu = (props) => {
                               >
                                 <DropdownItem
                                   key={index}
-                                  className="mb-3 mt-3"
+                                  className="pb-3 pt-3"
                                   name={externalLink.name}
                                   value={externalLink.id}
                                 >
@@ -341,12 +341,12 @@ const Menu = (props) => {
                   )}
 
                   <Link to={'/change-password'}>
-                    <DropdownItem className="mb-3 mt-3">
+                    <DropdownItem className="pb-3 pt-3">
                       Skift adgangskode
                     </DropdownItem>
                   </Link>
 
-                  <DropdownItem className="mb-3 mt-3" onClick={handleLogout}>
+                  <DropdownItem className="pb-3 pt-3" onClick={handleLogout}>
                     Log ud
                   </DropdownItem>
                 </DropdownMenu>
