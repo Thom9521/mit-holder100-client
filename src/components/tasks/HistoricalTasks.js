@@ -108,7 +108,7 @@ const HistoricalTasks = (props) => {
           className="submitBtn"
           onClick={handleHistroicalTasks}
         >
-          Se løste opgaver
+          Se nylige løste opgaver
         </Button>
       </div>
     );
@@ -122,10 +122,10 @@ const HistoricalTasks = (props) => {
     } else {
       return (
         <div>
-          <h4 className="mt-5">Løste opgaver</h4>
+          <h4 className="mt-5">Nylige løste opgaver</h4>
           {/*Shows if there are no tasks */}
           {noTasks ? (
-            <p>Du har ingen løste opgaver</p>
+            <p>Du har ingen nylige løste opgaver</p>
           ) : (
             // Shows if there are tasks
             // Mapping through the tasks and returns a Link for each one.
@@ -133,22 +133,14 @@ const HistoricalTasks = (props) => {
               (task) =>
                 // Checking the task with the showTasksForChosenCompany method
                 showTasksForChosenCompany(theState, task) && (
-                  <Link
-                    key={task.id}
-                    to={{
-                      pathname: `historical-task/${task.id}`,
-                      state: { task: task, companyState: theState },
-                    }}
-                    className="taskLink"
-                    onClick={() => window.scrollTo(0, 0)}
-                  >
-                    <HistoricalTask key={task.id} task={task} />
-                  </Link>
+
+                  <HistoricalTask key={task.id} task={task} />
                 )
             )
           )}
+
           {showingTasks === 0 && checkedTasks === tasks.length && (
-            <p>Du har ingen løste opgaver</p>
+            <p>Du har ingen nylige løste opgaver</p>
           )}
         </div>
       );

@@ -340,6 +340,12 @@ const Menu = (props) => {
                     <InstallPWAButton deferredPrompt={deferredPrompt} />
                   )}
 
+                  <a href="tel:33607608" className="callUs">
+                    <DropdownItem className="pb-2 pt-2">
+                      Ring til os
+                  </DropdownItem>
+                  </a>
+
                   <Link to={'/change-password'}>
                     <DropdownItem className="pb-2 pt-2">
                       Skift adgangskode

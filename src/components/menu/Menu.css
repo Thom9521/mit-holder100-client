@@ -130,7 +130,9 @@ a:active {
 .singleCompanyLink:hover{
 text-decoration: none;
 }
-
+.callUs{
+  display: none;
+}
 
 @media only screen and (max-width: 991px) {
   .headerContainer {
@@ -273,7 +275,9 @@ text-decoration: none;
 .setOrangeColor{
   color: var(--holder100Orange) !important
 }
-
+.callUs{
+  display:initial;
+}
 }
 @media only screen and (min-width: 150px) {
   .headerContainer,

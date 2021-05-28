@@ -4,24 +4,52 @@
 .iFrameStyles{
     border:1px solid var(--holder100Orange);
     width: 100%;
+    border-radius: 1rem;
 }
 
 .linkContainer {
-    margin-left: 5rem;
-    margin-right: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
   .linkContainer h4 {
     color: #707070;
-    margin-bottom: 2rem;
   }
+  .embeddedContent{
+    /* background-color: white; */
+    padding: 1rem;
+    /* border-radius: 1rem;
+    box-shadow: 0 6px 6px -6px black; */
+  }
+  .fontAwesomeIconEmbeddedLink{
+    font-size: 1.8rem !important;
+    color: var(--holder100Orange);
+  }
+  
 
 @media only screen and (max-width: 991px) {
 .linkContainer {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: unset;
+    margin-right: unset;
     margin-bottom: 2rem;
     padding-top: 7rem;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .fontAwesomeIconEmbeddedLink, .linkContainer h4{
+    font-size: 1.3rem !important
+  }
+  .embeddedContent{
+    padding: unset;
+
+  }
+  .headerPadding{
+    padding: 0.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  .iFrameStyles{
+    border-radius: unset;
   }
 }
