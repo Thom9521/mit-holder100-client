@@ -80,10 +80,16 @@ const HistoricalTasks = (props) => {
     var taskCompanyId = '';
     var companyId = '';
     checkedTasks++;
+    var kundeField = '';
+    // Getting the "kunde" custom field
+    for (let i = 0; i < task.custom_fields.length; i++) {
+      if (task.custom_fields[i].id === "18224409-b817-4985-81c8-5bb0ef1a1642")
+        kundeField = task.custom_fields[i];
+    }
     // If the task has a "kunde" value and the state is set
-    if (task.custom_fields[0].value[0] && state) {
+    if (kundeField.value[0] && state) {
       companyId = state.id;
-      taskCompanyId = task.custom_fields[0].value[0].id;
+      taskCompanyId = kundeField.value[0].id;
 
       // If the companyId on the dropdown is equal to the task "kunde" field or the dropdown value is set to 0
       if (companyId === taskCompanyId || companyId === '0') {
@@ -94,7 +100,7 @@ const HistoricalTasks = (props) => {
       }
     }
     // If the task doesnt have a "kunde" and the dropdown value is set to all
-    else if (task.custom_fields[0].value[0] === undefined && state.id === '0') {
+    else if (kundeField.value[0] === undefined && state.id === '0') {
       showingTasks++;
       return true;
     }
@@ -138,7 +144,7 @@ const HistoricalTasks = (props) => {
             )
           )}
 
-          {showingTasks === 0 && checkedTasks === tasks.length && (
+          {!noTasks && showingTasks === 0 && checkedTasks === tasks.length && (
             <p>Du har ingen nylige løste opgaver</p>
           )}
         </div>

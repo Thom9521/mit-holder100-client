@@ -94,14 +94,14 @@ const Menu = (props) => {
             for (let i = 0; i < response.data.length; i++) {
               for (let j = 0; j < response.data[i].custom_fields.length; j++) {
                 if (
-                  response.data[i].custom_fields[j].name === 'Link type' &&
+                  response.data[i].custom_fields[j].id === "18a82e58-5ee4-43e7-ac89-238e1aa21658" &&
                   response.data[i].custom_fields[j].value === 0
                 ) {
                   setEmbeddedLinks((prevstate) => {
                     return [...prevstate, response.data[i]];
                   });
                 } else if (
-                  response.data[i].custom_fields[j].name === 'Link type' &&
+                  response.data[i].custom_fields[j].id === "18a82e58-5ee4-43e7-ac89-238e1aa21658" &&
                   response.data[i].custom_fields[j].value === 1
                 ) {
                   setExternalLinks((prevstate) => {
@@ -289,7 +289,7 @@ const Menu = (props) => {
                         // Maps through the custom fields in each link
                         externalLink.custom_fields.map(
                           (customField) =>
-                            customField.name === 'Link' && (
+                            customField.id === "afcce534-65c2-4aa6-a98a-b858418b74e8" && (
                               <a
                                 key={customField.id}
                                 href={customField.value}
