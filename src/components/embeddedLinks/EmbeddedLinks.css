@@ -41,15 +41,15 @@
     font-size: 1.3rem !important
   }
   .embeddedContent{
-    padding: unset;
+    padding: unset !important;
 
   }
   .headerPadding{
-    padding: 0.5rem;
-    margin-left: 2rem;
-    margin-right: 2rem;
+    padding: 0.5rem !important;
+    /* margin-left: 2rem !important;
+    margin-right: 2rem !important; */
   }
   .iFrameStyles{
-    border-radius: unset;
+    border-radius: unset !important;
   }
 }
