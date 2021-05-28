@@ -22,7 +22,7 @@ const SpecificHistoricalTask = () => {
 
   // Loopes through the custom fields to get 'Kundens opgave'
   for (let i = 0; i < state.task.custom_fields.length; i++) {
-    if (state.task.custom_fields[i].name === 'fb7b15c6-e8d8-4643-9bb4-d6464763b2d0') {
+    if (state.task.custom_fields[i].id === 'fb7b15c6-e8d8-4643-9bb4-d6464763b2d0') {
       taskDescription = state.task.custom_fields[i].value;
     }
   }
