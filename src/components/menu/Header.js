@@ -97,50 +97,52 @@ const Header = (props) => {
           </Link>
         </Col>
         <Col className="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-xs-6 col-6 dropdownCol">
-          <Dropdown
-            isOpen={dropdownOpen}
-            toggle={toggle}
-            className="dropdownStyles dropdownStylesHeader"
-          >
-            <DropdownToggle>
-              {userCompanies !== '' && chosenCompany.name !== '' ? chosenCompany.name : (
-                <Loader
-                  className="loaderHeader"
-                  type="TailSpin"
-                  color="#ff9414"
-                  height={23}
-                  width={23}
-                />
-              )}{' '}
-              <FontAwesomeIcon
-                className="fontAwesomeIconHeader"
-                icon={faCaretDown}
-              ></FontAwesomeIcon>
-            </DropdownToggle>
-            <DropdownMenu>
-              {/* <DropdownItem
-                className="mb-2 mt-1"
-                name="Alle firmaer"
-                value="0"
-                onClick={(e) => handleChosenCompany(e)}
-              >
-                Alle firmaer
-              </DropdownItem> */}
-              {/*Mapping through the array of companies if it is not empty */}
-              {userCompanies !== '' &&
-                userCompanies.map((company, index) => (
-                  <DropdownItem
-                    key={index}
-                    className="mb-2 mt-1"
-                    name={company.name}
-                    value={company.id}
-                    onClick={(e) => handleChosenCompany(e)}
-                  >
-                    {company.name}
-                  </DropdownItem>
-                ))}
-            </DropdownMenu>
-          </Dropdown>
+          {userCompanies.length > 1 ? (
+
+            <Dropdown
+              isOpen={dropdownOpen}
+              toggle={toggle}
+              className="dropdownStyles dropdownStylesHeader"
+            >
+              <DropdownToggle>
+                {userCompanies !== '' && chosenCompany.name !== '' ? chosenCompany.name : (
+                  <Loader
+                    className="loaderHeader"
+                    type="TailSpin"
+                    color="#ff9414"
+                    height={23}
+                    width={23}
+                  />
+                )}{' '}
+                <FontAwesomeIcon
+                  className="fontAwesomeIconHeader"
+                  icon={faCaretDown}
+                ></FontAwesomeIcon>
+              </DropdownToggle>
+              <DropdownMenu>
+                {userCompanies !== '' &&
+                  userCompanies.map((company, index) => (
+                    <DropdownItem
+                      key={index}
+                      className="mb-2 mt-1"
+                      name={company.name}
+                      value={company.id}
+                      onClick={(e) => handleChosenCompany(e)}
+                    >
+                      {company.name}
+                    </DropdownItem>
+                  ))}
+              </DropdownMenu>
+            </Dropdown>
+          ) : (
+            userCompanies !== '' && chosenCompany.name !== '' && (
+              <Link className="singleCompanyLink" to={{ pathname: '/tasks', state: chosenCompany }}>
+                <div className="singleCompany"
+                >{userCompanies[0].name}
+                </div>
+              </Link>
+            )
+          )}
         </Col>
       </Row>
     </Container>
