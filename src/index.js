@@ -25,7 +25,7 @@ if (
   !window.location.pathname.includes('/historical-task/')
 ) {
   stylingClassesContainer = 'contentWrapper orangeBackground';
-  stylingClassesContainerRow = 'orangeBackgroundContent';
+  stylingClassesContainerRow = 'orangeBackgroundContent containerOrange';
   specificRoute = false;
 }
 

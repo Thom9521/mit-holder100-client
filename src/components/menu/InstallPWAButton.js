@@ -19,7 +19,7 @@ function InstallPWAButton(props) {
   };
 
   return (
-    <DropdownItem className="mb-3 mt-3" onClick={handleInstallClick}>
+    <DropdownItem className="pb-2 pt-2" onClick={handleInstallClick}>
       Installér App
     </DropdownItem>
   );

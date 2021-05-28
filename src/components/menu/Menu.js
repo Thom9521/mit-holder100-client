@@ -341,12 +341,12 @@ const Menu = (props) => {
                   )}
 
                   <Link to={'/change-password'}>
-                    <DropdownItem className="pb-3 pt-3">
+                    <DropdownItem className="pb-2 pt-2">
                       Skift adgangskode
                     </DropdownItem>
                   </Link>
 
-                  <DropdownItem className="pb-3 pt-3" onClick={handleLogout}>
+                  <DropdownItem className="pb-2 pt-2" onClick={handleLogout}>
                     Log ud
                   </DropdownItem>
                 </DropdownMenu>

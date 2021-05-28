@@ -97,10 +97,7 @@ a:active {
 .dropdownStyles button:focus {
   box-shadow: 0 0 0 0.2rem transparent !important;
 }
-.dropdown-item {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-}
+
 .dropdownLink {
   width: auto;
   display: block;
