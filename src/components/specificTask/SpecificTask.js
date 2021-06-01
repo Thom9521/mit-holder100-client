@@ -385,6 +385,7 @@ const SpecificTask = () => {
               <Input
                 id="selectedFile"
                 type="file"
+                accept="image/*, video/*, audio/*, application/pdf, .xd, .doc, .docm, .docx, .dot, .xla, .xlam, .xll, .xlm, .xls, .xlsm, .xlt, xltx, .txt, .rtf, .zip, .rar, .ai, .psd, .indd, .u3d, .prc, .dwg, .dwt, .dxf, .dwf, .dst, .xps, .mpp, .vsd, .pptx	"
                 name="selectedFile"
                 className="fileInput"
                 onChange={onSelectFile}
